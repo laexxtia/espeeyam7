@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Listing Detail</title>
+    <!-- Add Bootstrap CSS CDN link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <style>
+        /* Custom CSS styles */
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .role-title {
+            /* font-size: 24px; */
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .requirements ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        .apply-btn {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="role-title">Job Title</h1>
+                        <hr>
+                        <div class="description">
+                            <h2>Description</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi eu ex lacinia luctus. Fusce id dapibus lectus. Vivamus eu lacinia ex, nec lacinia sapien.</p>
+                        </div>
+                        <div class="requirements">
+                            <h2>Requirements</h2>
+                            <ul>
+                                <li>Minimum 2 years of experience</li>
+                                <li>Bachelor's degree in a related field</li>
+                                <li>Strong communication skills</li>
+                            </ul>
+                        </div>
+                        <div class="skills">
+                            <h2>skills</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id praesentium accusantium fuga nesciunt expedita assumenda quos voluptatibus doloremque nam vero dolor, eum, ut illum recusandae harum reiciendis minus perspiciatis veritatis.</p>
+                        </div>
+                        <div class="salary">
+                            <h2>Salary</h2>
+                            <p>$60,000 - $80,000 per year</p>
+                        </div>
+                        <div class="apply-btn">
+                            <a class="btn btn-primary " onclick="applyNow()">Apply Now</a>
+                        </div>
+
+                        <script>
+                            // JavaScript function to show a confirmation alert
+                            function applyNow() {
+                                if (confirm("Are you sure you want to apply for this job?")) {
+                                    swal("Good job!", "You have successfully applied for the job!", "success");
+                                }   
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js CDN links (for Bootstrap modal, etc.) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+</body>
+</html>
