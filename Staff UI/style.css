@@ -16,7 +16,7 @@
 
 .row{
     padding-top: 20px;
-    justify-content: center;
+    justify-content:space-around;
 
 }
 .jobs-list-container h2{
