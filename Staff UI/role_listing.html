@@ -91,21 +91,19 @@
                                     skills: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
                                     salary: "$60,000 - $80,000 per year"
                             };
-                            
-
-                            // Get existing applied jobs from local storage or initialize an empty array
-                            const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
-
-                            // Add the new job to the array
-                            appliedJobs.push(jobDetails);
-
-                            // Store updated applied jobs in local storage
-                            localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
-
+                 
                             function applyNow() {
                                 if (confirm("Are you sure you want to apply for this job?")) {
                                     swal("Good job!", "You have successfully applied for the job!", "success");
-              
+                                    // Get existing applied jobs from local storage or initialize an empty array
+                                        const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
+
+                                        // Add the new job to the array
+                                        appliedJobs.push(jobDetails);
+
+                                        // Store updated applied jobs in local storage
+                                        localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+
                                 }   
                             }
 

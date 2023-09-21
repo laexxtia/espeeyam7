@@ -5,7 +5,7 @@ const jobs = [
         details:
         "Responsible for designing, developing and maintaining software systems and applications.",
         // openPositions: "2",
-        link: "#",
+        link: "role_listing.html",
     },
     
     {
