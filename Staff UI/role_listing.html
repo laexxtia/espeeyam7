@@ -40,6 +40,7 @@
     </style>
 </head>
 <body>
+    
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="rounded">
@@ -79,11 +80,38 @@
 
                         <script>
                             // JavaScript function to show a confirmation alert
+                            const jobDetails = {
+                                    title: "Product Owner",
+                                    description: "Lorem ipsum dolor sit amet...",
+                                    requirements: [
+                                        "Minimum 2 years of experience",
+                                        "Bachelor's degree in a related field",
+                                        "Strong communication skills"
+                                    ],
+                                    skills: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+                                    salary: "$60,000 - $80,000 per year"
+                            };
+                            
+
+                            // Get existing applied jobs from local storage or initialize an empty array
+                            const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
+
+                            // Add the new job to the array
+                            appliedJobs.push(jobDetails);
+
+                            // Store updated applied jobs in local storage
+                            localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+
                             function applyNow() {
                                 if (confirm("Are you sure you want to apply for this job?")) {
                                     swal("Good job!", "You have successfully applied for the job!", "success");
+              
                                 }   
                             }
+
+
+
+
                         </script>
                     </div>
                 </div>
