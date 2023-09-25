@@ -1,3 +1,54 @@
+import app from '../config/newconfig.js';
+import { getDatabase, set, ref, update, get, child, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+
+const database = getDatabase(app);
+const auth = getAuth();
+const storage = getStorage()
+const storageref = sRef(storage);
+const jobsRef = ref(database, 'jobs'); // Assuming 'jobs' is the path to your jobs data
+
+let jobs1; // Declare a variable to store the jobs data
+
+async function getJobsFromFirebase() {
+    try {
+        const snapshot = await get(jobsRef);
+        if (snapshot.exists()) {
+            jobs1 = snapshot.val(); // Assign the retrieved data to the 'jobs' variable
+        } else {
+            console.log("No jobs data available");
+            jobs1 = null; // Set 'jobs' to null or another appropriate value when no data exists
+        }
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
+        throw error;
+    }
+}
+
+// To use the function and get the jobs data:
+async function main() {
+    try {
+        await getJobsFromFirebase(); // Fetch the jobs data
+        
+        if (jobs1) {
+            // Now you can work with the 'jobs' variable here
+            // console.log("Jobs:", jobs1);
+            for (const jobId in jobs1){
+                const job = jobs1[jobId]
+                console.log(job)
+            }
+        } else {
+            // Handle the case when no jobs data is available
+        }
+    } catch (error) {
+        // Handle any errors here
+    }
+}
+
+main(); // Call the main function to fetch and work with the jobs data
+
+
 const jobs = [
     {
         title: "Software Engineer",
@@ -45,6 +96,8 @@ const jobs = [
     },
 
 ]
+
+
 
 const jobsHeading = document.querySelector(".container-fluid h2");
 const jobsMainContainer = document.querySelector(".jobs-list-container")
