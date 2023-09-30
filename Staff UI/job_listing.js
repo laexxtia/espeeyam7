@@ -9,16 +9,31 @@ const storage = getStorage()
 const storageref = sRef(storage);
 const jobsRef = ref(database, 'jobs'); // Assuming 'jobs' is the path to your jobs data
 
-let jobs1; // Declare a variable to store the jobs data
+let jobs; // Declare a variable to store the jobs data
+const jobsHeading = document.querySelector(".container-fluid h2");
+const jobsMainContainer = document.querySelector(".jobs-list-container")
+const jobSearch = document.querySelector(".form-control")
+
+let searchTerm ="";
+
+// Now you can work with the 'jobs' variable here
+// console.log("Jobs:", jobs1);
+let jobsContainer = document.createElement("div");
+jobsContainer.setAttribute("class", "row mx-auto");
+
+jobsContainer.innerHTML="";
+jobsMainContainer.innerHTML="";
+
+let matchingJobsCount = 0;
 
 async function getJobsFromFirebase() {
     try {
         const snapshot = await get(jobsRef);
         if (snapshot.exists()) {
-            jobs1 = snapshot.val(); // Assign the retrieved data to the 'jobs' variable
+            jobs = snapshot.val(); // Assign the retrieved data to the 'jobs' variable
         } else {
-            console.log("No jobs data available");
-            jobs1 = null; // Set 'jobs' to null or another appropriate value when no data exists
+            // console.log("No jobs data available");
+            jobs = null; // Set 'jobs' to null or another appropriate value when no data exists
         }
     } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -30,15 +45,62 @@ async function getJobsFromFirebase() {
 async function main() {
     try {
         await getJobsFromFirebase(); // Fetch the jobs data
-        
-        if (jobs1) {
-            // Now you can work with the 'jobs' variable here
-            // console.log("Jobs:", jobs1);
-            for (const jobId in jobs1){
-                const job = jobs1[jobId]
-                console.log(job)
+        if (jobs) {
+            // console.log(Object.keys(jobs).length)
+
+            if (Object.keys(jobs).length == 1) {
+                jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`; 
+            } else if (Object.keys(jobs).length == 0) {
+                jobsHeading.innerHTML = `No Jobs`;
+            } else {
+                jobsHeading.innerHTML = `${Object.keys(jobs).length} Jobs`;
             }
-        } else {
+
+            for (const jobId in jobs){
+                const job = jobs[jobId]
+                // console.log(job)
+                console.log(searchTerm)
+                if(job.title.toLowerCase().includes(searchTerm.toLowerCase())){
+                    let jobCard = document.createElement("div");
+                    jobCard.setAttribute("class", "col-3 box") 
+        
+                    let image = document.createElement("img");
+                    image.src = job.image
+                    image.setAttribute("width", "30px")
+                    image.setAttribute("height", "30px")
+        
+        
+                    let title = document.createElement("h3");
+                    title.classList.add("job-title");
+                    title.innerText = job.title;
+        
+                    let details = document.createElement("div");
+                    details.classList.add("details");
+                    details.innerText = job.details;
+        
+                    let detailsbtn = document.createElement("a")
+                    detailsbtn.setAttribute("class", "btn btn-primary")
+                    detailsbtn.innerHTML = "More Details";
+                    detailsbtn.href = job.link;
+        
+                    jobCard.appendChild(image);
+                    jobCard.appendChild(title);
+                    jobCard.appendChild(details);
+                    jobCard.appendChild(detailsbtn);
+        
+                    jobsContainer.append(jobCard)
+        
+                    matchingJobsCount++
+                    jobsMainContainer.append(jobsContainer)
+                }
+            
+            }
+            console.log(jobsMainContainer)
+            
+        } 
+        
+        
+        else {
             // Handle the case when no jobs data is available
         }
     } catch (error) {
@@ -48,132 +110,131 @@ async function main() {
 
 main(); // Call the main function to fetch and work with the jobs data
 
-
-const jobs = [
-    {
-        title: "Software Engineer",
-        image: "images/software-engineer.png",
-        details:
-        "Responsible for designing, developing and maintaining software systems and applications.",
-        // openPositions: "2",
-        link: "role_listing.html",
-    },
+// const jobs = [
+//     {
+//         title: "Software Engineer",
+//         image: "images/software-engineer.png",
+//         details:
+//         "Responsible for designing, developing and maintaining software systems and applications.",
+//         // openPositions: "2",
+//         link: "role_listing.html",
+//     },
     
-    {
-        title: "Data Scientist",
-        image: "images/data-scientist.png",
-        details:
-        "Responsible for collecting, analyzing and interpreting large data sets to help organizations make better decisions.",
-        // openPositions: "3",
-        link: "#",
-    },
+//     {
+//         title: "Data Scientist",
+//         image: "images/data-scientist.png",
+//         details:
+//         "Responsible for collecting, analyzing and interpreting large data sets to help organizations make better decisions.",
+//         // openPositions: "3",
+//         link: "#",
+//     },
     
-    {
-        title: "Project Manager",
-        image: "images/project-manager.png",
-        details:
-        "Responsible for planning, executing and closing projects on time and within budget.",
-        // openPositions: "1",
-        link: "#",
-    },
+//     {
+//         title: "Project Manager",
+//         image: "images/project-manager.png",
+//         details:
+//         "Responsible for planning, executing and closing projects on time and within budget.",
+//         // openPositions: "1",
+//         link: "#",
+//     },
     
-    {
-        title: "Product Manager",
-        image: "images/product-manager.png",
-        details:
-        "Responsible for managing the entire product life cycle, from ideation to launch and post-launch maintenance.",
-        // openPositions: "1",
-        link: "#",
-    },
+//     {
+//         title: "Product Manager",
+//         image: "images/product-manager.png",
+//         details:
+//         "Responsible for managing the entire product life cycle, from ideation to launch and post-launch maintenance.",
+//         // openPositions: "1",
+//         link: "#",
+//     },
     
-    {
-        title: "Sales Representative",
-        image: "images/sales-representative.png",
-        details:
-        "Responsible for reaching out to potential customers and closing sales deals.",
-        // openPositions: "4",
-        link: "#",
-    },
+//     {
+//         title: "Sales Representative",
+//         image: "images/sales-representative.png",
+//         details:
+//         "Responsible for reaching out to potential customers and closing sales deals.",
+//         // openPositions: "4",
+//         link: "#",
+//     },
 
-]
-
-
-
-const jobsHeading = document.querySelector(".container-fluid h2");
-const jobsMainContainer = document.querySelector(".jobs-list-container")
-const jobSearch = document.querySelector(".form-control")
-
-let searchTerm ="";
+// ]
 
 
-if (jobs.length==1){
-    jobsHeading.innerHTML = `${jobs.length} Job`; 
-} else if(jobs.length == 0){
-    jobsHeading.innerHTML = `No Jobs`
-} else{
-    jobsHeading.innerHTML=`${jobs.length} Jobs`
-}
 
-function createJobListingCards() {
-    let jobsContainer = document.createElement("div");
-    jobsContainer.setAttribute("class", "row mx-auto");
+// const jobsHeading = document.querySelector(".container-fluid h2");
+// const jobsMainContainer = document.querySelector(".jobs-list-container")
+// const jobSearch = document.querySelector(".form-control")
 
-    jobsContainer.innerHTML="";
-    jobsMainContainer.innerHTML="";
-
-    let matchingJobsCount = 0;
-
-    jobs.forEach(job => {
-        // console.log(job.title);
-        if(job.title.toLowerCase().includes(searchTerm.toLowerCase())){
-
-            let jobCard = document.createElement("div");
-            jobCard.setAttribute("class", "col-3 box") 
-
-            let image = document.createElement("img");
-            image.src = job.image
-            image.setAttribute("width", "30px")
-            image.setAttribute("height", "30px")
+// let searchTerm ="";
 
 
-            let title = document.createElement("h3");
-            title.classList.add("job-title");
-            title.innerText = job.title;
+// if (jobs.length==1){
+//     jobsHeading.innerHTML = `${jobs.length} Job`; 
+// } else if(jobs.length == 0){
+//     jobsHeading.innerHTML = `No Jobs`
+// } else{
+//     jobsHeading.innerHTML=`${jobs.length} Jobs`
+// }
 
-            let details = document.createElement("div");
-            details.classList.add("details");
-            details.innerText = job.details;
+// function createJobListingCards() {
+//     let jobsContainer = document.createElement("div");
+//     jobsContainer.setAttribute("class", "row mx-auto");
 
-            let detailsbtn = document.createElement("a")
-            detailsbtn.setAttribute("class", "btn btn-primary")
-            detailsbtn.innerHTML = "More Details";
-            detailsbtn.href = job.link;
+//     jobsContainer.innerHTML="";
+//     jobsMainContainer.innerHTML="";
 
-            jobCard.appendChild(image);
-            jobCard.appendChild(title);
-            jobCard.appendChild(details);
-            jobCard.appendChild(detailsbtn);
+//     let matchingJobsCount = 0;
 
-            jobsContainer.append(jobCard)
+//     jobs.forEach(job => {
+//         // console.log(job.title);
+//         if(job.title.toLowerCase().includes(searchTerm.toLowerCase())){
+
+//             let jobCard = document.createElement("div");
+//             jobCard.setAttribute("class", "col-3 box") 
+
+//             let image = document.createElement("img");
+//             image.src = job.image
+//             image.setAttribute("width", "30px")
+//             image.setAttribute("height", "30px")
+
+
+//             let title = document.createElement("h3");
+//             title.classList.add("job-title");
+//             title.innerText = job.title;
+
+//             let details = document.createElement("div");
+//             details.classList.add("details");
+//             details.innerText = job.details;
+
+//             let detailsbtn = document.createElement("a")
+//             detailsbtn.setAttribute("class", "btn btn-primary")
+//             detailsbtn.innerHTML = "More Details";
+//             detailsbtn.href = job.link;
+
+//             jobCard.appendChild(image);
+//             jobCard.appendChild(title);
+//             jobCard.appendChild(details);
+//             jobCard.appendChild(detailsbtn);
+
+//             jobsContainer.append(jobCard)
             
-            jobsMainContainer.append(jobsContainer)
-            matchingJobsCount++
-        }
-        if (matchingJobsCount === 1) {
-            jobsHeading.innerHTML = `${matchingJobsCount} Job`;
-        } else if(matchingJobsCount == 0){
-            jobsHeading.innerHTML = `No Jobs`
-        } else{
-            jobsHeading.innerHTML=`${jobs.length} Jobs`
-        }
+//             jobsMainContainer.append(jobsContainer)
+//             matchingJobsCount++
+//         }
+//         if (matchingJobsCount === 1) {
+//             jobsHeading.innerHTML = `${matchingJobsCount} Job`;
+//         } else if(matchingJobsCount == 0){
+//             jobsHeading.innerHTML = `No Jobs`
+//         } else{
+//             jobsHeading.innerHTML=`${jobs.length} Jobs`
+//         }
     
-    })
-}
+//     })
+// }
 
-createJobListingCards();
+// createJobListingCards();
 
-jobSearch.addEventListener("input",(e) =>{
-    searchTerm=e.target.value;
-    createJobListingCards();
-})
+// jobSearch.addEventListener("input",(e) =>{
+//     searchTerm=e.target.value;
+//     createJobListingCards();
+// })
 
