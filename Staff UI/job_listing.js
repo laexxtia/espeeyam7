@@ -16,8 +16,21 @@ const jobSearch = document.querySelector(".form-control")
 
 let searchTerm ="";
 
+jobSearch.addEventListener("input", () => {
+    searchTerm = jobSearch.value.toLowerCase();
+    console.log("Search Term:", searchTerm); // Check if searchTerm is updated
+    main();
+});
+
+// Function to hide all job cards
+function hideAllJobCards() {
+    const jobCards = document.querySelectorAll(".job-card");
+    jobCards.forEach((card) => {
+        card.style.display = "none";
+    });
+}
+
 // Now you can work with the 'jobs' variable here
-// console.log("Jobs:", jobs1);
 let jobsContainer = document.createElement("div");
 jobsContainer.setAttribute("class", "row mx-auto");
 
@@ -46,8 +59,9 @@ async function main() {
     try {
         await getJobsFromFirebase(); // Fetch the jobs data
         if (jobs) {
-            // console.log(Object.keys(jobs).length)
-
+            hideAllJobCards(); // Hide all job cards
+            
+            // Update the job count in the heading
             if (Object.keys(jobs).length == 1) {
                 jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`; 
             } else if (Object.keys(jobs).length == 0) {
@@ -56,14 +70,18 @@ async function main() {
                 jobsHeading.innerHTML = `${Object.keys(jobs).length} Jobs`;
             }
 
+            // Clear existing job cards before adding new ones
+            jobsContainer.innerHTML = "";
+
             for (const jobId in jobs){
-                const job = jobs[jobId]
-                // console.log(job)
-                console.log(searchTerm)
+                const job = jobs[jobId];
+                console.log(searchTerm);
                 if(job.title.toLowerCase().includes(searchTerm.toLowerCase())){
                     let jobCard = document.createElement("div");
-                    jobCard.setAttribute("class", "col-3 box") 
-        
+                    jobCard.setAttribute("class", "col-3 box job-card") 
+
+                    // ... Create job card content as before ...
+
                     let image = document.createElement("img");
                     image.src = job.image
                     image.setAttribute("width", "30px")
@@ -89,17 +107,13 @@ async function main() {
                     jobCard.appendChild(detailsbtn);
         
                     jobsContainer.append(jobCard)
-        
                     matchingJobsCount++
-                    jobsMainContainer.append(jobsContainer)
                 }
-            
             }
-            console.log(jobsMainContainer)
-            
+
+            // Append the matching job cards to the jobsMainContainer
+            jobsMainContainer.appendChild(jobsContainer);
         } 
-        
-        
         else {
             // Handle the case when no jobs data is available
         }
@@ -108,7 +122,8 @@ async function main() {
     }
 }
 
-main(); // Call the main function to fetch and work with the jobs data
+// Call the main function initially
+main();
 
 // const jobs = [
 //     {
