@@ -64,7 +64,7 @@
                         <option value="sales">Sales</option>
                     </select>
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="jobSkills" class="form-label">Skills Required</label>
                     <ol class="input-list">
                         <li><input type="text" class="form-control mb-3" id="jobSkill1" name="jobSkill1" required></li>
@@ -73,11 +73,61 @@
                         <li><input type="text" class="form-control mb-3" id="jobSkill4" name="jobSkill4" required></li>
                         <li><input type="text" class="form-control mb-3" id="jobSkill5" name="jobSkill5" required></li>
                     </ol>
+                </div> -->
+                <div class="mb-3">
+                    <label for="skillsList" class="form-label">Skills Required</label>
+                    <div>
+                        <input class="form-control my-2" list="skill1" id="skill" placeholder="Type to search...">
+                            <datalist id="skill1">
+                            <option value="Python">
+                            <option value="Javascript">
+                            <option value="C">
+                            <option value="Leadership">
+                            <option value="Team Building">
+                            </datalist>  
+                        <input class="form-control my-2" list="skill2" id="skill" placeholder="Type to search...">
+                            <datalist id="skill2">
+                            <option value="Python">
+                            <option value="Javascript">
+                            <option value="C">
+                            <option value="Leadership">
+                            <option value="Team Building">
+                            </datalist>  
+                        <input class="form-control my-2" list="skill3" id="Skill" placeholder="Type to search...">
+                            <datalist id="skill3">
+                            <option value="Python">
+                            <option value="Javascript">
+                            <option value="C">
+                            <option value="Leadership">
+                            <option value="Team Building">
+                            </datalist>
+                        <input class="form-control my-2" list="skill4" id="skill" placeholder="Type to search...">
+                            <datalist id="skill4">
+                            <option value="Python">
+                            <option value="Javascript">
+                            <option value="C">
+                            <option value="Leadership">
+                            <option value="Team Building">
+                            </datalist>
+                        <input class="form-control my-2" list="skill5" id="skills" placeholder="Type to search...">
+                            <datalist id="skill5">
+                            <option value="Python">
+                            <option value="Javascript">
+                            <option value="C">
+                            <option value="Leadership">
+                            <option value="Team Building">
+                            </datalist>  
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="jobSalary" class="form-label">Salary (SGD)</label>
                     <input type="number" class="form-control" id="jobSalary" name="jobSalary" required>
                 </div>
+                <div class="mb-3">
+                    <label for="deadline" class="form-label">Application Deadline</label>
+                    <input type="date" class="form-control" id="deadline" name="deadline" required>
+                </div>
+                
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
             </form>
         </div>

@@ -6,6 +6,7 @@ const jobs = [
         "Responsible for designing, developing and maintaining software systems and applications.",
         // openPositions: "2",
         link: "role_listing.html",
+        appLink: "applicant_list.html"
     },
     
     {
@@ -15,6 +16,7 @@ const jobs = [
         "Responsible for collecting, analyzing and interpreting large data sets to help organizations make better decisions.",
         // openPositions: "3",
         link: "#",
+        appLink: "applicant_list.html"
     },
     
     {
@@ -24,6 +26,7 @@ const jobs = [
         "Responsible for planning, executing and closing projects on time and within budget.",
         // openPositions: "1",
         link: "#",
+        appLink: "applicant_list.html"
     },
     
     {
@@ -33,6 +36,7 @@ const jobs = [
         "Responsible for managing the entire product life cycle, from ideation to launch and post-launch maintenance.",
         // openPositions: "1",
         link: "#",
+        appLink: "applicant_list.html"
     },
     
     {
@@ -42,6 +46,7 @@ const jobs = [
         "Responsible for reaching out to potential customers and closing sales deals.",
         // openPositions: "4",
         link: "#",
+        appLink: "applicant_list.html"
     },
 
 ]
@@ -96,10 +101,16 @@ function createJobListingCards() {
             detailsbtn.innerHTML = "More Details";
             detailsbtn.href = job.link;
 
+            let applicantsbtn = document.createElement("a")
+            applicantsbtn.setAttribute("class", "btn btn-primary applicantsbtn")
+            applicantsbtn.innerHTML = "View Applicants";
+            applicantsbtn.href = job.appLink;
+
             jobCard.appendChild(image);
             jobCard.appendChild(title);
             jobCard.appendChild(details);
             jobCard.appendChild(detailsbtn);
+            jobCard.appendChild(applicantsbtn)
 
             jobsContainer.append(jobCard)
             
