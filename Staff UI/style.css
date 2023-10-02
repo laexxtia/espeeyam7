@@ -52,8 +52,8 @@
 }
 
 .details{
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 18px;
     color: #333;
     line-height: 1.3;
@@ -65,10 +65,22 @@
     position:relative;
 }
 
-.skillbox{
-    border-color: aqua;
-    border-radius: 16px;
-    fill: aqua;
 
+.skillrow{
+    margin-top: 10px;
+    position: relative;
+    align-items: center;
 }
 
+.test{
+    margin-right: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    font-family: "Rubik", sans-serif;
+}
+
+.skilltext{
+    opacity: 70%;
+    font-family: "Rubik", sans-serif;
+    margin-bottom: 10px;
+}

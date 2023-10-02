@@ -109,15 +109,22 @@ async function main() {
                     jobCard.appendChild(image);
                     jobCard.appendChild(title);
                     jobCard.appendChild(details);
+
+                    let skill_row = document.createElement("div")
+                    skill_row.setAttribute("class", "skillrow")
+                    let skill_text = document.createElement("p")
+                    skill_text.setAttribute("class", "skilltext")
+                    skill_text.innerHTML = "Skills Needed:"
+                    skill_row.append(skill_text)
                     for (const i in job.Skills){
                         let skills_needed = document.createElement("span");
-                        skills_needed.setAttribute("class", "skillbox");
-                        skills_needed.innerText = job.Skills[i]
-                        jobCard.appendChild(skills_needed);
-                    }
-        
+                        skills_needed.setAttribute("class", "btn btn-success test");
+                        skills_needed.innerText = job.Skills[i];
+                        skill_row.append(skills_needed)
+                        }
+                    jobCard.appendChild(skill_row);
                     jobCard.appendChild(detailsbtn);
-        
+
                     jobsContainer.append(jobCard)
                     matchingJobsCount++
                 }
