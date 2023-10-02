@@ -64,7 +64,7 @@ async function main() {
         await getJobsFromFirebase(); // Fetch the jobs data
         if (jobs) {
             hideAllJobCards(); // Hide all job cards
-            
+            console.log(jobs.Skill)
             // Update the job count in the heading
             if (Object.keys(jobs).length == 1) {
                 jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`; 
@@ -99,7 +99,8 @@ async function main() {
                     let details = document.createElement("div");
                     details.classList.add("details");
                     details.innerText = job.details;
-        
+
+
                     let detailsbtn = document.createElement("a")
                     detailsbtn.setAttribute("class", "btn btn-primary")
                     detailsbtn.innerHTML = "More Details";
@@ -108,6 +109,13 @@ async function main() {
                     jobCard.appendChild(image);
                     jobCard.appendChild(title);
                     jobCard.appendChild(details);
+                    for (const i in job.Skills){
+                        let skills_needed = document.createElement("span");
+                        skills_needed.setAttribute("class", "skillbox");
+                        skills_needed.innerText = job.Skills[i]
+                        jobCard.appendChild(skills_needed);
+                    }
+        
                     jobCard.appendChild(detailsbtn);
         
                     jobsContainer.append(jobCard)
