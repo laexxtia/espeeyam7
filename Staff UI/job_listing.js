@@ -9,7 +9,9 @@ const storage = getStorage()
 const storageref = sRef(storage);
 const jobsRef = ref(database, 'jobs'); // Assuming 'jobs' is the path to your jobs data
 
+
 let jobs; // Declare a variable to store the jobs data
+
 const jobsHeading = document.querySelector(".container-fluid h2");
 const jobsMainContainer = document.querySelector(".jobs-list-container")
 const jobSearch = document.querySelector(".form-control")
@@ -53,6 +55,8 @@ async function getJobsFromFirebase() {
         throw error;
     }
 }
+
+
 
 // To use the function and get the jobs data:
 async function main() {
