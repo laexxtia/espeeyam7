@@ -65,3 +65,10 @@
     position:relative;
 }
 
+.skillbox{
+    border-color: aqua;
+    border-radius: 16px;
+    fill: aqua;
+
+}
+
