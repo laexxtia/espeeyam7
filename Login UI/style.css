@@ -11,7 +11,6 @@ body{
     background-color: #fff1cc !important;
     justify-content: center;
     align-items: center;
-    margin: auto;
     
 }
 /* Container */
@@ -21,7 +20,7 @@ body{
     width: 800px;
     /* border: 1px solid black; */
     margin: auto;
-    margin-top: 50px;
+    margin-top: 60px;
     padding-left: 0;
     border-radius: 20px;
     box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2)
@@ -37,10 +36,12 @@ body{
     flex-direction: column;
     width: 50%;
     align-items: center;
+    justify-content: center;
     background-color: whitesmoke;
     font-family: 'Poppins', sans-serif;
     position: relative;
 }
+
 .form h2{
     font-size:3rem;
     margin: 20px;
@@ -59,10 +60,11 @@ body{
     display: inline-block;
 }
 
+
 #submit{
     padding: 12px 30px;
     width: 40%;
-    margin-top: 40px;
+    margin-top: 20px;
     background-color: blue;
     color: white;
     font-weight: bold;
@@ -84,7 +86,7 @@ body{
 .form a{
     text-decoration: underline;
     color: black;
-    margin-top: 40px;
+    margin-top: 20px;
     font-family: 'Poppins', sans-serif;
     display: inline-block;
 }
@@ -107,4 +109,9 @@ body{
 .side img{
     width: 80%;
     height: 100%;
+}
+
+i{
+    margin-left: -45px;
+    cursor: pointer;
 }
