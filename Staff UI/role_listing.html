@@ -174,7 +174,7 @@
                             <p>Annual income of up to SGD 80,000.</p>
                         </div>
 
-                        <div class="apply-btn mt-3">
+                        <div id="apply-btn" class="apply-btn mt-3">
                             <a class="btn btn-outline-primary fs-4 px-3" onclick="applyNow()">Apply Now</a>
                         </div>
 
@@ -210,21 +210,20 @@
                             // for deadline
                             document.addEventListener("DOMContentLoaded", function() {
 
-                                // Define the application deadline date (year, month (0-11), day)
-                                const deadlineDate = new Date(2023, 9, 7);
+                                // application deadline date (year, month (0-11), day) - applicants can apply UP TILL 2359 of deadline date
+                                const deadlineDate = new Date(2023, 9, 7, 23, 59);
                                 
-                                // Get the current date
+                                // current date
                                 const currentDate = new Date();
 
-                                // Compare the current date with the deadline date
-                                if (currentDate == deadlineDate) {
-                                    // Application is still open
+                                if (currentDate <= deadlineDate) {
+                                    // before deadline - shows deadline date
                                     document.getElementById("deadline").textContent = deadlineDate.toDateString();
                                 } 
                                 
                                 else 
                                     {
-                                    // Application deadline has passed
+                                    // after deadline - shows applications closed
                                     document.getElementById("deadline").innerHTML = `
                                     <div class="d-flex">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-ban-fill mt-1 me-2" viewBox="0 0 16 16">
@@ -233,6 +232,9 @@
                                         <p class="fw-bold text-danger">Applications Closed</p>
                                     </div>
                                     `;
+
+                                    // removes apply now button
+                                    document.getElementById("apply-btn").style.display = "none";
                                 }
                         });
 
