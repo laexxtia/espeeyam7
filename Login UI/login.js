@@ -1,6 +1,6 @@
 import app from '../config/newconfig.js';
 import { getDatabase, set, ref, update, get, child, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, browserSessionPersistence, setPersistence} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
 const database = getDatabase(app);
@@ -29,6 +29,7 @@ if (login != null) {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                       // User is signed in, redirect to authenticated page
+                      setPersistence(auth, browserSessionPersistence)
                       window.location.href = '/Staff UI/job_listing.html';
                     } else {
                       // User is signed out, redirect to login page
