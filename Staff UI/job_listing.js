@@ -146,9 +146,22 @@ auth.onAuthStateChanged(function (user) {
                             skill_row.append(skill_text)
                             for (const i in job.Skills) {
                                 let skills_needed = document.createElement("span");
-                                skills_needed.setAttribute("class", "btn btn-success test");
-                                skills_needed.innerText = job.Skills[i];
-                                skill_row.append(skills_needed)
+                                for (const j in userData.Skill){
+                                    console.log(userData.Skill[j])
+                                    if (userData.Skill[j] == job.Skills[i]){
+                                        skills_needed.setAttribute("class", "btn btn-success test");
+                                        skills_needed.innerText = job.Skills[i];
+                                        skill_row.append(skills_needed)
+                                        console.log("hi")
+                                    }
+                                    else{
+                                        skills_needed.setAttribute("class", "btn btn-secondary test disabled");
+                                        skills_needed.innerText = job.Skills[i];
+                                        skill_row.append(skills_needed)
+                                    }
+
+                                }
+                                
                             }
                             jobCard.appendChild(skill_row);
                             jobCard.appendChild(detailsbtn);
