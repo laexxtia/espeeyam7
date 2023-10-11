@@ -91,8 +91,8 @@ auth.onAuthStateChanged(function (user) {
                 await getUserDataFromFirebase();
                 if (jobs && userData) {
                     hideAllJobCards(); // Hide all job cards
-                    console.log(userData.Skill)
-                    console.log(jobs.Skill)
+                    // console.log(userData.Skill)
+                    // console.log(jobs.Skill)
                     // Update the job count in the heading
                     if (Object.keys(jobs).length == 1) {
                         jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`;
@@ -146,23 +146,21 @@ auth.onAuthStateChanged(function (user) {
                             skill_row.append(skill_text)
                             for (const i in job.Skills) {
                                 let skills_needed = document.createElement("span");
-                                for (const j in userData.Skill){
-                                    console.log(userData.Skill[j])
-                                    if (userData.Skill[j] == job.Skills[i]){
+                                skills_needed.innerText = job.Skills[i]; // Set the default text
+                                
+                                for (const j in userData.Skill) {
+                                    if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
                                         skills_needed.setAttribute("class", "btn btn-success test");
-                                        skills_needed.innerText = job.Skills[i];
-                                        skill_row.append(skills_needed)
-                                        console.log("hi")
-                                    }
-                                    else{
+                                        break; // Skill matched, no need to continue checking
+                                    } else {
                                         skills_needed.setAttribute("class", "btn btn-secondary test disabled");
-                                        skills_needed.innerText = job.Skills[i];
-                                        skill_row.append(skills_needed)
                                     }
-
                                 }
                                 
+                                skill_row.append(skills_needed);
                             }
+                                                    
+                            
                             jobCard.appendChild(skill_row);
                             jobCard.appendChild(detailsbtn);
 
