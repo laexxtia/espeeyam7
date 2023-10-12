@@ -143,6 +143,9 @@ auth.onAuthStateChanged(function (user) {
                             let skill_text = document.createElement("p")
                             skill_text.setAttribute("class", "skilltext")
                             skill_text.innerHTML = "Skills Needed:"
+                            let skill_buttons = document.createElement("div")
+                            console.log(job.Skills)
+                            skill_buttons.setAttribute("class", "scrollable-div")
                             skill_row.append(skill_text)
                             for (const i in job.Skills) {
                                 let skills_needed = document.createElement("span");
@@ -157,7 +160,8 @@ auth.onAuthStateChanged(function (user) {
                                     }
                                 }
                                 
-                                skill_row.append(skills_needed);
+                                skill_buttons.append(skills_needed);
+                                skill_row.append(skill_buttons)
                             }
                                                     
                             

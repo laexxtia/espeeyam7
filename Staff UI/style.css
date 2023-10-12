@@ -26,7 +26,7 @@
 
 
 .box{
-    padding: 12px;
+    padding: 20px;
     box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2);
     border-radius: 16px;
     margin: 30px 30px;
@@ -70,11 +70,15 @@
     margin-top: 10px;
     position: relative;
     align-items: center;
+    margin-bottom: 10px;
+    
+
 }
 
 .test{
     margin-right: 10px;
     margin-bottom: 10px;
+    padding-top: 10px;
     position: relative;
     font-family: "Rubik", sans-serif;
 }
@@ -83,4 +87,25 @@
     opacity: 70%;
     font-family: "Rubik", sans-serif;
     margin-bottom: 10px;
+}
+
+.scrollable-div {
+    white-space: nowrap; /* Prevent buttons from wrapping to the next line */
+    overflow-x: scroll; /* Add horizontal scroll when content overflows */
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+    height: auto;
+    
+}
+
+
+/* Optional: Style the scrollbar */
+.scrollable-div::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+
 }
