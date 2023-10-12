@@ -69,7 +69,85 @@ fetchSkillsFromFirebase()
 
 
 const jobsRef = ref(database, 'jobs')
-const jobTitle = document.getElementById('jobTitle').value
-const details = document.getElementById('jobDescription').value
-const location = document.getElementById('jobLocation').value
-const department = document.getElementById('jobDept').value
+const createBtn = document.getElementById('submit')
+
+
+if (createBtn != null){
+  createBtn.addEventListener("click", async function() { 
+  const jobTitle = document.getElementById('jobTitle').value
+  const details = document.getElementById('jobDescription').value
+  const location = document.getElementById('jobLocation').value
+  const department = document.getElementById('jobDept').value
+  const skill1 = document.getElementById('skill1').value
+  const skill2 = document.getElementById('skill2').value
+  const skill3 = document.getElementById('skill3').value
+  const skill4 = document.getElementById('skill4').value
+  const skill5 = document.getElementById('skill5').value
+  const salary = document.getElementById('jobSalary').value
+  const deadline = document.getElementById('deadline').value
+
+
+  const allValuesFilled = (
+    jobTitle !== "" &&
+    details !== "" &&
+    location !== "" &&
+    department !== "" &&
+    salary !== "" &&
+    deadline !== ""
+  );
+
+  const filledSkills = [];
+
+  if (skill1 !== "") {
+    filledSkills.push(skill1);
+  }
+  if (skill2 !== "") {
+    filledSkills.push(skill2);
+  }
+  if (skill3 !== "") {
+    filledSkills.push(skill3);
+  }
+  if (skill4 !== "") {
+    filledSkills.push(skill4);
+  }
+  if (skill5 !== "") {
+    filledSkills.push(skill5);
+  }
+    if(allValuesFilled && filledSkills.length >= 1){
+      const jobData = {
+        title: jobTitle,
+        details: details,
+        location: location,
+        department: department,
+        Skills: filledSkills,
+        salary: parseInt(salary),
+        deadline: new Date(`${deadline}`).getTime()
+      }
+
+      push(jobsRef, jobData).then(function() {
+        console.log("Data has been successfully added!");
+      }).catch(function(error) {
+        console.error("Error adding data:", error);
+      });
+
+    }
+    else{
+      alert("Please fill all fields");
+      console.log(filledSkills)
+      console.log('jobTitle: ', jobTitle);
+      console.log('details: ', details);
+      console.log('location: ', location);
+      console.log('department: ', department);
+      console.log('skill1: ', skill1);
+      console.log('skill2: ', skill2);
+      console.log('skill3: ', skill3);
+      console.log('skill4: ', skill4);
+      console.log('skill5: ', skill5);
+      console.log('salary: ', salary);
+      console.log('deadline: ', deadline);
+    }
+    
+
+
+  })
+}
