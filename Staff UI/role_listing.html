@@ -7,13 +7,17 @@
     <!-- Add Bootstrap CSS CDN link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script type = "module" src="role_listing.js"></script>
 
     <style>
         /* Custom CSS styles */
         body {
             background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+            font-family: "Rubik", sans-serif
         }
 
         .card {
@@ -37,6 +41,10 @@
             text-align: center;
             margin: 20px 0;
         }
+
+        .h1{
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -53,197 +61,20 @@
             </div>
 
             <div class="col-md-8">
-              
+            
                 <div class="card">
                     <div class="card-body p-5">
-                        <h1 class="role-title mb-5">Product Owner</h1>
-                       
-                        <hr>
 
-                         <!-- description -->
-                        <div class="mt-5 mb-5">
-                            <div class="d-flex mb-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-journal-text me-2 mt-1" viewBox="0 0 16 16">
-                                    <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-                                </svg>
-                                <h3 class="font-monospace">Description</h3>
-                            </div>
-                            <p>As the Product Owner, you will be responsible for defining and prioritizing a product's features and ensuring they align with customer needs and business goals, and acting as a bridge between stakeholders and the development team to guide the product's direction.</p>
-
-                            <p class="fw-bold">
-                                Application Deadline:
-                                
-                                <p id="deadline" class="fw-bold text-danger"></p>
-                            </p>
-                        </div>
-
-                        <!-- responsibilities -->
-                        <div class="mb-5">
-                            <div class="d-flex mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-clipboard2-check me-2 mt-1" viewBox="0 0 16 16">
-                                    <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"/>
-                                    <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"/>
-                                    <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3Z"/>
-                                  </svg>
-                                <h3 class="font-monospace">Responsibilities</h3>
-                            </div>
-                            
-                            <ul>
-                                <li>
-                                    <div>
-                                        <p class="fw-bold d-inline">
-                                            Product Strategy: 
-                                        </p>
-                                        Develop and communicate a clear product vision and strategy in collaboration with stakeholders.
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <p class="fw-bold d-inline">
-                                            Backlog Management:
-                                        </p>
-                                        Maintain a well-defined and prioritized product backlog, ensuring that it reflects current priorities and customer needs.
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <p class="fw-bold d-inline">
-                                            Requirement Gathering:
-                                        </p>
-                                        Gather and prioritize product requirements from various stakeholders, including customers, internal teams, and market research.
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <p class="fw-bold d-inline">
-                                            User Stories:
-                                        </p>
-                                        Write detailed user stories, acceptance criteria, and specifications to guide the development team.
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <p class="fw-bold d-inline">
-                                            Cross-functional Collaboration:
-                                        </p>
-                                        Work closely with cross-functional teams, including development, design, etc, to ensure successful product delivery.
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <p class="fw-bold d-inline">
-                                            Quality Assurance:
-                                        </p>
-                                        Ensure that the final product meets quality standards and aligns with the initial vision.
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- qualifications -->
-                        <div class="mb-5">
-                            <div class="d-flex mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-file-earmark-ruled me-2 mt-1" viewBox="0 0 16 16">
-                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h7v1a1 1 0 0 1-1 1H6zm7-3H6v-2h7v2z"/>
-                                  </svg>
-                                <h3 class="font-monospace">Qualifications</h3>
-                            </div>
-                            
-                            <ul>
-                                <li>Proven experience (2 years) as a Product Owner or similar role in a software development environment.</li>
-                                <li>Bachelor's degree in Business Administration, Computer Science, Information Systems, Software Engineering, Data Science, or in a related field.</li>
-                                <li>Strong understanding of Agile methodologies, Scrum, and/or Kanban.</li>
-                                <li>Proficiency in using Agile project management tools such as Jira or Trello.</li>
-                                <li>Experience with user-centered design principles and usability testing.</li>
-                                <li>Excellent communication, leadership, and teamwork skills.</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- salary -->
-                        <div class="mb-5">
-                            <div class="d-flex mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-cash-stack me-2 mt-1" viewBox="0 0 16 16">
-                                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-                                    <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"/>
-                                  </svg>
-                                <h3 class="font-monospace">Salary</h3>
-                            </div>
-                           
-                            <p>Annual income of up to SGD 80,000.</p>
-                        </div>
-
-                        <div id="apply-btn" class="apply-btn mt-3">
-                            <a class="btn btn-outline-primary fs-4 px-3" onclick="applyNow()">Apply Now</a>
-                        </div>
-
-                        <script>
-                            // JavaScript function to show a confirmation alert
-                            const jobDetails = {
-                                    title: "Product Owner",
-                                    description: "Lorem ipsum dolor sit amet...",
-                                    requirements: [
-                                        "Minimum 2 years of experience",
-                                        "Bachelor's degree in a related field",
-                                        "Strong communication skills"
-                                    ],
-                                    skills: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
-                                    salary: "$60,000 - $80,000 per year"
-                            };
-                 
-                            function applyNow() {
-                                if (confirm("Are you sure you want to apply for this job?")) {
-                                    swal("Good job!", "You have successfully applied for the job!", "success");
-                                    // Get existing applied jobs from local storage or initialize an empty array
-                                        const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
-
-                                        // Add the new job to the array
-                                        appliedJobs.push(jobDetails);
-
-                                        // Store updated applied jobs in local storage
-                                        localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
-
-                                }   
-                            }
-
-                            // for deadline
-                            document.addEventListener("DOMContentLoaded", function() {
-
-                                // application deadline date (year, month (0-11), day) - applicants can apply UP TILL 2359 of deadline date
-                                const deadlineDate = new Date(2023, 9, 7, 23, 59);
-                                
-                                // current date
-                                const currentDate = new Date();
-
-                                if (currentDate <= deadlineDate) {
-                                    // before deadline - shows deadline date
-                                    document.getElementById("deadline").textContent = deadlineDate.toDateString();
-                                } 
-                                
-                                else 
-                                    {
-                                    // after deadline - shows applications closed
-                                    document.getElementById("deadline").innerHTML = `
-                                    <div class="d-flex">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-ban-fill mt-1 me-2" viewBox="0 0 16 16">
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM2.71 12.584c.218.252.454.488.706.707l9.875-9.875a7.034 7.034 0 0 0-.707-.707l-9.875 9.875Z"/>
-                                        </svg>
-                                        <p class="fw-bold text-danger">Applications Closed</p>
-                                    </div>
-                                    `;
-
-                                    // removes apply now button
-                                    document.getElementById("apply-btn").style.display = "none";
-                                }
-                        });
-
-                        </script>
                     </div>
+
                 </div>
-            </div>
+                        
+
+            </div>  
         </div>
     </div>
+
+
 
     <!-- Add Bootstrap JS and Popper.js CDN links (for Bootstrap modal, etc.) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>

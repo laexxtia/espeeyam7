@@ -109,3 +109,11 @@
     border-radius: 10px;
 
 }
+
+h2{
+    padding-left: 12px;
+}
+
+.form-control{
+    padding-left: 12px; 
+}

@@ -9,21 +9,26 @@ const storage = getStorage()
 const storageref = sRef(storage);
 const jobsRef = ref(database, 'jobs'); // Assuming 'jobs' is the path to your jobs data
 
+
+
 auth.onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
         console.log(user)
         var uid = user.uid;
         const user_ref = ref(database, 'Staff/' + uid)
+        sessionStorage.setItem("userID", uid);
 
         console.log("USER IS LOGGED IN")
         console.log("User UID: " + uid);
         let jobs; // Declare a variable to store the jobs data
         let userData
+        // console.log(userData)
 
         const jobsHeading = document.querySelector(".container-fluid h2");
         const jobsMainContainer = document.querySelector(".jobs-list-container")
         const jobSearch = document.querySelector(".form-control")
+        const welcome_msg = document.querySelector(".welcome-msg")
 
         let searchTerm = "";
 
@@ -94,6 +99,7 @@ auth.onAuthStateChanged(function (user) {
                     // console.log(userData.Skill)
                     // console.log(jobs.Skill)
                     // Update the job count in the heading
+                    // 
                     if (Object.keys(jobs).length == 1) {
                         jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`;
                     } else if (Object.keys(jobs).length == 0) {
@@ -104,9 +110,10 @@ auth.onAuthStateChanged(function (user) {
 
                     // Clear existing job cards before adding new ones
                     jobsContainer.innerHTML = "";
-
+                    welcome_msg.innerHTML = "Welcome, " + userData.Staff_FName
                     for (const jobId in jobs) {
                         const job = jobs[jobId];
+                        console.log(jobId)
                         console.log(searchTerm);
                         if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                             let jobCard = document.createElement("div");
@@ -114,10 +121,10 @@ auth.onAuthStateChanged(function (user) {
 
                             // ... Create job card content as before ...
 
-                            let image = document.createElement("img");
-                            image.src = job.image
-                            image.setAttribute("width", "30px")
-                            image.setAttribute("height", "30px")
+                            // let image = document.createElement("img");
+                            // image.src = job.image
+                            // image.setAttribute("width", "30px")
+                            // image.setAttribute("height", "30px")
 
 
                             let title = document.createElement("h3");
@@ -132,9 +139,9 @@ auth.onAuthStateChanged(function (user) {
                             let detailsbtn = document.createElement("a")
                             detailsbtn.setAttribute("class", "btn btn-primary")
                             detailsbtn.innerHTML = "More Details";
-                            detailsbtn.href = job.link;
+                            detailsbtn.href = job.link + "?=" + jobId
 
-                            jobCard.appendChild(image);
+                            // jobCard.appendChild(image);
                             jobCard.appendChild(title);
                             jobCard.appendChild(details);
 
@@ -146,6 +153,7 @@ auth.onAuthStateChanged(function (user) {
                             let skill_buttons = document.createElement("div")
                             console.log(job.Skills)
                             skill_buttons.setAttribute("class", "scrollable-div")
+
                             skill_row.append(skill_text)
                             for (const i in job.Skills) {
                                 let skills_needed = document.createElement("span");
