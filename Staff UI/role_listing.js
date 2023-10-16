@@ -165,6 +165,9 @@ async function main(){
             if (skills_matched_counter >= Object.keys(job.Skills).length){
                 jobSkillsMatchText.innerHTML = "You meet all the skill requirements for this job.";
             }
+            else if (skills_matched_counter == 1) {
+                jobSkillsMatchText.innerHTML =skills_matched_counter + " skill matches your profile. Stand out by adding other skills you have."
+            }
             else if(skills_matched_counter < Object.keys(job.Skills).length){
                 jobSkillsMatchText.innerHTML = skills_matched_counter + " skills match your profile. Stand out by adding other skills you have.";
             }
@@ -175,19 +178,37 @@ async function main(){
             jobSkillsMatch.appendChild(jobSkillsMatchText);
             jobContainer.append(jobSkillsMatch);
 
-
-
-
+            //apply now function
+            function applyNow() {
+                if (confirm("Are you sure you want to apply for this job?")) {
+                    swal("Good job!", "You have successfully applied for the job!", "success");
+                    // Get existing applied jobs from local storage or initialize an empty array
+                    const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
             
-            //salary 
-
-
-
-
-
+                    // Add the new job to the array
+                    appliedJobs.push(jobDetails);
             
-
-
+                    // Store updated applied jobs in local storage
+                    localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+            
+                }
+            }
+            //apply now button 
+            if (!document.querySelector("#apply-btn")) {
+                // Apply Now button
+                let applynowbtndiv = document.createElement("div");
+                applynowbtndiv.setAttribute("class", "apply-btn mt-3");
+                applynowbtndiv.setAttribute("id", "apply-btn");
+                let applynowbtn = document.createElement("a");
+                applynowbtn.setAttribute("class", "btn btn-outline-primary fs-4 px-3");
+                applynowbtn.setAttribute("href", "javascript:void(0);"); // Set the href attribute to "javascript:void(0);" to make it clickable
+                applynowbtn.addEventListener("click", function () {
+                    applyNow(); // Call your applyNow function on button click
+                });
+                applynowbtn.innerHTML = "Apply Now";
+                applynowbtndiv.appendChild(applynowbtn);
+                jobContainer.appendChild(applynowbtndiv);
+            }
 
         }
     } catch (error){
@@ -210,20 +231,7 @@ main()
 //     salary: "$60,000 - $80,000 per year"
 // };
 
-// function applyNow() {
-//     if (confirm("Are you sure you want to apply for this job?")) {
-//         swal("Good job!", "You have successfully applied for the job!", "success");
-//         // Get existing applied jobs from local storage or initialize an empty array
-//         const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
 
-//         // Add the new job to the array
-//         appliedJobs.push(jobDetails);
-
-//         // Store updated applied jobs in local storage
-//         localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
-
-//     }
-// }
 
 // for deadline
 // document.addEventListener("DOMContentLoaded", function () {
