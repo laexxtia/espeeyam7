@@ -88,16 +88,16 @@ function createApplicantList() {
             viewbtn.innerHTML = "View";
             viewbtn.href = applicant.profile;
 
-            // let applicantsbtn = document.createElement("a")
-            // applicantsbtn.setAttribute("class", "btn btn-primary applicantsbtn")
-            // applicantsbtn.innerHTML = "View Applicants";
-            // applicantsbtn.href = job.appLink;
+            let applicantsbtn = document.createElement("a")
+            applicantsbtn.setAttribute("class", "btn btn-primary applicantsbtn")
+            applicantsbtn.innerHTML = "View Applicants";
+            applicantsbtn.href = job.appLink;
 
             // jobCard.appendChild(image);
             appList.appendChild(nameSkills);
             // appList.appendChild(skills);
             appList.appendChild(viewbtn);
-            // jobCard.appendChild(applicantsbtn)
+            jobCard.appendChild(applicantsbtn)
 
             appContainer.append(appList)
             

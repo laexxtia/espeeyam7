@@ -83,7 +83,7 @@ if (createBtn != null) {
         department: department,
         Skills: filledSkills,
         salary: parseInt(salary),
-        deadline: new Date(`${deadline}`).getTime()
+        deadline: deadline
       }
 
       firebaseService.pushData(jobsRef, jobData)
@@ -96,6 +96,7 @@ if (createBtn != null) {
     } else {
       alert("Please fill all fields");
       // Your code to handle validation errors
+      console.log(deadline)
     }
   });
 }
