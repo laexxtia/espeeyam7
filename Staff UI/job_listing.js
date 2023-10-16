@@ -14,7 +14,7 @@ const jobsRef = ref(database, 'jobs'); // Assuming 'jobs' is the path to your jo
 auth.onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
-        console.log(user)
+        console.log(user.uid)
         var uid = user.uid;
         const user_ref = ref(database, 'Staff/' + uid)
         sessionStorage.setItem("userID", uid);
@@ -110,6 +110,7 @@ auth.onAuthStateChanged(function (user) {
 
                     // Clear existing job cards before adding new ones
                     jobsContainer.innerHTML = "";
+                    console.log(userData)
                     welcome_msg.innerHTML = "Welcome, " + userData.Staff_FName
                     for (const jobId in jobs) {
                         const job = jobs[jobId];

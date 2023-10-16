@@ -25,7 +25,6 @@ const jobRef = ref(database, 'jobs/' + search);
 const user_ref = ref(database, 'Staff/' + userID);
 const jobContainer = document.querySelector(".card-body")
 
-console.log(user_ref);
 // const user_ref = ref(database, "Staff/"+)
 let job;
 let userData;
@@ -177,29 +176,40 @@ async function main(){
             jobSkillsMatch.appendChild(jobSkillsMatchTitleDiv);
             jobSkillsMatch.appendChild(jobSkillsMatchText);
             jobContainer.append(jobSkillsMatch);
-
+            
             //apply now function
             function applyNow() {
                 if (confirm("Are you sure you want to apply for this job?")) {
-                    swal("Good job!", "You have successfully applied for the job!", "success");
-                    // Get existing applied jobs from local storage or initialize an empty array
-                    const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
-            
-                    // Add the new job to the array
-                    appliedJobs.push(jobDetails);
-            
-                    // Store updated applied jobs in local storage
-                    localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
-            
+                    const userAppliedJobsRef = ref(database, `Staff/${userID}/applied_jobs`); // Reference to the user's applied jobs array
+                    get(userAppliedJobsRef).then(snapshot => {
+                        // Check if the applied jobs array exists
+                        const appliedJobsArray = snapshot.exists() ? snapshot.val() : [];
+                        
+                        // Add the new job ID to the array
+                        appliedJobsArray.push(search);
+                        
+                        // Set the updated array back in the database
+                        set(userAppliedJobsRef, appliedJobsArray).then(() => {
+                            swal("Good job!", "You have successfully applied for the job!", "success");
+                        }).catch(error => {
+                            console.error("Error applying for the job:", error);
+                            swal("Error", "An error occurred while applying for the job.", "error");
+                        });
+                    }).catch(error => {
+                        console.error("Error fetching applied jobs data:", error);
+                        swal("Error", "An error occurred while applying for the job.", "error");
+                    });
                 }
-            }
+                
+            };
             //apply now button 
-            if (!document.querySelector("#apply-btn")) {
+            if (!document.querySelector("#apply-btn") || !(Object.values(userData.applied_jobs).includes(search))) {
                 // Apply Now button
+                console.log("creating button")
                 let applynowbtndiv = document.createElement("div");
                 applynowbtndiv.setAttribute("class", "apply-btn mt-3");
                 applynowbtndiv.setAttribute("id", "apply-btn");
-                let applynowbtn = document.createElement("a");
+                let applynowbtn = document.createElement("button");
                 applynowbtn.setAttribute("class", "btn btn-outline-primary fs-4 px-3");
                 applynowbtn.setAttribute("href", "javascript:void(0);"); // Set the href attribute to "javascript:void(0);" to make it clickable
                 applynowbtn.addEventListener("click", function () {
@@ -209,6 +219,18 @@ async function main(){
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             }
+            else{
+                console.log("creating button")
+                let applynowbtndiv = document.createElement("div");
+                applynowbtndiv.setAttribute("class", "apply-btn mt-3");
+                applynowbtndiv.setAttribute("id", "apply-btn");
+                let applynowbtn = document.createElement("button");
+                applynowbtn.setAttribute("class", "btn btn-secondary fs-4 px-3");
+                applynowbtn.setAttribute("disabled", ""); // Set the disabled attribute to make the button disabled
+                applynowbtn.innerHTML = "Apply Now";
+                applynowbtndiv.appendChild(applynowbtn);
+                jobContainer.appendChild(applynowbtndiv);
+            };
 
         }
     } catch (error){

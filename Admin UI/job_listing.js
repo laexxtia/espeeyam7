@@ -22,8 +22,12 @@ firebaseService.onAuthStateChanged(async (user) => {
     // User is signed in.
     console.log(user);
     const uid = user.uid;
-    console.log(user.uid)
+    console.log(user.uid);
     const user_ref = `Staff/${uid}`;
+    var currentURL = window.location.href;
+    var url = new URL(currentURL);
+    var search = url.search.slice(2);
+    const job_ref = `jobs/` + search;
     let jobs; // Declare a variable to store the jobs data
     let userData;
 
@@ -58,7 +62,7 @@ firebaseService.onAuthStateChanged(async (user) => {
 
     async function getJobsFromFirebase() {
       try {
-        jobs = await firebaseService.getDatabaseValue('jobs');
+        jobs = await firebaseService.getDatabaseValue(job_ref);
       } catch (error) {
         console.error("Error fetching jobs:", error);
         throw error;
@@ -88,6 +92,7 @@ async function main() {
   
         for (const jobId in jobs) {
           const job = jobs[jobId];
+          console.log(job)
           if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
             let jobCard = document.createElement("div");
             jobCard.setAttribute("class", "col-3 box job-card");
@@ -99,16 +104,23 @@ async function main() {
             let details = document.createElement("div");
             details.classList.add("details");
             details.innerText = job.details;
+
+            let btndiv = document.createElement("div");
+            btndiv.classList.add("btndiv");
   
             let detailsbtn = document.createElement("a");
             detailsbtn.setAttribute("class", "btn btn-primary");
             detailsbtn.innerHTML = "More Details";
-            detailsbtn.href = job.link;
+            detailsbtn.href = job.link + "?=" + jobId
+            
 
             let applicantbtn = document.createElement("a");
-            applicantbtn.setAttribute("class", "btn btn-primary my-1");
+            applicantbtn.setAttribute("class", "btn btn-outline-primary");
             applicantbtn.innerHTML = "View Applicants";
             applicantbtn.href = ""
+
+            btndiv.appendChild(detailsbtn);
+            btndiv.appendChild(applicantbtn);
   
             // jobCard.appendChild(image); // Append the image
             jobCard.appendChild(title);
@@ -116,8 +128,9 @@ async function main() {
   
             // jobCard.appendChild(skill_row); // Append the skill row
   
-            jobCard.appendChild(detailsbtn);
-            jobCard.appendChild(applicantbtn);
+            // jobCard.appendChild(detailsbtn);
+            // jobCard.appendChild(applicantbtn);
+            jobCard.appendChild(btndiv);
             jobsContainer.append(jobCard);
             matchingJobsCount++;
           }

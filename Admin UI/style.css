@@ -63,6 +63,7 @@
 .btn{
     margin-top: auto;
     position:relative;
+    
 }
 
 
@@ -116,4 +117,12 @@ h2{
 
 .form-control{
     padding-left: 12px; 
+}
+
+.btndiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 5px;
 }
