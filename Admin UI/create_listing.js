@@ -37,7 +37,7 @@ if (createBtn != null) {
     const jobTitle = document.getElementById('jobTitle').value;
     const details = document.getElementById('jobDescription').value;
     const responsibilities = document.getElementById('jobResponsibilities').value;
-    const qualifications = document.getElementById('jobQualifications')
+    // const qualifications = document.getElementById('jobQualifications')
 
     const department = document.getElementById('jobDept').value;
     const skill1 = document.getElementById('skill1').value;
@@ -45,7 +45,7 @@ if (createBtn != null) {
     const skill3 = document.getElementById('skill3').value;
     const skill4 = document.getElementById('skill4').value;
     const skill5 = document.getElementById('skill5').value;
-    const salary = document.getElementById('jobSalary').value;
+    // const salary = document.getElementById('jobSalary').value;
     const deadline = document.getElementById('deadline').value;
 
     const allValuesFilled = (
@@ -79,10 +79,10 @@ if (createBtn != null) {
         title: jobTitle,
         details: details,
         responsibilities: responsibilities,
-        qualifications: qualifications,
+        // qualifications: qualifications,
         department: department,
         Skills: filledSkills,
-        salary: parseInt(salary),
+        // salary: parseInt(salary),
         deadline: deadline
       }
 

@@ -104,6 +104,11 @@ async function main() {
             detailsbtn.setAttribute("class", "btn btn-primary");
             detailsbtn.innerHTML = "More Details";
             detailsbtn.href = job.link;
+
+            let applicantbtn = document.createElement("a");
+            applicantbtn.setAttribute("class", "btn btn-primary my-1");
+            applicantbtn.innerHTML = "View Applicants";
+            applicantbtn.href = ""
   
             // jobCard.appendChild(image); // Append the image
             jobCard.appendChild(title);
@@ -112,6 +117,7 @@ async function main() {
             // jobCard.appendChild(skill_row); // Append the skill row
   
             jobCard.appendChild(detailsbtn);
+            jobCard.appendChild(applicantbtn);
             jobsContainer.append(jobCard);
             matchingJobsCount++;
           }
