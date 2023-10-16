@@ -1,0 +1,72 @@
+
+.container{
+    margin: auto;
+    justify-content: center;
+}
+
+.welcome-msg{
+    font-family: "Rubik", sans-serif;
+    font-style: bold;
+    font-size: 25px;
+}
+
+.jobs-list-container{
+    font-family: "Rubik", sans-serif;
+}
+
+.row{
+    padding-top: 20px;
+    justify-content:space-around;
+
+}
+.jobs-list-container h2{
+    font-size: 30px;
+    border-left: 4px solid black;
+    padding-left: 20px;
+}
+
+
+.box{
+    padding: 12px;
+    box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2);
+    border-radius: 16px;
+    margin: 20px 10px;
+    position: relative;
+    transition: all 400ms ease;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.box:hover{
+    transform: scale(1.03);
+}
+
+.job-title{
+    font-size: 30px;
+    padding: 10px 0;
+    margin: 0;
+    position: relative;
+    word-wrap:break-word ;
+}
+
+.details{
+    margin-top: 6px; 
+    font-size: 18px;
+    color: #333;
+    line-height: 1.3;
+}
+
+.detailsbtn{
+    margin-top: 10px;
+}
+
+.applicantsbtn{
+    margin-top: 5px;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
