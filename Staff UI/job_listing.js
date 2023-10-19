@@ -39,12 +39,9 @@ firebaseService.onAuthStateChanged(async (user) => {
                     continue;
                 }
 
-                // console.log(jobId)
-                // console.log(searchTerm);
                 if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                     let jobCard = document.createElement("div");
                     jobCard.setAttribute("class", "col-3 box job-card")
-
 
                     let title = document.createElement("h3");
                     title.classList.add("job-title");
@@ -53,7 +50,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                     let details = document.createElement("div");
                     details.classList.add("details");
                     details.innerText = job.details;
-
 
                     let detailsbtn = document.createElement("a")
                     detailsbtn.setAttribute("class", "btn btn-primary")
@@ -209,16 +205,7 @@ firebaseService.onAuthStateChanged(async (user) => {
             hideAllJobCards(); // Hide all job cards
         
             for (const jobCard of jobsContainer.querySelectorAll(".job-card")) {
-                // console.log(jobCard.dataset.skills)
-                // const jobSkills = jobCard.dataset.skills.split(",").map(skill => skill.trim().toLowerCase());
-        
-                // if (jobSkills) {
-                //     const matchingSkills = selectedSkills.filter(skill => jobSkills.includes(skill));
-        
-                //     if (matchingSkills.length === selectedSkills.length) {
-                //         jobCard.style.display = "block";
-                //     }
-                // }
+
                 const skillsAttribute = jobCard.dataset.skills;
     
                 if (skillsAttribute) {
@@ -238,8 +225,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                 }
             }
         }
-        
-        
 
         // Function to dynamically generate skill checkboxes based on the available skills
         async function generateSkillCheckboxes() {
@@ -264,18 +249,11 @@ firebaseService.onAuthStateChanged(async (user) => {
             skillsFilter.addEventListener("change", () => {
                 filterJobCardsBySkills();
             });
-
-
         }
-        
-        
 
         // Call the function to generate skill checkboxes when the page loads
         // getSkillsFromDatabase()
         generateSkillCheckboxes();
-
-
-
 
         // To use the function and get the jobs data:
         async function main() {
@@ -286,13 +264,13 @@ firebaseService.onAuthStateChanged(async (user) => {
                     hideAllJobCards(); // Hide all job cards
 
                     // Update the job count in the heading
-                    if (Object.keys(jobs).length == 1) {
-                        jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`;
-                    } else if (Object.keys(jobs).length == 0) {
-                        jobsHeading.innerHTML = `No Jobs`;
-                    } else {
-                        jobsHeading.innerHTML = `${Object.keys(jobs).length} Jobs`;
-                    }
+                    // if (Object.keys(jobs).length == 1) {
+                    //     jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`;
+                    // } else if (Object.keys(jobs).length == 0) {
+                    //     jobsHeading.innerHTML = `No Jobs`;
+                    // } else {
+                    //     jobsHeading.innerHTML = `${Object.keys(jobs).length} Jobs`;
+                    // }
 
                     // Clear existing job cards before adding new ones
                     jobsContainer.innerHTML = "";
@@ -300,6 +278,15 @@ firebaseService.onAuthStateChanged(async (user) => {
                     welcome_msg.innerHTML = "Welcome, " + userData.Staff_FName;
 
                     createJobCards()
+
+                    const jobCards = document.querySelectorAll(".job-card");
+                    const jobCardsArray = Array.from(jobCards);
+
+                    const displayedJobCards = jobCardsArray.filter(card => getComputedStyle(card).display !== "none");
+                    const numberOfDisplayedJobCards = displayedJobCards.length;
+                    console.log("Number of displayed job cards: " + numberOfDisplayedJobCards);
+                    jobsHeading.innerHTML = `${numberOfDisplayedJobCards} Jobs`;
+
                 } else {
                     // Handle the case when no jobs data is available
                 }
@@ -316,6 +303,3 @@ firebaseService.onAuthStateChanged(async (user) => {
         window.location.href = '/Login UI/login.html';
     }
 });
-
-
-
