@@ -80,7 +80,7 @@ async function main(){
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
-            console.log(jobDescription);
+            console.log(deadline)
 
             //responsibilities
             let jobResponsibilties = document.createElement("div");
@@ -230,26 +230,35 @@ async function main(){
                 jobContainer.appendChild(applynowbtndiv);
             };
 
+            console.log(job.deadline);
+
             // date responsiveness
-            currentDate = new Date();
+            function getDeadline() {
+                currentDate = new Date();
+                applyBtn = document.getElementById("apply-btn");
 
-            deadlineDate = document.getElementById("deadline-date");
-            applyBtn = document.getElementById("apply-btn");
+                // converting job deadline into a datetime object with time
+                deadline_date = job.deadline;
+                time_text = "23:59";
+                dateTimeText = deadline_date + " " + timeText;
+                deadlineObj = new Date(dateTimeText); 
 
-            // Compare the current date with the deadline date
-            if (currentDate >= deadline_date) {
-                // Application deadline has passed
-                deadlineDate.innerHTML = `
-                <div class="d-flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-ban-fill mt-1 me-2" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM2.71 12.584c.218.252.454.488.706.707l9.875-9.875a7.034 7.034 0 0 0-.707-.707l-9.875 9.875Z"/>
-                    </svg>
-                    <p class="fw-bold text-danger">Applications Closed</p>
-                </div>
-                `;
-                applyBtn.style.display = "none";
-            }
+                inner_html = ''; // innerhtml of deadline date to be returned 
+            
+                if (currentDate > deadlineObj) {
+                    // Application deadline has passed
+                    inner_html = "Applications Closed";
+                    applyBtn.style.display = "none";
+                }
+                else {
+                    inner_html = deadline_date;
+                }
 
+                return inner_html;
+            };
+
+            document.getElementById('deadline-date').textContent = getDeadline();
+            
         }
     } catch (error){
 
