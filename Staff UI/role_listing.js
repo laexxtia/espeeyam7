@@ -76,7 +76,7 @@ async function main(){
             deadline.innerHTML = "Application Deadline:"
             let deadline_date = document.createElement("p");
             deadline_date.setAttribute("class", "fw-bold text-danger");
-            deadline_date.setAttribute("id", "deadline");
+            deadline_date.setAttribute("id", "deadline-date");
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
@@ -208,6 +208,7 @@ async function main(){
                 applynowbtndiv.setAttribute("id", "apply-btn");
                 let applynowbtn = document.createElement("button");
                 applynowbtn.setAttribute("class", "btn btn-outline-primary fs-4 px-3");
+                applynowbtn.setAttribute("id", "apply-btn");
                 applynowbtn.setAttribute("href", "javascript:void(0);"); // Set the href attribute to "javascript:void(0);" to make it clickable
                 applynowbtn.addEventListener("click", function () {
                     applyNow(); // Call your applyNow function on button click
@@ -228,6 +229,26 @@ async function main(){
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             };
+
+            // date responsiveness
+            currentDate = new Date();
+
+            deadlineDate = document.getElementById("deadline-date");
+            applyBtn = document.getElementById("apply-btn");
+
+            // Compare the current date with the deadline date
+            if (currentDate >= deadline_date) {
+                // Application deadline has passed
+                deadlineDate.innerHTML = `
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-ban-fill mt-1 me-2" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM2.71 12.584c.218.252.454.488.706.707l9.875-9.875a7.034 7.034 0 0 0-.707-.707l-9.875 9.875Z"/>
+                    </svg>
+                    <p class="fw-bold text-danger">Applications Closed</p>
+                </div>
+                `;
+                applyBtn.style.display = "none";
+            }
 
         }
     } catch (error){
