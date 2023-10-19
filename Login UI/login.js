@@ -21,7 +21,7 @@ if (login != null) {
           if (user) {
             const userUID = user.uid;
             console.log(userUID)
-            const user_ref = 'Staff/' + userUID;
+            const user_ref = firebaseService.getDatabaseRef('Staff/' + userUID);
             const userData = await firebaseService.getDatabaseValue(user_ref);
             if (userData) {
               const user_accesss = userData.Access_Rights;
