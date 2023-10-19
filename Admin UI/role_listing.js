@@ -72,15 +72,34 @@ async function main(){
             jobTitle.innerHTML = job.title;
             console.log(jobTitle);
             
+            // Edit button
+            let editButtonDiv = document.createElement("div");
+            editButtonDiv.style.display = "flex";
+            editButtonDiv.style.justifyContent = "flex-end";
+
+            let editButton = document.createElement("button");
+            editButton.setAttribute("class", "btn btn-primary");
+            editButton.innerHTML = "Edit";
+            editButtonDiv.appendChild(editButton);
+            // editButton.addEventListener("click", editJob);
+            
             //horizontal line 
+            jobContainer.appendChild(editButtonDiv); 
+
             jobContainer.appendChild(jobTitle);
+            
+
             const horizontal_line = document.createElement("hr");
+            
             jobContainer.appendChild(horizontal_line);
 
             //Job Description 
             let jobDescription = document.createElement("div");
+            
             let jobDescriptionTitleDiv = document.createElement("div");
+            
             jobDescription.setAttribute("class", "mt-5 mb-5");
+
             jobDescriptionTitleDiv.setAttribute("class", "d-flex mb-1")
             let jobDescriptionTitle = document.createElement("h2")
             jobDescriptionTitle.innerHTML = "About the Job"
