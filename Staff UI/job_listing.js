@@ -30,6 +30,15 @@ firebaseService.onAuthStateChanged(async (user) => {
 
             for (const jobId in jobs) {
                 const job = jobs[jobId];
+
+                // not creating job cards for jobs that are past application deadline
+                let currentDate = new Date();
+                let job_deadline = new Date(job.deadline + " 23:59"); 
+
+                if (currentDate > job_deadline) {
+                    continue;
+                }
+
                 // console.log(jobId)
                 // console.log(searchTerm);
                 if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
