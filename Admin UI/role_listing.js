@@ -161,6 +161,8 @@ async function main(){
             let jobSkillsTitle = document.createElement("h2"); 
             jobSkillsTitle.innerHTML = "Skills Required";
             console.log(job.Skills);
+
+
             let jobSkillsList = document.createElement("ul");
             for (const i in job.Skills){
                 let jobSkillsListItem = document.createElement("li");
@@ -168,6 +170,7 @@ async function main(){
                 console.log(job.Skills[i]);
                 jobSkillsList.append(jobSkillsListItem);
             }
+
 
             jobSkillsTitleDiv.appendChild(jobSkillsTitle);
             jobSkills.appendChild(jobSkillsTitleDiv);

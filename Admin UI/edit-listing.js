@@ -21,12 +21,21 @@ console.log(jobDescription)
 document.getElementById('jobDescription').value = jobDescription;
 
 
-const jobSkills = jobContainer.querySelector('.skills').textContent;
-console.log(jobSkills)
+const jobSkills = jobContainer.querySelector('.skills');
+const jobSkillsItems = jobSkills.querySelectorAll('li');
 
+for (let i = 0; i < jobSkillsItems.length; i++) {
+    const skillInput = document.getElementById(`skill${i + 1}`);
+    skillInput.value = jobSkillsItems[i].textContent;
+  }
 
+// Deadline date ( can uncomment later)
+// const jobDeadline = jobContainer.querySelector('.deadline').textContent;
+// console.log(jobDeadline)
 
-const jobDeadline = jobContainer.querySelector('.deadline').textContent;
-console.log(jobDeadline)
+// const deadlineDate = new Date(jobDeadline);
+// const deadlineDateString = deadlineDate.toISOString().substring(0, 10);
+// // console.log(deadlineDateString)
 
-document.getElementById('jobDeadline').value = jobDeadline;
+// document.getElementById('deadline').value = deadlineDateString;
+
