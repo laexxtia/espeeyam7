@@ -52,7 +52,6 @@ if (createBtn != null) {
       jobTitle !== "" &&
       details !== "" &&
       department !== "" &&
-      salary !== "" &&
       deadline !== ""
     );
 

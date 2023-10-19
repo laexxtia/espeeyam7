@@ -192,7 +192,16 @@ async function main(){
                         
                         // Set the updated array back in the database
                         set(userAppliedJobsRef, appliedJobsArray).then(() => {
-                            swal("Good job!", "You have successfully applied for the job!", "success");
+                            swal({
+                                title: "Good job!", 
+                                text: "You have successfully applied for the job!",
+                                timer: 2000,
+                                showConfirmButton: false,
+                                
+                            })
+                            setTimeout(window.location.reload.bind(window.location),1000)
+                            
+                            ;
                         }).catch(error => {
                             console.error("Error applying for the job:", error);
                             swal("Error", "An error occurred while applying for the job.", "error");
@@ -239,7 +248,7 @@ async function main(){
                 let applynowbtn = document.createElement("button");
                 applynowbtn.setAttribute("class", "btn btn-secondary fs-4 px-3");
                 applynowbtn.setAttribute("disabled", ""); // Set the disabled attribute to make the button disabled
-                applynowbtn.innerHTML = "Apply Now";
+                applynowbtn.innerHTML = "Applications have closed";
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             };

@@ -59,17 +59,21 @@ async function main(){
                 console.log(userData);
                 const applicantCardHTML = `
                 <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">${userData.Staff_FName} ${userData.Staff_LName}</h5>
-                        <p class="card-text">Email: ${userData.Email}</p>
-                        <p class="card-text">Country: ${userData.Country}</p>
-                        <p class="card-text">Department: ${userData.Dept}</p>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">${userData.Staff_FName} ${userData.Staff_LName}</h5>
+                            <p class="card-text">Email: ${userData.Email}</p>
+                            <p class="card-text">Country: ${userData.Country}</p>
+                            <p class="card-text">Department: ${userData.Dept}</p>
+                            <div class = skill_btns>
+
+                            </div>
                     </div>
                 </div>
             </div>
             `
             applicantContainer.innerHTML += applicantCardHTML;
+            
             }
             
         }
