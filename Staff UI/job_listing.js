@@ -49,7 +49,7 @@ firebaseService.onAuthStateChanged(async (user) => {
                     let detailsbtn = document.createElement("a")
                     detailsbtn.setAttribute("class", "btn btn-primary")
                     detailsbtn.innerHTML = "More Details";
-                    detailsbtn.href = job.link + "?=" + jobId
+                    detailsbtn.href = "role_listing.html?=" + jobId
 
                     // jobCard.appendChild(image);
                     jobCard.appendChild(title);
