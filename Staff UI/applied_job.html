@@ -38,33 +38,6 @@
             </div>
 
             
-        <!-- Include JavaScript to retrieve and display applied job cards -->
-            <script>
-            // Retrieve applied jobs from local storage
-            const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
-
-            // Get the element where applied job cards will be added
-                const appliedJobCardsContainer = document.getElementById('appliedJobCards');
-
-                // Create and append job cards for each applied job
-                appliedJobs.forEach(job => {
-                    const jobCardHTML = `
-                        <div class="col-md-6">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">${job.title}</h5>
-                                    <p class="card-text">${job.description}</p>
-                                    <p class="card-text">Skills: ${job.skills}</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    appliedJobCardsContainer.innerHTML += jobCardHTML;
-                });
-        </script>
-    <!-- End of Applied Jobs Section -->
-
-
     <!--  hardcoded stuff- for referece only
         
         <div class="row">

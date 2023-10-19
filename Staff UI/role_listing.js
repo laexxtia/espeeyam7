@@ -181,12 +181,14 @@ async function main(){
             function applyNow() {
                 if (confirm("Are you sure you want to apply for this job?")) {
                     const userAppliedJobsRef = ref(database, `Staff/${userID}/applied_jobs`); // Reference to the user's applied jobs array
+                    const jobApplicantRef = ref(database, `jobs/${search}/applicants`); //Reference to the applicant array for specific job 
                     get(userAppliedJobsRef).then(snapshot => {
                         // Check if the applied jobs array exists
                         const appliedJobsArray = snapshot.exists() ? snapshot.val() : [];
                         
                         // Add the new job ID to the array
                         appliedJobsArray.push(search);
+
                         
                         // Set the updated array back in the database
                         set(userAppliedJobsRef, appliedJobsArray).then(() => {
@@ -195,15 +197,25 @@ async function main(){
                             console.error("Error applying for the job:", error);
                             swal("Error", "An error occurred while applying for the job.", "error");
                         });
-                    }).catch(error => {
+                    })
+                    get(jobApplicantRef).then(snapshot =>{
+                        //Check if applicant array exists
+                        const applicantArray = snapshot.exists()? snapshot.val() : [];
+                        // Add user ID  into applicant array
+                        applicantArray.push(userID); 
+                        console.log(applicantArray)
+                        //Set updated array back in the database; 
+                        set(jobApplicantRef,applicantArray)
+                    })
+                    .catch(error => {
                         console.error("Error fetching applied jobs data:", error);
                         swal("Error", "An error occurred while applying for the job.", "error");
                     });
                 }
-                
             };
             //apply now button 
-            if (!document.querySelector("#apply-btn") || !(Object.values(userData.applied_jobs).includes(search))) {
+            console.log(userData.applied_jobs)
+            if (typeof userData.applied_jobs === 'undefined' || !Object.values(userData.applied_jobs).includes(search)) { 
                 // Apply Now button
                 console.log("creating button")
                 let applynowbtndiv = document.createElement("div");
@@ -219,7 +231,7 @@ async function main(){
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             }
-            else{
+            else if(Object.values(userData.applied_jobs).includes(search)){
                 console.log("creating button")
                 let applynowbtndiv = document.createElement("div");
                 applynowbtndiv.setAttribute("class", "apply-btn mt-3");

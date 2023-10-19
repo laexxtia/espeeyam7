@@ -117,7 +117,7 @@ async function main() {
             let applicantbtn = document.createElement("a");
             applicantbtn.setAttribute("class", "btn btn-outline-primary");
             applicantbtn.innerHTML = "View Applicants";
-            applicantbtn.href = ""
+            applicantbtn.href = "applicant_list.html" + "?=" + jobId;
 
             btndiv.appendChild(detailsbtn);
             btndiv.appendChild(applicantbtn);
