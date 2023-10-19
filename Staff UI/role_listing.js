@@ -77,10 +77,10 @@ async function main(){
             let deadline_date = document.createElement("p");
             deadline_date.setAttribute("class", "fw-bold text-danger");
             deadline_date.setAttribute("id", "deadline-date");
+            deadline_date.textContent = 'not working';
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
-            console.log(deadline)
 
             //responsibilities
             let jobResponsibilties = document.createElement("div");
@@ -257,7 +257,7 @@ async function main(){
                 return inner_html;
             };
 
-            document.getElementById('deadline-date').textContent = getDeadline();
+            deadline_date.textContent = getDeadline();
             
         }
     } catch (error){
