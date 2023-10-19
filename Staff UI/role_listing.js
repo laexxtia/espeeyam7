@@ -146,18 +146,18 @@ async function main(){
 
             console.log(job.Skills.length);
             const skillmatchpercentage = (skills_matched_counter)/(job.Skills.length);
-            console.log(skillmatchpercentage);
+            console.log(Math.round(skillmatchpercentage*100));
 
             if (skillmatchpercentage < 0.5){
-                jobskillspercentage.innerHTML = skillmatchpercentage*100 + "%"
+                jobskillspercentage.innerHTML = Math.round(skillmatchpercentage*100) + "%"
                 jobskillspercentage.style.color = "#fc215e";
             }
             else if (skillmatchpercentage === 0.5) {
-                jobskillspercentage.innerHTML = skillmatchpercentage*100 + "%"
+                jobskillspercentage.innerHTML = Math.round(skillmatchpercentage*100) + "%"
                 jobskillspercentage.style.color = "#ffbe00";
             }
             else{
-                jobskillspercentage.innerHTML = skillmatchpercentage*100 + "%"
+                jobskillspercentage.innerHTML =Math.round(skillmatchpercentage*100) + "%"
                 jobskillspercentage.style.color = "#00db96";
             }
             
