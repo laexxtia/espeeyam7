@@ -122,7 +122,7 @@ async function main(){
             jobSkillsMatch.setAttribute("class", "mb-5");
             jobSkillsMatchTitleDiv.setAttribute("class", "d-flex mb-2");
             let jobSkillsMatchTitle=document.createElement("h2");
-            jobSkillsMatchTitle.innerHTML= "How You Match";
+            jobSkillsMatchTitle.innerHTML= "Skills Match Percentage";
             let skills_matched_counter = 0;
             let skills_missing = [];
             for (const i in job.Skills) {
@@ -141,7 +141,25 @@ async function main(){
             console.log(skills_missing);
             console.log(skills_matched_counter);
             console.log(job.Skills);
+            let jobskillspercentage = document.createElement("h2");
             let jobSkillsMatchText = document.createElement("p");
+
+            console.log(job.Skills.length);
+            const skillmatchpercentage = (skills_matched_counter)/(job.Skills.length);
+            console.log(skillmatchpercentage);
+
+            if (skillmatchpercentage < 0.5){
+                jobskillspercentage.innerHTML = skillmatchpercentage*100 + "%"
+                jobskillspercentage.style.color = "#fc215e";
+            }
+            else if (skillmatchpercentage === 0.5) {
+                jobskillspercentage.innerHTML = skillmatchpercentage*100 + "%"
+                jobskillspercentage.style.color = "#ffbe00";
+            }
+            else{
+                jobskillspercentage.innerHTML = skillmatchpercentage*100 + "%"
+                jobskillspercentage.style.color = "#00db96";
+            }
             
             if (skills_matched_counter >= Object.keys(job.Skills).length){
                 jobSkillsMatchText.innerHTML = "You meet all the skill requirements for this job.";
@@ -156,6 +174,7 @@ async function main(){
 
             jobSkillsMatchTitleDiv.appendChild(jobSkillsMatchTitle);
             jobSkillsMatch.appendChild(jobSkillsMatchTitleDiv);
+            jobSkillsMatch.appendChild(jobskillspercentage);
             jobSkillsMatch.appendChild(jobSkillsMatchText);
             jobContainer.append(jobSkillsMatch);
             
