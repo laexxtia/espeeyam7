@@ -39,13 +39,15 @@ async function getJobFromFirebase() {
     }
 }
 
+let job_deadline = ''
+
 async function main(){
     try{
         await getJobFromFirebase();
         await getUserDataFromFirebase();
-        if(job && userData){
-            // console.log(job);
 
+        if(job && userData){
+            
             // Job Title
             let jobTitle = document.createElement("h1");
             jobTitle.setAttribute("class", "role-title mb-3");
@@ -71,13 +73,16 @@ async function main(){
             jobDescription.appendChild(jobDescriptionText);
 
             //deadline
+            job_deadline = job.deadline;
+            console.log(job_deadline);
+
             let deadline = document.createElement("p")
             deadline.setAttribute("class", "fw-bold");
             deadline.innerHTML = "Application Deadline:"
             let deadline_date = document.createElement("p");
             deadline_date.setAttribute("class", "fw-bold text-danger");
             deadline_date.setAttribute("id", "deadline-date");
-            deadline_date.textContent = 'not working';
+            deadline_date.innerHTML = job_deadline;
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
@@ -93,7 +98,6 @@ async function main(){
             jobResponsibilties.appendChild(jobResponsibilitiesTitleDiv);
             jobContainer.appendChild(jobResponsibilties);
             
-
             // Skills Required
             let jobSkills = document.createElement("div"); 
             let jobSkillsTitleDiv = document.createElement("div");
@@ -171,7 +175,6 @@ async function main(){
                 jobSkillsMatchText.innerHTML = skills_matched_counter + " skills match your profile. Stand out by adding other skills you have.";
             }
 
-
             jobSkillsMatchTitleDiv.appendChild(jobSkillsMatchTitle);
             jobSkillsMatch.appendChild(jobSkillsMatchTitleDiv);
             jobSkillsMatch.appendChild(jobskillspercentage);
@@ -216,7 +219,6 @@ async function main(){
                 
             }
             
-            
             //apply now button 
             console.log(userData.applied_jobs)
             if (typeof userData.applied_jobs === 'undefined' || !Object.values(userData.applied_jobs).includes(search)) { 
@@ -249,35 +251,27 @@ async function main(){
                 jobContainer.appendChild(applynowbtndiv);
             };
 
-            console.log(job.deadline);
-
             // date responsiveness
             function getDeadline() {
-                currentDate = new Date();
-                applyBtn = document.getElementById("apply-btn");
+                let currentDate = new Date();
+                let deadline_date = document.getElementById('deadline-date');
+                let applyBtn = document.getElementById("apply-btn");
 
                 // converting job deadline into a datetime object with time
-                deadline_date = job.deadline;
-                time_text = "23:59";
-                dateTimeText = deadline_date + " " + timeText;
-                deadlineObj = new Date(dateTimeText); 
+                let time_text = "23:59";
+                let dateTimeText = job.deadline + " " + time_text;
+                let deadlineObj = new Date(dateTimeText); 
 
-                inner_html = ''; // innerhtml of deadline date to be returned 
-            
                 if (currentDate > deadlineObj) {
                     // Application deadline has passed
-                    inner_html = "Applications Closed";
+                    deadline_date.innerHTML = "Applications Closed";
                     applyBtn.style.display = "none";
                 }
-                else {
-                    inner_html = deadline_date;
-                }
 
-                return inner_html;
             };
 
-            deadline_date.textContent = getDeadline();
-            
+            getDeadline();
+
         }
     } catch (error){
 
@@ -285,4 +279,4 @@ async function main(){
 
 }
 
-main()
+main();
