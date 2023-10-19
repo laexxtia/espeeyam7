@@ -188,8 +188,10 @@ firebaseService.onAuthStateChanged(async (user) => {
         }
 
         function filterJobCardsBySkills() {
-            const selectedSkills = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
-                .map(skillCheckbox => skillCheckbox.value.toLowerCase());
+            const selectedSkills = Array.from(document.querySelectorAll(".skill-button.active"))
+                .map(skillButton => skillButton.innerText.toLowerCase());
+
+            console.log(selectedSkills)
         
             // If no skills are selected, show all job cards
             if (selectedSkills.length === 0) {
@@ -237,25 +239,34 @@ firebaseService.onAuthStateChanged(async (user) => {
             const allSkills = await getSkillsFromDatabase();
             const skillsFilter = document.querySelector(".skills-filter");
 
-            // Clear any existing checkboxes
-            skillsFilter.innerHTML = "<h3>Filter by Skills:</h3>";
-
-            // Generate checkboxes for each skill
             allSkills.forEach(skill => {
-                const checkboxLabel = document.createElement("label");
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.value = skill;
-                checkboxLabel.appendChild(checkbox);
-                checkboxLabel.appendChild(document.createTextNode(skill));
-                skillsFilter.appendChild(checkboxLabel);
+                const skillElement = document.createElement("button");
+                skillElement.classList.add("skill-button", "rounded-pill"); 
+                skillElement.innerText = skill;
+
+                // Add an event listener to handle skill selection
+                skillElement.addEventListener("click", () => {
+                    console.log(skillElement.innerText)
+                    skillElement.classList.toggle("active");
+                    filterJobCardsBySkills();
+                });
+
+                skillsFilter.appendChild(skillElement);
             });
 
-            // Add an event listener for skill selection
-            skillsFilter.addEventListener("change", () => {
+            const clearAllLink = document.createElement("a");
+            clearAllLink.href = "#";
+            clearAllLink.id = "clear-all-link";
+            clearAllLink.innerText = "Clear All";
+            skillsFilter.appendChild(clearAllLink);
+            
+            clearAllLink.addEventListener("click", () => {
+                const skillButtons = document.querySelectorAll(".skill-button");
+                skillButtons.forEach(button => {
+                    button.classList.remove("active");
+                });
                 filterJobCardsBySkills();
             });
-
 
         }
         
