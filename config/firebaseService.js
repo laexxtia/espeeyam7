@@ -40,8 +40,8 @@ class FirebaseService {
     }
   
     async getDatabaseValue(refPath) {
-      const databaseRef = ref(this.database, refPath);
-      const snapshot = await get(databaseRef);
+
+      const snapshot = await get(refPath);
       return snapshot.val();
     }
   
@@ -57,6 +57,21 @@ class FirebaseService {
 
     async fetchSkillsFromFirebase() {
         const skillsRef = this.getDatabaseRef('Skills');
+        try {
+          const snapshot = await get(skillsRef);
+          if (snapshot.exists()) {
+            const skillsData = snapshot.val();
+            return Object.values(skillsData);
+          } else {
+            return null;
+          }
+        } catch (error) {
+          throw error;
+        }
+      }
+      
+      async fetchJobsFromFirebase() {
+        const skillsRef = this.getDatabaseRef('jobs');
         try {
           const snapshot = await get(skillsRef);
           if (snapshot.exists()) {

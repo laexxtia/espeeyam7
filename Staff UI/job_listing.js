@@ -1,34 +1,28 @@
-import app from '../config/newconfig.js';
-import { getDatabase, set, ref, update, get, child, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+import app from "../config/newconfig.js";
+import FirebaseService from '../config/firebaseService.js'; // Import the FirebaseService class
 
-const database = getDatabase(app);
-const auth = getAuth();
-const storage = getStorage()
-const storageref = sRef(storage);
-const jobsRef = ref(database, 'jobs'); // Assuming 'jobs' is the path to your jobs data
+// Initialize FirebaseService with your Firebase app
+const firebaseService = new FirebaseService(app);
 
-
-
-auth.onAuthStateChanged(function (user) {
+firebaseService.onAuthStateChanged(async (user) => {
     if (user) {
         // User is signed in.
-        console.log(user.uid)
         var uid = user.uid;
-        const user_ref = ref(database, 'Staff/' + uid)
-        sessionStorage.setItem("userID", uid);
 
-        console.log("USER IS LOGGED IN")
-        console.log("User UID: " + uid);
+        console.log("USER IS LOGGED IN");
+        // console.log("User UID: " + uid);
+
+        sessionStorage.setItem("userID", uid);
+        const user_ref = firebaseService.getDatabaseRef('Staff/' + uid);
+
         let jobs; // Declare a variable to store the jobs data
-        let userData
+        let userData;
         // console.log(userData)
 
         const jobsHeading = document.querySelector(".container-fluid h2");
-        const jobsMainContainer = document.querySelector(".jobs-list-container")
-        const jobSearch = document.querySelector(".form-control")
-        const welcome_msg = document.querySelector(".welcome-msg")
+        const jobsMainContainer = document.querySelector(".jobs-list-container");
+        const jobSearch = document.querySelector(".form-control");
+        const welcome_msg = document.querySelector(".welcome-msg");
 
         let searchTerm = "";
 
@@ -57,9 +51,10 @@ auth.onAuthStateChanged(function (user) {
 
         async function getJobsFromFirebase() {
             try {
-                const snapshot = await get(jobsRef);
-                if (snapshot.exists()) {
-                    jobs = snapshot.val(); // Assign the retrieved data to the 'jobs' variable
+                const jobsRef = firebaseService.getDatabaseRef('jobs');
+                const snapshot = await firebaseService.getDatabaseValue(jobsRef);
+                if (snapshot) {
+                    jobs = snapshot; // Assign the retrieved data to the 'jobs' variable
                 } else {
                     // console.log("No jobs data available");
                     jobs = null; // Set 'jobs' to null or another appropriate value when no data exists
@@ -72,9 +67,9 @@ auth.onAuthStateChanged(function (user) {
 
         async function getUserDataFromFirebase() {
             try {
-                const snapshot = await get(user_ref); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
-                if (snapshot.exists()) {
-                    userData = snapshot.val(); // Assign the retrieved data to the 'userData' variable
+                const snapshot = await firebaseService.getDatabaseValue(user_ref); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
+                if (snapshot) {
+                    userData = snapshot; // Assign the retrieved data to the 'userData' variable
                 } else {
                     userData = null; // Set 'userData' to null or another appropriate value when no data exists
                 }
@@ -83,11 +78,6 @@ auth.onAuthStateChanged(function (user) {
                 throw error;
             }
         }
-        
-
-
-
-
 
         // To use the function and get the jobs data:
         async function main() {
@@ -96,10 +86,8 @@ auth.onAuthStateChanged(function (user) {
                 await getUserDataFromFirebase();
                 if (jobs && userData) {
                     hideAllJobCards(); // Hide all job cards
-                    // console.log(userData.Skill)
-                    // console.log(jobs.Skill)
+
                     // Update the job count in the heading
-                    // 
                     if (Object.keys(jobs).length == 1) {
                         jobsHeading.innerHTML = `${Object.keys(jobs).length} Job`;
                     } else if (Object.keys(jobs).length == 0) {
@@ -110,22 +98,16 @@ auth.onAuthStateChanged(function (user) {
 
                     // Clear existing job cards before adding new ones
                     jobsContainer.innerHTML = "";
-                    console.log(userData)
-                    welcome_msg.innerHTML = "Welcome, " + userData.Staff_FName
+
+                    welcome_msg.innerHTML = "Welcome, " + userData.Staff_FName;
+
                     for (const jobId in jobs) {
                         const job = jobs[jobId];
-                        console.log(jobId)
-                        console.log(searchTerm);
+                        // console.log(jobId)
+                        // console.log(searchTerm);
                         if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                             let jobCard = document.createElement("div");
                             jobCard.setAttribute("class", "col-3 box job-card")
-
-                            // ... Create job card content as before ...
-
-                            // let image = document.createElement("img");
-                            // image.src = job.image
-                            // image.setAttribute("width", "30px")
-                            // image.setAttribute("height", "30px")
 
 
                             let title = document.createElement("h3");
@@ -152,7 +134,7 @@ auth.onAuthStateChanged(function (user) {
                             skill_text.setAttribute("class", "skilltext")
                             skill_text.innerHTML = "Skills Needed:"
                             let skill_buttons = document.createElement("div")
-                            console.log(job.Skills)
+                            // console.log(job.Skills)
                             skill_buttons.setAttribute("class", "scrollable-div")
 
                             skill_row.append(skill_text)
@@ -184,8 +166,7 @@ auth.onAuthStateChanged(function (user) {
 
                     // Append the matching job cards to the jobsMainContainer
                     jobsMainContainer.appendChild(jobsContainer);
-                }
-                else {
+                } else {
                     // Handle the case when no jobs data is available
                 }
             } catch (error) {
@@ -195,13 +176,12 @@ auth.onAuthStateChanged(function (user) {
 
         // Call the main function initially
         main();
-
-        // You can now use 'uid' in your application as needed.
     } else {
         // No user is signed in. Handle this case if necessary.
         console.log("No user is signed in.");
-        window.location.href = '/Login UI/login.html'
+        window.location.href = '/Login UI/login.html';
     }
 });
+
 
 
