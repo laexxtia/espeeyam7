@@ -118,17 +118,45 @@ if (saveBtn != null) {
         deadline: deadline
     }
 
-    firebaseService.pushData(jobsRef, jobData)
+    
+    const jobId = '-NgXnPuSQAe3jscWi_-h'
+
+    const jobRef = firebaseService.getDatabaseRef(`jobs/${jobId}`);
+    console.log(jobRef)
+
+
+    firebaseService.updateData(jobRef, jobData)
+
         .then(() => {
         console.log("Data has been successfully updated!");
         })
         .catch(error => {
         console.error("Error updating data:", error);
         });
-    } else {
+
+
+    // firebaseService.pushData(jobRef, jobData)
+
+    //     .then(() => {
+    //     console.log("Data has been successfully updated!");
+    //     })
+    //     .catch(error => {
+    //     console.error("Error updating data:", error);
+    //     });
+
+    // jobRef.update(jobData)
+    //   .then(() => {
+    //     console.log("Data has been successfully updated!");
+    //   })
+    //   .catch(error => {
+    //     console.error("Error updating data:", error);
+    //   });
+    } 
+    
+    
+    else {
     alert("Please fill all fields");
-    // Your code to handle validation errors
-    console.log(deadline)
+
     }
 });
 }

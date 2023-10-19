@@ -10,7 +10,8 @@ class FirebaseService {
       this.storage = getStorage();
       this.currentUser = null;
     }
-  
+
+
     async signInWithEmailAndPassword(email, password) {
       try {
         const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
@@ -92,6 +93,15 @@ class FirebaseService {
       pushData(ref, data) {
         return push(ref, data);
       }
+
+      updateData(ref, data) {
+        return update(ref, data);
+      
+      }
+      
+
+
+
   }
   
   
