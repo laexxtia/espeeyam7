@@ -13,13 +13,20 @@ console.log(jobContainer)
 const jobTitle = jobContainer.querySelector('.role-title').textContent;
 console.log(jobTitle)
 
+document.getElementById('jobTitle').value = jobTitle;
+
+
 const jobDescription = jobContainer.querySelector('.jobDescription').textContent;
 console.log(jobDescription)
+document.getElementById('jobDescription').value = jobDescription;
+
 
 const jobSkills = jobContainer.querySelector('.skills').textContent;
 console.log(jobSkills)
 
+
+
 const jobDeadline = jobContainer.querySelector('.deadline').textContent;
 console.log(jobDeadline)
 
-
+document.getElementById('jobDeadline').value = jobDeadline;
