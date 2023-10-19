@@ -1,54 +1,35 @@
 import app from "../config/newconfig.js";
-import {
-    getDatabase,
-    set,
-    ref,
-    update,
-    get,
-    child,
-    push
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import {
-    getStorage,
-    ref as sRef,
-    uploadBytes,
-    getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+import FirebaseService from "../config/firebaseService.js";
 
-const database = getDatabase(app)
+const firebaseService = new FirebaseService(app)
 var currentURL = window.location.href;
 const userID = sessionStorage.getItem("userID");
 var url = new URL(currentURL);
 var search = url.search.slice(2);
 console.log(search)
-const jobRef = ref(database, 'jobs/' + search);
-const user_ref = ref(database, 'Staff/' + userID);
+
+const jobRef = firebaseService.getDatabaseRef(`jobs/${search}`)
+const user_ref = firebaseService.getDatabaseRef(`Staff/${userID}`)
 const jobContainer = document.querySelector(".card-body")
 
 // const user_ref = ref(database, "Staff/"+)
 let job;
 let userData;
-async function getJobFromFirebase(){
-    try{
-        const snapshot = await get(jobRef);
-        if (snapshot.exists()){
-            job = snapshot.val();
-        }
-        else{
-            job = null
-        }
-    }
-    catch(error){
-        console.error("Error fetching jobs:", error);
-        throw error;
-    }
-}
 
-async function getUserDataFromFirebase() {
+async function getJobFromFirebase() {
     try {
-        const snapshot = await get(user_ref); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
-        if (snapshot.exists()) {
-            userData = snapshot.val(); // Assign the retrieved data to the 'userData' variable
+      job = await firebaseService.getDatabaseValue(jobRef);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      throw error;
+    }
+  }
+
+  async function getUserDataFromFirebase() {
+    try {
+        const snapshot = await firebaseService.getDatabaseValue(user_ref); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
+        if (snapshot) {
+            userData = snapshot; // Assign the retrieved data to the 'userData' variable
         } else {
             userData = null; // Set 'userData' to null or another appropriate value when no data exists
         }
@@ -57,6 +38,7 @@ async function getUserDataFromFirebase() {
         throw error;
     }
 }
+
 async function main(){
     try{
         await getJobFromFirebase();
@@ -94,7 +76,7 @@ async function main(){
             deadline.innerHTML = "Application Deadline:"
             let deadline_date = document.createElement("p");
             deadline_date.setAttribute("class", "fw-bold text-danger");
-            deadline_date.setAttribute("id", "deadline");
+            deadline_date.setAttribute("id", "deadline-date");
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
@@ -178,50 +160,44 @@ async function main(){
             jobContainer.append(jobSkillsMatch);
             
             //apply now function
-            function applyNow() {
+            async function applyNow() {
                 if (confirm("Are you sure you want to apply for this job?")) {
-                    const userAppliedJobsRef = ref(database, `Staff/${userID}/applied_jobs`); // Reference to the user's applied jobs array
-                    const jobApplicantRef = ref(database, `jobs/${search}/applicants`); //Reference to the applicant array for specific job 
-                    get(userAppliedJobsRef).then(snapshot => {
-                        // Check if the applied jobs array exists
-                        const appliedJobsArray = snapshot.exists() ? snapshot.val() : [];
-                        
-                        // Add the new job ID to the array
-                        appliedJobsArray.push(search);
-
-                        
-                        // Set the updated array back in the database
-                        set(userAppliedJobsRef, appliedJobsArray).then(() => {
-                            swal({
-                                title: "Good job!", 
-                                text: "You have successfully applied for the job!",
-                                timer: 2000,
-                                showConfirmButton: false,
-                                
-                            })
-                            setTimeout(window.location.reload.bind(window.location),1000)
-                            
-                            ;
-                        }).catch(error => {
-                            console.error("Error applying for the job:", error);
-                            swal("Error", "An error occurred while applying for the job.", "error");
-                        });
-                    })
-                    get(jobApplicantRef).then(snapshot =>{
-                        //Check if applicant array exists
-                        const applicantArray = snapshot.exists()? snapshot.val() : [];
-                        // Add user ID  into applicant array
-                        applicantArray.push(userID); 
-                        console.log(applicantArray)
-                        //Set updated array back in the database; 
-                        set(jobApplicantRef,applicantArray)
-                    })
-                    .catch(error => {
-                        console.error("Error fetching applied jobs data:", error);
-                        swal("Error", "An error occurred while applying for the job.", "error");
+                    const userAppliedJobsRef = firebaseService.getDatabaseRef(`Staff/${userID}/applied_jobs`); // Reference to the user's applied jobs array
+                    const jobApplicantRef = firebaseService.getDatabaseRef(`jobs/${search}/applicants`); // Reference to the applicant array for a specific job
+            
+                    // Fetch the user's applied jobs array
+                    const userAppliedJobs = await firebaseService.getDatabaseValue(userAppliedJobsRef);
+                    const appliedJobsArray = userAppliedJobs || [];
+            
+                    // Add the new job ID to the array
+                    appliedJobsArray.push(search);
+            
+                    // Set the updated array back in the database
+                    await firebaseService.set(userAppliedJobsRef, appliedJobsArray);
+            
+                    // Fetch the job's applicant array
+                    const jobApplicants = await firebaseService.getDatabaseValue(jobApplicantRef);
+                    const applicantArray = jobApplicants || [];
+            
+                    // Add user ID to the applicant array
+                    applicantArray.push(userID);
+            
+                    // Set the updated array back in the database
+                    await firebaseService.set(jobApplicantRef, applicantArray);
+            
+                    // Show success message and reload the page
+                    swal({
+                        title: "Good job!",
+                        text: "You have successfully applied for the job!",
+                        timer: 2000,
+                        showConfirmButton: false,
                     });
+                    setTimeout(window.location.reload.bind(window.location), 1000);
                 }
-            };
+                
+            }
+            
+            
             //apply now button 
             console.log(userData.applied_jobs)
             if (typeof userData.applied_jobs === 'undefined' || !Object.values(userData.applied_jobs).includes(search)) { 
@@ -232,6 +208,7 @@ async function main(){
                 applynowbtndiv.setAttribute("id", "apply-btn");
                 let applynowbtn = document.createElement("button");
                 applynowbtn.setAttribute("class", "btn btn-outline-primary fs-4 px-3");
+                applynowbtn.setAttribute("id", "apply-btn");
                 applynowbtn.setAttribute("href", "javascript:void(0);"); // Set the href attribute to "javascript:void(0);" to make it clickable
                 applynowbtn.addEventListener("click", function () {
                     applyNow(); // Call your applyNow function on button click
@@ -252,6 +229,26 @@ async function main(){
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             };
+
+            // date responsiveness
+            currentDate = new Date();
+
+            deadlineDate = document.getElementById("deadline-date");
+            applyBtn = document.getElementById("apply-btn");
+
+            // Compare the current date with the deadline date
+            if (currentDate >= deadline_date) {
+                // Application deadline has passed
+                deadlineDate.innerHTML = `
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-ban-fill mt-1 me-2" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM2.71 12.584c.218.252.454.488.706.707l9.875-9.875a7.034 7.034 0 0 0-.707-.707l-9.875 9.875Z"/>
+                    </svg>
+                    <p class="fw-bold text-danger">Applications Closed</p>
+                </div>
+                `;
+                applyBtn.style.display = "none";
+            }
 
         }
     } catch (error){

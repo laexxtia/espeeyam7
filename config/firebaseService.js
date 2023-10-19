@@ -10,6 +10,15 @@ class FirebaseService {
       this.storage = getStorage();
       this.currentUser = null;
     }
+    
+    async set(refPath, data) {
+      try {
+          await set(refPath, data);
+      } catch (error) {
+          console.error("Error setting data:", error);
+          throw error;
+      }
+  }
   
     async signInWithEmailAndPassword(email, password) {
       try {

@@ -1,38 +1,27 @@
 import app from '../config/newconfig.js';
-import { getDatabase, set, ref, update, get, child, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+import FirebaseService from '../config/firebaseService.js';
 
-const database = getDatabase(app);
-const auth = getAuth();
-const storage = getStorage()
-const storageref = sRef(storage);
+const firebaseService = new FirebaseService(app)
 const applicantProfileCardContainer = document.getElementById('applicantCards');
 var currentURL = window.location.href;
 var url = new URL(currentURL);
 var jobID = url.search.slice(2);
 
-const jobRef = ref(database, 'jobs/' + jobID);
+const jobRef = firebaseService.getDatabaseRef('jobs/' + jobID);
 const applicantContainer = document.querySelector("#applicants");
+
 let job;
 let applicants;  
 let userData;
 
-async function getJobFromFirebase(){
-    try{
-        const snapshot = await get(jobRef);
-        if (snapshot.exists()){
-            job = snapshot.val();
-        }
-        else{
-            job = null
-        }
+async function getJobFromFirebase() {
+    try {
+      job = await firebaseService.getDatabaseValue(jobRef);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      throw error;
     }
-    catch(error){
-        console.error("Error fetching job:", error);
-        throw error;
-    }
-}
+  }
 
 
 async function main(){
@@ -41,12 +30,13 @@ async function main(){
         if(job){
             applicants = job.applicants
             for (const i in applicants){
-                const userRef = ref(database, "Staff/" + applicants[i]);
+                const userRef = firebaseService.getDatabaseRef("Staff/" + applicants[i]);
+
                 async function getUserDataFromFirebase() {
                     try {
-                        const snapshot = await get(userRef); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
-                        if (snapshot.exists()) {
-                            userData = snapshot.val(); // Assign the retrieved data to the 'userData' variable
+                        const snapshot = await firebaseService.getDatabaseValue(userRef); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
+                        if (snapshot) {
+                            userData = snapshot; // Assign the retrieved data to the 'userData' variable
                         } else {
                             userData = null; // Set 'userData' to null or another appropriate value when no data exists
                         }
