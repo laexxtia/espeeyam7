@@ -83,6 +83,23 @@ async function main(){
             editButtonDiv.appendChild(editButton);
             // editButton.addEventListener("click", editJob);
             
+
+                    
+            // Add an event listener to the edit button
+            editButton.addEventListener('click', () => {
+
+            // Redirect the user to the edit listing page with the jobContainer as a query parameter
+            window.location.href = `edit-listing.html?jobContainer=${encodeURIComponent(jobContainer.outerHTML)}`;
+            });
+
+
+
+            // Append the edit button to the job container
+            editButtonDiv.appendChild(editButton);
+
+
+
+            
             //horizontal line 
             jobContainer.appendChild(editButtonDiv); 
 
@@ -108,18 +125,21 @@ async function main(){
             let jobDescriptionText = document.createElement("p");
             jobDescriptionText.innerHTML = job.details;
             jobDescription.appendChild(jobDescriptionText);
+            jobDescriptionText.setAttribute("class", "jobDescription");
+            // console.log(jobDescriptionText.innerHTML)
 
             //deadline
             let deadline = document.createElement("p")
             deadline.setAttribute("class", "fw-bold");
             deadline.innerHTML = "Application Deadline:"
             let deadline_date = document.createElement("p");
-            deadline_date.setAttribute("class", "fw-bold text-danger");
+            deadline_date.setAttribute("class", "fw-bold text-danger deadline");
             deadline_date.setAttribute("id", "deadline");
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
             console.log(jobDescription);
+
 
             //responsibilities
             let jobResponsibilties = document.createElement("div");
@@ -153,6 +173,7 @@ async function main(){
             jobSkills.appendChild(jobSkillsTitleDiv);
             jobSkills.appendChild(jobSkillsList);
             jobContainer.append(jobSkills);
+            jobSkillsList.setAttribute("class", "skills");
 
 
             // how you match
