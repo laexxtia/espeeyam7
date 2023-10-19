@@ -23,11 +23,11 @@ firebaseService.onAuthStateChanged(async (user) => {
     console.log(user);
     const uid = user.uid;
     console.log(user.uid);
-    const user_ref = `Staff/${uid}`;
+    const user_ref = firebaseService.getDatabaseRef(`Staff/${uid}`);
     var currentURL = window.location.href;
     var url = new URL(currentURL);
     var search = url.search.slice(2);
-    const job_ref = `jobs/` + search;
+    const job_ref = firebaseService.getDatabaseRef(`jobs/` + search);
     let jobs; // Declare a variable to store the jobs data
     let userData;
 
