@@ -248,7 +248,7 @@ async function main(){
                 let applynowbtn = document.createElement("button");
                 applynowbtn.setAttribute("class", "btn btn-secondary fs-4 px-3");
                 applynowbtn.setAttribute("disabled", ""); // Set the disabled attribute to make the button disabled
-                applynowbtn.innerHTML = "Applications have closed";
+                applynowbtn.innerHTML = "Apply Now";
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             };

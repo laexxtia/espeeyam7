@@ -65,15 +65,35 @@ async function main(){
                             <p class="card-text">Email: ${userData.Email}</p>
                             <p class="card-text">Country: ${userData.Country}</p>
                             <p class="card-text">Department: ${userData.Dept}</p>
-                            <div class = skill_btns>
+                            <div class = skillrow>
 
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            `
-            applicantContainer.innerHTML += applicantCardHTML;
-            
+                `
+                applicantContainer.innerHTML += applicantCardHTML;
+                const skillrow = document.querySelector(".skillrow");
+                var skill_btns = document.createElement("div");
+                skill_btns.setAttribute("class", "scrollable-div")
+                console.log("hi")
+                for (const i in job.Skills) {
+                    let skills_needed = document.createElement("span");
+                    skills_needed.innerText = job.Skills[i]; // Set the default text
+                    
+                    for (const j in userData.Skill) {
+                        if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
+                            skills_needed.setAttribute("class", "btn btn-success test");
+                            break; // Skill matched, no need to continue checking
+                        } else {
+                            skills_needed.setAttribute("class", "btn btn-secondary test disabled");
+                        }
+                    }
+                    skill_btns.appendChild(skills_needed);
+                    skillrow.appendChild(skill_btns);
+                    console.log(skillrow);
+                }
+                
             }
             
         }

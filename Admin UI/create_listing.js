@@ -88,6 +88,18 @@ if (createBtn != null) {
       firebaseService.pushData(jobsRef, jobData)
         .then(() => {
           console.log("Data has been successfully added!");
+          swal({
+            title: "Good job!",
+            text: "You have successfully created a new job listing!",
+            timer: 3000, // Set the timer to 8 seconds (8000 milliseconds)
+            type: success,
+            showConfirmButton: false
+          });
+      
+          setTimeout(() => {
+            // Redirect to 'job_listing.html' after the SweetAlert animation
+            window.location.href = 'job_listing.html';
+          }, 3000); // Adjust the timeout to match the timer duration
         })
         .catch(error => {
           console.error("Error adding data:", error);
