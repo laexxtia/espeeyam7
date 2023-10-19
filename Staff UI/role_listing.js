@@ -264,7 +264,7 @@ async function main(){
 
                 if (currentDate > deadlineObj) {
                     // Application deadline has passed
-                    deadline_date.innerHTML = "Applications Closed";
+                    deadline_date.innerHTML = "Closed";
                     applyBtn.style.display = "none";
                 }
 
