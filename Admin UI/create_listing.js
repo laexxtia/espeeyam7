@@ -82,7 +82,9 @@ if (createBtn != null) {
         department: department,
         Skills: filledSkills,
         // salary: parseInt(salary),
-        deadline: deadline
+        deadline: deadline,
+        link: 'role_listing.html',
+        applicants_list: 'applicant_list.html'
       }
 
       firebaseService.pushData(jobsRef, jobData)
