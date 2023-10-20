@@ -128,10 +128,18 @@ if (saveBtn != null) {
 
     
     
-    const jobId = '-NgjbCPeYsIF3_R6SP7r'
+    // const jobId = '-NgjbCPeYsIF3_R6SP7r'
+
+    const jobIdencoded = urlParams.get('search');
+    const jobId = decodeURIComponent(jobIdencoded);
+    console.log(jobId)
+
 
     const jobRef = firebaseService.getDatabaseRef(`jobs/${jobId}`);
-    console.log(jobRef)
+    /* The line `console.log(jobRef)` is printing the value of the `jobRef` variable to the console.
+    This is useful for debugging purposes to check the value of the variable and ensure that it is
+    correct. */
+    // console.log(jobRef)
 
 
     firebaseService.updateData(jobRef, jobData)
