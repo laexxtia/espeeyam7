@@ -60,6 +60,7 @@ async function getJobFromFirebase(){
 //         throw error;
 //     }
 // }
+
 async function main(){
     try{
         await getJobFromFirebase();
@@ -89,7 +90,7 @@ async function main(){
             editButton.addEventListener('click', () => {
 
             // Redirect the user to the edit listing page with the jobContainer as a query parameter
-            window.location.href = `edit-listing.html?jobContainer=${encodeURIComponent(jobContainer.outerHTML)}`;
+            window.location.href = `edit-listing.html?=${encodeURIComponent(search)}`;
             });
 
 
