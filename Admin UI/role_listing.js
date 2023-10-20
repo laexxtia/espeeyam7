@@ -90,11 +90,7 @@ async function main(){
             editButton.addEventListener('click', () => {
 
             // Redirect the user to the edit listing page with the jobContainer as a query parameter
-<<<<<<< HEAD
-            window.location.href = `edit-listing.html?jobContainer=${encodeURIComponent(jobContainer.outerHTML)}&search=${search}`;
-=======
             window.location.href = `edit-listing.html?=${encodeURIComponent(search)}`;
->>>>>>> edit-listing-new2
             });
 
 
