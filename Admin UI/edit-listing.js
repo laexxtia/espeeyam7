@@ -66,7 +66,15 @@ const jobsRef = firebaseService.getDatabaseRef('jobs');
 const saveBtn = document.getElementById('save');
 
 if (saveBtn != null) {
+    
     saveBtn.addEventListener("click", async function () {
+        Swal.fire({
+            position: 'middle',
+            icon: 'success',
+            title: 'Role listing has been updated',
+            showConfirmButton: false,
+            timer: 1500
+        })
     const jobTitle = document.getElementById('jobTitle').value;
     const details = document.getElementById('jobDescription').value;
     const responsibilities = document.getElementById('jobResponsibilities').value;
@@ -155,8 +163,13 @@ if (saveBtn != null) {
     
     
     else {
-    alert("Please fill all fields");
-
+    Swal.fire({
+        position: 'middle',
+        icon: 'info',
+        title: 'Please fill all fields',
+        showConfirmButton: false,
+        timer: 1500
+    })
     }
 });
 }
