@@ -1,40 +1,64 @@
 import app from '../config/newconfig.js';
-import FirebaseService from '../config/firebaseService.js';
+import {
+    getDatabase,
+    set,
+    ref,
+    update,
+    get,
+    child,
+    push
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
+const database = getDatabase(app);
+
+import FirebaseService from '../config/firebaseService.js';
 const firebaseService = new FirebaseService(app);
 
-// Get the jobContainer query parameter from the URL
-const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams)
-const jobContainerHTML = urlParams.get('jobContainer');
-console.log(jobContainerHTML)
+const url = new URL(window.location.href);
+const search = url.search.slice(2);
+const jobRef = ref(database, 'jobs/' + search);
 
-// Convert the jobContainer HTML string to a DOM element
-const jobContainer = document.createElement('div');
-jobContainer.innerHTML = jobContainerHTML;
-console.log(jobContainer)
+let job;
 
-// Get the job data from the jobContainer element
-const jobTitle = jobContainer.querySelector('.role-title').textContent;
-console.log(jobTitle)
+async function getJobFromFirebase(){
+    try{
+        const snapshot = await get(jobRef);
+        if (snapshot.exists()){
+            job = snapshot.val();
+        }
+        else{
+            job = null
+        }
+    }
+    catch(error){
+        console.error("Error fetching jobs:", error);
+        throw error;
+    }
+}
 
-document.getElementById('jobTitle').value = jobTitle;
+async function main(){
+    try{
+        await getJobFromFirebase();
+        if(job){
+            document.getElementById('jobTitle').value = job.title; 
+            document.getElementById('jobDescription').value = job.details;
+            document.getElementById('jobDept').value = job.department; 
+            document.getElementById('deadline').value = job.deadline;
+            for (let i = 0; i < job.Skills.length; i++) {
+                const skillInput = document.getElementById(`skill${i + 1}`);
+                skillInput.value = job.Skills[i];
+            }
 
+            
+        }
+    } catch (error){
+        console.error("Error in main:", error);
 
-const jobDescription = jobContainer.querySelector('.jobDescription').textContent;
-console.log(jobDescription)
-document.getElementById('jobDescription').value = jobDescription;
+    }
 
+}
 
-const jobSkills = jobContainer.querySelector('.skills');
-const jobSkillsItems = jobSkills.querySelectorAll('li');
-
-for (let i = 0; i < jobSkillsItems.length; i++) {
-    const skillInput = document.getElementById(`skill${i + 1}`);
-    skillInput.value = jobSkillsItems[i].textContent;
-  }
-
-
+main()
 
 async function fetchSkillsAndPopulateDropdown() {
 try {
@@ -62,10 +86,9 @@ skills.forEach(skill => {
 // Fetch skills data and populate the datalist
 fetchSkillsAndPopulateDropdown();
 
-const jobsRef = firebaseService.getDatabaseRef('jobs');
 const saveBtn = document.getElementById('save');
 
-if (saveBtn != null) {
+if (saveBtn) {
     
     saveBtn.addEventListener("click", async function () {
         Swal.fire({
@@ -74,12 +97,15 @@ if (saveBtn != null) {
             title: 'Role listing has been updated',
             showConfirmButton: false,
             timer: 1500
-        })
+        }).then(() => {
+            // Redirect to role_listing.html
+            window.location.href = `role_listing.html?=${encodeURIComponent(search)}`;
+        });
+        
     const jobTitle = document.getElementById('jobTitle').value;
     const details = document.getElementById('jobDescription').value;
     const responsibilities = document.getElementById('jobResponsibilities').value;
     // const qualifications = document.getElementById('jobQualifications')
-
     const department = document.getElementById('jobDept').value;
     const skill1 = document.getElementById('skill1').value;
     const skill2 = document.getElementById('skill2').value;
@@ -126,24 +152,8 @@ if (saveBtn != null) {
         deadline: deadline
     }
 
-    
-    
-    // const jobId = '-NgjbCPeYsIF3_R6SP7r'
-
-    const jobIdencoded = urlParams.get('search');
-    const jobId = decodeURIComponent(jobIdencoded);
-    console.log(jobId)
-
-
-    const jobRef = firebaseService.getDatabaseRef(`jobs/${jobId}`);
-    /* The line `console.log(jobRef)` is printing the value of the `jobRef` variable to the console.
-    This is useful for debugging purposes to check the value of the variable and ensure that it is
-    correct. */
-    // console.log(jobRef)
-
-
+    const jobRef = firebaseService.getDatabaseRef(`jobs/${search}`);
     firebaseService.updateData(jobRef, jobData)
-
         .then(() => {
         console.log("Data has been successfully updated!");
         })
@@ -169,7 +179,6 @@ if (saveBtn != null) {
     //     console.error("Error updating data:", error);
     //   });
     } 
-    
     
     else {
     Swal.fire({
