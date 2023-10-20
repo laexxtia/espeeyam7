@@ -33,7 +33,16 @@ const jobsRef = firebaseService.getDatabaseRef('jobs');
 const createBtn = document.getElementById('submit');
 
 if (createBtn != null) {
+  
   createBtn.addEventListener("click", async function () {
+    Swal.fire({
+      position: 'middle',
+      icon: 'success',
+      title: 'Role listing has been updated',
+      showConfirmButton: false,
+      timer: 1500
+  })
+
     const jobTitle = document.getElementById('jobTitle').value;
     const details = document.getElementById('jobDescription').value;
     const responsibilities = document.getElementById('jobResponsibilities').value;
@@ -95,7 +104,14 @@ if (createBtn != null) {
           console.error("Error adding data:", error);
         });
     } else {
-      alert("Please fill all fields");
+      // alert("Please fill all fields");
+      Swal.fire({
+        position: 'middle',
+        icon: 'info',
+        title: 'Please fill all fields',
+        showConfirmButton: false,
+        timer: 1500
+    })
       // Your code to handle validation errors
       console.log(deadline)
     }
