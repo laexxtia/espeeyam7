@@ -66,6 +66,19 @@
     
 }
 
+.skill-button {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white;
+    border: 3px solid #f0f0f0;
+}
+
+.skill-button.active {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white; 
+    border: 3px solid #007bff; 
+}
 
 .skillrow{
     margin-top: 10px;

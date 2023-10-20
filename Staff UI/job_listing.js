@@ -1,5 +1,5 @@
 import app from "../config/newconfig.js";
-import FirebaseService from '../config/firebaseService.js'; // Import the FirebaseService class
+import FirebaseService from '../config/firebaseService.js';
 
 // Initialize FirebaseService with your Firebase app
 const firebaseService = new FirebaseService(app);
@@ -10,14 +10,12 @@ firebaseService.onAuthStateChanged(async (user) => {
         var uid = user.uid;
 
         console.log("USER IS LOGGED IN");
-        // console.log("User UID: " + uid);
 
         sessionStorage.setItem("userID", uid);
         const user_ref = firebaseService.getDatabaseRef('Staff/' + uid);
 
         let jobs; // Declare a variable to store the jobs data
         let userData;
-        // console.log(userData)
 
         const jobsHeading = document.querySelector(".container-fluid h2");
         const jobsMainContainer = document.querySelector(".jobs-list-container");
@@ -30,8 +28,6 @@ firebaseService.onAuthStateChanged(async (user) => {
 
             for (const jobId in jobs) {
                 const job = jobs[jobId];
-                // console.log(jobId)
-                // console.log(searchTerm);
                 if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                     let jobCard = document.createElement("div");
                     jobCard.setAttribute("class", "col-3 box job-card")
@@ -61,7 +57,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                     skill_text.setAttribute("class", "skilltext")
                     skill_text.innerHTML = "Skills Needed:"
                     let skill_buttons = document.createElement("div")
-                    // console.log(job.Skills)
                     skill_buttons.setAttribute("class", "scrollable-div")
 
                     skill_row.append(skill_text)
@@ -136,7 +131,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                 if (snapshot) {
                     jobs = snapshot; // Assign the retrieved data to the 'jobs' variable
                 } else {
-                    // console.log("No jobs data available");
                     jobs = null; // Set 'jobs' to null or another appropriate value when no data exists
                 }
             } catch (error) {
@@ -164,7 +158,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             try {
                 // Reference to your Firebase Realtime Database jobs node
                 // await getJobsFromFirebase;
-                // console.log('hi')
                 await getJobsFromFirebase()
                 // Initialize an empty array to store skills
                 const allSkills = [];
@@ -178,7 +171,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                     }
                 }
 
-                // console.log(allSkills)
                 return allSkills
 
             } catch (error) {
@@ -213,6 +205,7 @@ firebaseService.onAuthStateChanged(async (user) => {
                 //     }
                 // }
                 const skillsAttribute = jobCard.dataset.skills;
+                console.log(skillsAttribute)
     
                 if (skillsAttribute) {
                     const jobSkills = skillsAttribute.split(",").map(skill => skill.trim().toLowerCase());
