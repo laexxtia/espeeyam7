@@ -99,25 +99,67 @@ async function main(){
             jobContainer.appendChild(jobResponsibilties);
             
             // Skills Required
-            let jobSkills = document.createElement("div"); 
+            // let jobSkills = document.createElement("div"); 
             let jobSkillsTitleDiv = document.createElement("div");
-            jobSkills.setAttribute("class", "mb-5");
+            // jobSkills.setAttribute("class", "mb-5");
             jobSkillsTitleDiv.setAttribute("class", "d-flex mb-2");
             let jobSkillsTitle = document.createElement("h2"); 
             jobSkillsTitle.innerHTML = "Skills Required";
-            console.log(job.Skills);
-            let jobSkillsList = document.createElement("ul");
-            for (const i in job.Skills){
+            // console.log(job.Skills);
+            // let jobSkillsList = document.createElement("ul");
+            // for (const i in job.Skills){
+            //     let jobSkillsListItem = document.createElement("li");
+            //     jobSkillsListItem.innerHTML = job.Skills[i];
+            //     console.log(job.Skills[i]);
+            //     jobSkillsList.append(jobSkillsListItem);
+            // }
+
+            // jobSkillsTitleDiv.appendChild(jobSkillsTitle);
+            // jobSkills.appendChild(jobSkillsTitleDiv);
+            // jobSkills.appendChild(jobSkillsList);
+            // jobContainer.append(jobSkills);
+
+            // new skills list logic --------------------------------------------------------------------------
+            let skillListsContainer = document.createElement("div");
+            skillListsContainer.appendChild(jobSkillsTitle);
+            skillListsContainer.appendChild(jobSkillsTitleDiv);
+
+            // Create a list for skills that the staff has and match the job
+            let hasSkillList = document.createElement("ul");
+            hasSkillList.style.listStyleImage = "url('./images/yes-skill.png')";
+            hasSkillList.style.margin = "0";
+
+            // Create a list for skills without a match
+            let noSkillList = document.createElement("ul");
+            noSkillList.style.listStyleImage = "url('./images/check-mark.png')";
+            noSkillList.style.color = "#524f4f";
+
+            for (const i in job.Skills) {
                 let jobSkillsListItem = document.createElement("li");
-                jobSkillsListItem.innerHTML = job.Skills[i];
-                console.log(job.Skills[i]);
-                jobSkillsList.append(jobSkillsListItem);
+
+                // Create the skill text
+                let skillText = document.createElement("span");
+                skillText.innerHTML = job.Skills[i];
+
+                // Append the skill text to the appropriate list based on whether the staff has the skill
+                if (userData.Skill.includes(job.Skills[i])) {
+                    jobSkillsListItem.appendChild(skillText);
+                    hasSkillList.appendChild(jobSkillsListItem);
+                } else {
+                    jobSkillsListItem.appendChild(skillText);
+                    noSkillList.appendChild(jobSkillsListItem);
+                }
             }
 
-            jobSkillsTitleDiv.appendChild(jobSkillsTitle);
-            jobSkills.appendChild(jobSkillsTitleDiv);
-            jobSkills.appendChild(jobSkillsList);
-            jobContainer.append(jobSkills);
+            // Append the lists to the skill lists container
+            skillListsContainer.appendChild(hasSkillList);
+            skillListsContainer.appendChild(noSkillList);
+
+
+            // Append the skill lists container to the job container
+            jobContainer.appendChild(skillListsContainer);
+
+            // ---------------------------------------------------------------------------------------------------
 
 
             // how you match
