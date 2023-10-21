@@ -43,13 +43,19 @@ firebaseService.onAuthStateChanged(async (user) => {
       main();
     });
 
-    // Function to hide all job cards
     function hideAllJobCards() {
       const jobCards = document.querySelectorAll(".job-card");
       jobCards.forEach((card) => {
         card.style.display = "none";
       });
     }
+
+    function showAllJobCards() {
+      const jobCards = document.querySelectorAll(".job-card");
+      jobCards.forEach(card => {
+          card.style.display = "block";
+      });
+  }
 
     // Now you can work with the 'jobs' variable here
     let jobsContainer = document.createElement("div");
@@ -59,7 +65,7 @@ firebaseService.onAuthStateChanged(async (user) => {
     jobsMainContainer.innerHTML = "";
 
     let matchingJobsCount = 0;
-
+  
     async function getJobsFromFirebase() {
       try {
         jobs = await firebaseService.getDatabaseValue(job_ref);
@@ -72,6 +78,119 @@ firebaseService.onAuthStateChanged(async (user) => {
     async function getUserDataFromFirebase() {
       userData = await firebaseService.getDatabaseValue(user_ref);
     }
+
+    // skills filter, copied over from staff UI--------------------------------------------------------
+
+    async function getSkillsFromDatabase() {
+      try {
+          await getJobsFromFirebase()
+          const allSkills = [];
+          for (const i in jobs){
+              console.log(jobs[i]['Skills']);
+              const skill_list = jobs[i]['Skills']
+              for (const j in skill_list){
+                  if(!allSkills.includes(skill_list[j])){
+                      allSkills.push(skill_list[j])
+                  }
+              }
+          }
+
+          return allSkills
+
+      } catch (error) {
+          console.error("Error fetching skills:", error);
+          throw error;
+      }
+  }
+
+    function filterJobCardsBySkills() {
+      const selectedSkills = Array.from(document.querySelectorAll(".skill-button.active"))
+          .map(skillButton => skillButton.innerText.toLowerCase());
+  
+      if (selectedSkills.length === 0) {
+          showAllJobCards();
+          return;
+      }
+  
+      hideAllJobCards(); 
+
+      for (const jobId in jobs) {
+        const job = jobs[jobId];
+
+        // selectedSkills is all lowercase, convert job.Skills to all lowercase accordingly
+        job.Skills = job.Skills.map(skill => skill.toLowerCase());
+
+        if (selectedSkills.every(skill => job.Skills.includes(skill))) {
+          const jobCard = document.getElementById(`job-card-${jobId}`);
+          if (jobCard) {
+            jobCard.style.display = "block"
+          }
+        }
+      }
+
+  
+      // for (const jobCard of jobsContainer.querySelectorAll(".job-card")) {
+      //     console.log(jobCard)
+      //     const skillsAttribute = jobCard.dataset.skills;
+      //     console.log(skillsAttribute)
+
+      //     if (skillsAttribute) {
+      //         const jobSkills = skillsAttribute.split(",").map(skill => skill.trim().toLowerCase());
+      
+      //         const matchingSkills = selectedSkills.filter(skill => jobSkills.includes(skill));
+      
+      //         if (matchingSkills.length === selectedSkills.length) {
+      //             jobCard.style.display = "block";
+      //             console.log(jobCard)
+      //         } else {
+      //             jobCard.style.display = "none";
+      //         }
+      //     } else {
+      //         jobCard.style.display = "block";
+      //     }
+      // }
+  }
+
+  async function generateSkillCheckboxes() {
+    const allSkills = await getSkillsFromDatabase();
+    const skillsFilter = document.querySelector(".skills-filter");
+
+
+
+    allSkills.forEach(skill => {
+        const skillElement = document.createElement("button");
+        skillElement.classList.add("skill-button", "rounded-pill"); 
+        skillElement.innerText = skill;
+
+        skillElement.addEventListener("click", () => {
+            console.log(skillElement.innerText)
+            skillElement.classList.toggle("active");
+            filterJobCardsBySkills();
+        });
+
+        skillsFilter.appendChild(skillElement);
+    });
+
+    const clearAllLink = document.createElement("a");
+    clearAllLink.href = "#";
+    clearAllLink.id = "clear-all-link";
+    clearAllLink.innerText = "Clear All";
+    skillsFilter.appendChild(clearAllLink);
+    
+    clearAllLink.addEventListener("click", () => {
+        const skillButtons = document.querySelectorAll(".skill-button");
+        skillButtons.forEach(button => {
+            button.classList.remove("active");
+        });
+        filterJobCardsBySkills();
+    });
+
+}
+
+generateSkillCheckboxes();
+
+// --------------------------------------------------------------------------------------------------
+
 
     // To use the function and get the jobs data:
     // ... (Previous code)
@@ -92,10 +211,13 @@ async function main() {
   
         for (const jobId in jobs) {
           const job = jobs[jobId];
-          console.log(job)
+          
           if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
             let jobCard = document.createElement("div");
             jobCard.setAttribute("class", "col-3 box job-card");
+            
+            // set job.Skills as jobCard id for skills filter function
+            jobCard.setAttribute("id", `job-card-${jobId}`);
 
             let title = document.createElement("h3");
             title.classList.add("job-title");
@@ -132,6 +254,7 @@ async function main() {
             // jobCard.appendChild(applicantbtn);
             jobCard.appendChild(btndiv);
             jobsContainer.append(jobCard);
+
             matchingJobsCount++;
           }
         }
@@ -148,11 +271,8 @@ async function main() {
   
   // ... (Continued code)
   
-
-    // Call the main function initially
     main();
   } else {
-    // No user is signed in. Handle this case if necessary.
     console.log("No user is signed in.");
     window.location.href = '/Login UI/login.html';
   }

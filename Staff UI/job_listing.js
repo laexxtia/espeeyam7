@@ -1,23 +1,20 @@
 import app from "../config/newconfig.js";
-import FirebaseService from '../config/firebaseService.js'; // Import the FirebaseService class
+import FirebaseService from '../config/firebaseService.js';
 
 // Initialize FirebaseService with your Firebase app
 const firebaseService = new FirebaseService(app);
 
 firebaseService.onAuthStateChanged(async (user) => {
     if (user) {
-        // User is signed in.
         var uid = user.uid;
 
         console.log("USER IS LOGGED IN");
-        // console.log("User UID: " + uid);
 
         sessionStorage.setItem("userID", uid);
         const user_ref = firebaseService.getDatabaseRef('Staff/' + uid);
 
-        let jobs; // Declare a variable to store the jobs data
+        let jobs;
         let userData;
-        // console.log(userData)
 
         const jobsHeading = document.querySelector(".container-fluid h2");
         const jobsMainContainer = document.querySelector(".jobs-list-container");
@@ -66,7 +63,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                     skill_text.setAttribute("class", "skilltext")
                     skill_text.innerHTML = "Skills Needed:"
                     let skill_buttons = document.createElement("div")
-                    // console.log(job.Skills)
                     skill_buttons.setAttribute("class", "scrollable-div")
 
                     skill_row.append(skill_text)
@@ -92,7 +88,7 @@ firebaseService.onAuthStateChanged(async (user) => {
                     jobCard.appendChild(detailsbtn);
                     
                     console.log(job.Skills)
-                    jobCard.dataset.skills = job.Skills.join(", "); // Assuming job.Skills is an array
+                    jobCard.dataset.skills = job.Skills.join(", ");
 
                     jobsContainer.append(jobCard)
                     matchingJobsCount++
@@ -103,7 +99,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             jobsMainContainer.appendChild(jobsContainer);
 
         }
-        // Define a function to show all job cards
         function showAllJobCards() {
             const jobCards = document.querySelectorAll(".job-card");
             jobCards.forEach(card => {
@@ -117,7 +112,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             main();
         });
 
-        // Function to hide all job cards
         function hideAllJobCards() {
             const jobCards = document.querySelectorAll(".job-card");
             jobCards.forEach((card) => {
@@ -125,7 +119,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             });
         }
 
-        // Now you can work with the 'jobs' variable here
         let jobsContainer = document.createElement("div");
         jobsContainer.setAttribute("class", "row mx-auto");
 
@@ -141,7 +134,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                 if (snapshot) {
                     jobs = snapshot; // Assign the retrieved data to the 'jobs' variable
                 } else {
-                    // console.log("No jobs data available");
                     jobs = null; // Set 'jobs' to null or another appropriate value when no data exists
                 }
             } catch (error) {
@@ -164,17 +156,12 @@ firebaseService.onAuthStateChanged(async (user) => {
             }
         }
 
-        // Assuming you have a function to fetch skills from the database, e.g., getSkillsFromDatabase()
         async function getSkillsFromDatabase() {
             try {
                 // Reference to your Firebase Realtime Database jobs node
-                // await getJobsFromFirebase;
-                // console.log('hi')
                 await getJobsFromFirebase()
-                // Initialize an empty array to store skills
                 const allSkills = [];
                 for (const i in jobs){
-                    // console.log(jobs[i]['Skills']);
                     const skill_list = jobs[i]['Skills']
                     for (const j in skill_list){
                         if(!allSkills.includes(skill_list[j])){
@@ -183,7 +170,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                     }
                 }
 
-                // console.log(allSkills)
                 return allSkills
 
             } catch (error) {
@@ -193,16 +179,15 @@ firebaseService.onAuthStateChanged(async (user) => {
         }
 
         function filterJobCardsBySkills() {
-            const selectedSkills = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
-                .map(skillCheckbox => skillCheckbox.value.toLowerCase());
+            const selectedSkills = Array.from(document.querySelectorAll(".skill-button.active"))
+                .map(skillButton => skillButton.innerText.toLowerCase());
         
-            // If no skills are selected, show all job cards
             if (selectedSkills.length === 0) {
                 showAllJobCards();
                 return;
             }
         
-            hideAllJobCards(); // Hide all job cards
+            hideAllJobCards();
         
             for (const jobCard of jobsContainer.querySelectorAll(".job-card")) {
 
@@ -225,37 +210,47 @@ firebaseService.onAuthStateChanged(async (user) => {
                 }
             }
         }
+        
 
         // Function to dynamically generate skill checkboxes based on the available skills
         async function generateSkillCheckboxes() {
             const allSkills = await getSkillsFromDatabase();
             const skillsFilter = document.querySelector(".skills-filter");
 
-            // Clear any existing checkboxes
-            skillsFilter.innerHTML = "<h3>Filter by Skills:</h3>";
-
-            // Generate checkboxes for each skill
             allSkills.forEach(skill => {
-                const checkboxLabel = document.createElement("label");
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.value = skill;
-                checkboxLabel.appendChild(checkbox);
-                checkboxLabel.appendChild(document.createTextNode(skill));
-                skillsFilter.appendChild(checkboxLabel);
+                const skillElement = document.createElement("button");
+                skillElement.classList.add("skill-button", "rounded-pill"); 
+                skillElement.innerText = skill;
+
+                skillElement.addEventListener("click", () => {
+                    console.log(skillElement.innerText)
+                    skillElement.classList.toggle("active");
+                    filterJobCardsBySkills();
+                });
+
+                skillsFilter.appendChild(skillElement);
             });
 
-            // Add an event listener for skill selection
-            skillsFilter.addEventListener("change", () => {
+            const clearAllLink = document.createElement("a");
+            clearAllLink.href = "#";
+            clearAllLink.id = "clear-all-link";
+            clearAllLink.innerText = "Clear All";
+            skillsFilter.appendChild(clearAllLink);
+            
+            clearAllLink.addEventListener("click", () => {
+                const skillButtons = document.querySelectorAll(".skill-button");
+                skillButtons.forEach(button => {
+                    button.classList.remove("active");
+                });
                 filterJobCardsBySkills();
             });
-        }
 
-        // Call the function to generate skill checkboxes when the page loads
-        // getSkillsFromDatabase()
+        }
+        
+        
         generateSkillCheckboxes();
 
-        // To use the function and get the jobs data:
+
         async function main() {
             try {
                 await getJobsFromFirebase(); // Fetch the jobs data
@@ -295,10 +290,8 @@ firebaseService.onAuthStateChanged(async (user) => {
             }
         }
 
-        // Call the main function initially
         main();
     } else {
-        // No user is signed in. Handle this case if necessary.
         console.log("No user is signed in.");
         window.location.href = '/Login UI/login.html';
     }
