@@ -1,18 +1,50 @@
 import app from "../config/newconfig.js";
-import FirebaseService from "../config/firebaseService.js";
+import {
+    getDatabase,
+    set,
+    ref,
+    update,
+    get,
+    child,
+    push
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import {
+    getStorage,
+    ref as sRef,
+    uploadBytes,
+    getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
-const firebaseService = new FirebaseService(app)
+const database = getDatabase(app);
 var currentURL = window.location.href;
 const userID = sessionStorage.getItem("userID");
 var url = new URL(currentURL);
 var search = url.search.slice(2);
 console.log(search)
-const jobRef = firebaseService.getDatabaseRef('jobs/' + search);
-const user_ref = firebaseService.getDatabaseRef('Staff/' + userID);
+const jobRef = ref(database, 'jobs/' + search);
+const user_ref = ref(database, 'Staff/' + userID);
 const jobContainer = document.querySelector(".card-body")
 
 console.log(user_ref);
+// const user_ref = ref(database, "Staff/"+)
 let job;
+let userData;
+async function getJobFromFirebase(){
+    try{
+        const snapshot = await get(jobRef);
+        if (snapshot.exists()){
+            job = snapshot.val();
+            console.log(job);
+        }
+        else{
+            job = null
+        }
+    }
+    catch(error){
+        console.error("Error fetching jobs:", error);
+        throw error;
+    }
+}
 
 // async function getUserDataFromFirebase() {
 //     try {
@@ -33,7 +65,7 @@ async function main(){
     try{
         await getJobFromFirebase();
         if(job){
-            // console.log(job);
+            console.log(job);
 
             // Job Title
             let jobTitle = document.createElement("h1");
