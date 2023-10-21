@@ -14,14 +14,20 @@ const jobContainer = document.querySelector(".card-body")
 console.log(user_ref);
 let job;
 
-async function getJobFromFirebase() {
-    try {
-      job = await firebaseService.getDatabaseValue(jobRef);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-      throw error;
-    }
-  }
+// async function getUserDataFromFirebase() {
+//     try {
+//         const snapshot = await get(user_ref); // Retrieve data from the Firebase Realtime Database using the 'user_ref' you defined
+//         if (snapshot.exists()) {
+//             userData = snapshot.val(); // Assign the retrieved data to the 'userData' variable
+//             console.log(userData);
+//         } else {
+//             userData = null; // Set 'userData' to null or another appropriate value when no data exists
+//         }
+//     } catch (error) {
+//         console.error("Error fetching user data:", error);
+//         throw error;
+//     }
+// }
 
 async function main(){
     try{
@@ -45,6 +51,23 @@ async function main(){
             editButton.innerHTML = "Edit";
             editButtonDiv.appendChild(editButton);
             // editButton.addEventListener("click", editJob);
+            
+
+                    
+            // Add an event listener to the edit button
+            editButton.addEventListener('click', () => {
+
+            // Redirect the user to the edit listing page with the jobContainer as a query parameter
+            window.location.href = `edit-listing.html?=${encodeURIComponent(search)}`;
+            });
+
+
+
+            // Append the edit button to the job container
+            editButtonDiv.appendChild(editButton);
+
+
+
             
             //horizontal line 
             jobContainer.appendChild(editButtonDiv); 
@@ -71,18 +94,21 @@ async function main(){
             let jobDescriptionText = document.createElement("p");
             jobDescriptionText.innerHTML = job.details;
             jobDescription.appendChild(jobDescriptionText);
+            jobDescriptionText.setAttribute("class", "jobDescription");
+            // console.log(jobDescriptionText.innerHTML)
 
             //deadline
             let deadline = document.createElement("p")
             deadline.setAttribute("class", "fw-bold");
             deadline.innerHTML = "Application Deadline:"
             let deadline_date = document.createElement("p");
-            deadline_date.setAttribute("class", "fw-bold text-danger");
+            deadline_date.setAttribute("class", "fw-bold text-danger deadline");
             deadline_date.setAttribute("id", "deadline");
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
             console.log(jobDescription);
+
 
             //responsibilities
             let jobResponsibilties = document.createElement("div");
@@ -104,6 +130,8 @@ async function main(){
             let jobSkillsTitle = document.createElement("h2"); 
             jobSkillsTitle.innerHTML = "Skills Required";
             console.log(job.Skills);
+
+
             let jobSkillsList = document.createElement("ul");
             for (const i in job.Skills){
                 let jobSkillsListItem = document.createElement("li");
@@ -112,10 +140,12 @@ async function main(){
                 jobSkillsList.append(jobSkillsListItem);
             }
 
+
             jobSkillsTitleDiv.appendChild(jobSkillsTitle);
             jobSkills.appendChild(jobSkillsTitleDiv);
             jobSkills.appendChild(jobSkillsList);
             jobContainer.append(jobSkills);
+            jobSkillsList.setAttribute("class", "skills");
 
 
             // how you match
