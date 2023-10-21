@@ -43,7 +43,6 @@ firebaseService.onAuthStateChanged(async (user) => {
       main();
     });
 
-    // Function to hide all job cards
     function hideAllJobCards() {
       const jobCards = document.querySelectorAll(".job-card");
       jobCards.forEach((card) => {
@@ -84,10 +83,7 @@ firebaseService.onAuthStateChanged(async (user) => {
 
     async function getSkillsFromDatabase() {
       try {
-          // Reference to your Firebase Realtime Database jobs node
-          // await getJobsFromFirebase;
           await getJobsFromFirebase()
-          // Initialize an empty array to store skills
           const allSkills = [];
           for (const i in jobs){
               console.log(jobs[i]['Skills']);
@@ -111,13 +107,27 @@ firebaseService.onAuthStateChanged(async (user) => {
       const selectedSkills = Array.from(document.querySelectorAll(".skill-button.active"))
           .map(skillButton => skillButton.innerText.toLowerCase());
   
-      // If no skills are selected, show all job cards
       if (selectedSkills.length === 0) {
           showAllJobCards();
           return;
       }
   
-      hideAllJobCards(); // Hide all job cards
+      hideAllJobCards(); 
+
+      for (const jobId in jobs) {
+        const job = jobs[jobId];
+
+        // selectedSkills is all lowercase, convert job.Skills to all lowercase accordingly
+        job.Skills = job.Skills.map(skill => skill.toLowerCase());
+
+        if (selectedSkills.every(skill => job.Skills.includes(skill))) {
+          const jobCard = document.getElementById(`job-card-${jobId}`);
+          if (jobCard) {
+            jobCard.style.display = "block"
+          }
+        }
+      }
+
   
       // for (const jobCard of jobsContainer.querySelectorAll(".job-card")) {
       //     console.log(jobCard)
@@ -145,12 +155,13 @@ firebaseService.onAuthStateChanged(async (user) => {
     const allSkills = await getSkillsFromDatabase();
     const skillsFilter = document.querySelector(".skills-filter");
 
+
+
     allSkills.forEach(skill => {
         const skillElement = document.createElement("button");
         skillElement.classList.add("skill-button", "rounded-pill"); 
         skillElement.innerText = skill;
 
-        // Add an event listener to handle skill selection
         skillElement.addEventListener("click", () => {
             console.log(skillElement.innerText)
             skillElement.classList.toggle("active");
@@ -200,10 +211,13 @@ async function main() {
   
         for (const jobId in jobs) {
           const job = jobs[jobId];
-          console.log(job)
+          
           if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
             let jobCard = document.createElement("div");
             jobCard.setAttribute("class", "col-3 box job-card");
+            
+            // set job.Skills as jobCard id for skills filter function
+            jobCard.setAttribute("id", `job-card-${jobId}`);
 
             let title = document.createElement("h3");
             title.classList.add("job-title");
@@ -240,6 +254,7 @@ async function main() {
             // jobCard.appendChild(applicantbtn);
             jobCard.appendChild(btndiv);
             jobsContainer.append(jobCard);
+
             matchingJobsCount++;
           }
         }
@@ -256,11 +271,8 @@ async function main() {
   
   // ... (Continued code)
   
-
-    // Call the main function initially
     main();
   } else {
-    // No user is signed in. Handle this case if necessary.
     console.log("No user is signed in.");
     window.location.href = '/Login UI/login.html';
   }

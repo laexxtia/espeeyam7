@@ -6,7 +6,6 @@ const firebaseService = new FirebaseService(app);
 
 firebaseService.onAuthStateChanged(async (user) => {
     if (user) {
-        // User is signed in.
         var uid = user.uid;
 
         console.log("USER IS LOGGED IN");
@@ -14,7 +13,7 @@ firebaseService.onAuthStateChanged(async (user) => {
         sessionStorage.setItem("userID", uid);
         const user_ref = firebaseService.getDatabaseRef('Staff/' + uid);
 
-        let jobs; // Declare a variable to store the jobs data
+        let jobs;
         let userData;
 
         const jobsHeading = document.querySelector(".container-fluid h2");
@@ -82,7 +81,7 @@ firebaseService.onAuthStateChanged(async (user) => {
                     jobCard.appendChild(detailsbtn);
                     
                     console.log(job.Skills)
-                    jobCard.dataset.skills = job.Skills.join(", "); // Assuming job.Skills is an array
+                    jobCard.dataset.skills = job.Skills.join(", ");
 
                     jobsContainer.append(jobCard)
                     matchingJobsCount++
@@ -93,7 +92,7 @@ firebaseService.onAuthStateChanged(async (user) => {
             jobsMainContainer.appendChild(jobsContainer);
 
         }
-        // Define a function to show all job cards
+
         function showAllJobCards() {
             const jobCards = document.querySelectorAll(".job-card");
             jobCards.forEach(card => {
@@ -107,7 +106,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             main();
         });
 
-        // Function to hide all job cards
         function hideAllJobCards() {
             const jobCards = document.querySelectorAll(".job-card");
             jobCards.forEach((card) => {
@@ -115,7 +113,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             });
         }
 
-        // Now you can work with the 'jobs' variable here
         let jobsContainer = document.createElement("div");
         jobsContainer.setAttribute("class", "row mx-auto");
 
@@ -153,16 +150,12 @@ firebaseService.onAuthStateChanged(async (user) => {
             }
         }
 
-        // Assuming you have a function to fetch skills from the database, e.g., getSkillsFromDatabase()
         async function getSkillsFromDatabase() {
             try {
                 // Reference to your Firebase Realtime Database jobs node
-                // await getJobsFromFirebase;
                 await getJobsFromFirebase()
-                // Initialize an empty array to store skills
                 const allSkills = [];
                 for (const i in jobs){
-                    // console.log(jobs[i]['Skills']);
                     const skill_list = jobs[i]['Skills']
                     for (const j in skill_list){
                         if(!allSkills.includes(skill_list[j])){
@@ -185,13 +178,12 @@ firebaseService.onAuthStateChanged(async (user) => {
 
             console.log(selectedSkills)
         
-            // If no skills are selected, show all job cards
             if (selectedSkills.length === 0) {
                 showAllJobCards();
                 return;
             }
         
-            hideAllJobCards(); // Hide all job cards
+            hideAllJobCards();
         
             for (const jobCard of jobsContainer.querySelectorAll(".job-card")) {
                 // console.log(jobCard.dataset.skills)
@@ -225,7 +217,6 @@ firebaseService.onAuthStateChanged(async (user) => {
             }
         }
         
-        
 
         // Function to dynamically generate skill checkboxes based on the available skills
         async function generateSkillCheckboxes() {
@@ -237,7 +228,6 @@ firebaseService.onAuthStateChanged(async (user) => {
                 skillElement.classList.add("skill-button", "rounded-pill"); 
                 skillElement.innerText = skill;
 
-                // Add an event listener to handle skill selection
                 skillElement.addEventListener("click", () => {
                     console.log(skillElement.innerText)
                     skillElement.classList.toggle("active");
@@ -264,15 +254,9 @@ firebaseService.onAuthStateChanged(async (user) => {
         }
         
         
-
-        // Call the function to generate skill checkboxes when the page loads
-        // getSkillsFromDatabase()
         generateSkillCheckboxes();
 
 
-
-
-        // To use the function and get the jobs data:
         async function main() {
             try {
                 await getJobsFromFirebase(); // Fetch the jobs data
@@ -303,10 +287,8 @@ firebaseService.onAuthStateChanged(async (user) => {
             }
         }
 
-        // Call the main function initially
         main();
     } else {
-        // No user is signed in. Handle this case if necessary.
         console.log("No user is signed in.");
         window.location.href = '/Login UI/login.html';
     }
