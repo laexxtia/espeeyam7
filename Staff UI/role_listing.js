@@ -96,6 +96,10 @@ async function main(){
             jobResponsibilitiesTitle.innerHTML = "Responsibilities";
             jobResponsibilitiesTitleDiv.appendChild(jobResponsibilitiesTitle);
             jobResponsibilties.appendChild(jobResponsibilitiesTitleDiv);
+            let jobResponsibiltiesText = document.createElement("p");
+            jobResponsibiltiesText.innerHTML = job.responsibilities;
+            jobResponsibilties.appendChild(jobResponsibiltiesText);
+            
             jobContainer.appendChild(jobResponsibilties);
             
             // Skills Required
