@@ -32,7 +32,7 @@ fetchSkillsAndPopulateDropdown();
 const jobsRef = firebaseService.getDatabaseRef('jobs');
 const createBtn = document.getElementById('submit');
 
-if (createBtn != null) {
+if (createBtn) {
   
   createBtn.addEventListener("click", async function () {
     Swal.fire({
@@ -100,7 +100,7 @@ if (createBtn != null) {
         .then(() => {
           console.log("Data has been successfully added!");
           swal({
-            title: "Good job!",
+            title: "Success!",
             text: "You have successfully created a new job listing!",
             timer: 3000, // Set the timer to 8 seconds (8000 milliseconds)
             type: success,
@@ -128,4 +128,25 @@ if (createBtn != null) {
       console.log(deadline)
     }
   });
+}
+
+const cancelBtn = document.getElementById('cancel')
+
+if (cancelBtn) {
+    cancelBtn.addEventListener("click", async function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Your changes will not be saved!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#808080',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Continue editing'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "job_listing.html";
+            }        
+        });
+    });
 }
