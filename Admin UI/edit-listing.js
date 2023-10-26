@@ -16,7 +16,12 @@ const firebaseService = new FirebaseService(app);
 
 const url = new URL(window.location.href);
 const search = url.search.slice(2);
+const roleUrl = `role_listing.html?=${encodeURIComponent(search)}`;
 const jobRef = ref(database, 'jobs/' + search);
+console.log(jobRef)
+
+const backBtn  = document.getElementById('back-to-role');
+backBtn.setAttribute('href', roleUrl);
 
 let job;
 
@@ -98,8 +103,7 @@ if (saveBtn) {
             showConfirmButton: false,
             timer: 1500
         }).then(() => {
-            // Redirect to role_listing.html
-            window.location.href = `role_listing.html?=${encodeURIComponent(search)}`;
+            window.location.href = roleUrl;
         });
         
     const jobTitle = document.getElementById('jobTitle').value;
@@ -184,10 +188,31 @@ if (saveBtn) {
     Swal.fire({
         position: 'middle',
         icon: 'info',
-        title: 'Please fill all fields',
+        title: 'Please ensure all fields are corrently filled.',
         showConfirmButton: false,
         timer: 1500
     })
     }
 });
+}
+
+const cancelBtn = document.getElementById('cancel')
+
+if (cancelBtn) {
+    cancelBtn.addEventListener("click", async function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Your changes will not be saved!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#808080',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Continue editing'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = roleUrl;
+            }        
+        });
+    });
 }
