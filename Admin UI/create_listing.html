@@ -7,9 +7,13 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type = "module" src="create_listing.js"></script>
 </head>
 <body>
@@ -23,7 +27,7 @@
             
                     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                         <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="applied_job.html">Applied Jobs</a> -->
-                        <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Settings</a>
+                        <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Settings</a> -->
                         <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Profile</a>
                     </nav>
                 </div>
@@ -50,9 +54,13 @@
                     <textarea class="form-control" id="jobDescription" name="jobDescription" rows="4" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="jobLocation" class="form-label">Job Location</label>
-                    <input type="text" class="form-control" id="jobLocation" name="jobLocation" required>
+                    <label for="jobResponsibilities" class="form-label">Job Responsibilities</label>
+                    <input type="text" class="form-control" id="jobResponsibilities" name="jobResponsibilities" required>
                 </div>
+                <!-- <div class="mb-3">
+                    <label for="jobQualifications" class="form-label">Job Qualifications</label>
+                    <input type="text" class="form-control" id="jobQualifications" name="jobQualifications" required>
+                </div> -->
                 <div class="mb-3">
                     <label for="jobDept" class="form-label">Department</label>
                     <select class="form-select" id="jobDept" name="jobDept" required>
@@ -87,10 +95,10 @@
                         <datalist id="skills"></datalist>
                     </div>
                 </div>
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="jobSalary" class="form-label">Salary (SGD)</label>
                     <input type="number" class="form-control" id="jobSalary" name="jobSalary" required>
-                </div>
+                </div> -->
                 <div class="mb-3">
                     <label for="deadline" class="form-label">Application Deadline</label>
                     <input type="date" class="form-control" id="deadline" name="deadline" required>

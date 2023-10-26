@@ -1,23 +1,13 @@
 import app from '../config/newconfig.js';
-import { getDatabase, set, ref, update, get, child, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+import FirebaseService from '../config/firebaseService.js';
 
-const database = getDatabase(app);
-const auth = getAuth(app);
-const storage = getStorage()
-const storageref = sRef(storage);
+const firebaseService = new FirebaseService(app);
 
-let skills = [];
-
-// Define a function to fetch skills from the Firebase database
-async function fetchSkillsFromFirebase() {
-  const skillsRef = ref(database, 'Skills'); // Use the appropriate reference
+async function fetchSkillsAndPopulateDropdown() {
   try {
-    const snapshot = await get(skillsRef);
-    if (snapshot.exists()) {
-      const skillsData = snapshot.val();
-      skills = Object.values(skillsData);
+    const skills = await firebaseService.fetchSkillsFromFirebase();
+    if (skills) {
+      populateDropdown(skills);
     } else {
       console.log('No skills data available.');
     }
@@ -26,8 +16,7 @@ async function fetchSkillsFromFirebase() {
   }
 }
 
-// Define a function to populate the shared datalist
-function populateDropdown() {
+function populateDropdown(skills) {
   const skillsDropdown = document.getElementById('skills');
   skillsDropdown.innerHTML = '';
   skills.forEach(skill => {
@@ -37,117 +26,106 @@ function populateDropdown() {
   });
 }
 
-// Define a function to handle search input for all input elements
-function handleSearchInput() {
-  const inputElements = document.querySelectorAll('input[list="skills"]');
-  inputElements.forEach(inputElement => {
-    const searchTerm = inputElement.value.charAt(0).toLowerCase();
-    // The rest of the code for handling input and filtering
-    // For example, you can filter skills starting with searchTerm
-    const filteredSkills = skills.filter(skill =>
-      skill.toLowerCase().startsWith(searchTerm)
+// Fetch skills data and populate the datalist
+fetchSkillsAndPopulateDropdown();
+
+const jobsRef = firebaseService.getDatabaseRef('jobs');
+const createBtn = document.getElementById('submit');
+
+if (createBtn != null) {
+  
+  createBtn.addEventListener("click", async function () {
+    Swal.fire({
+      position: 'middle',
+      icon: 'success',
+      title: 'Role listing has been updated',
+      showConfirmButton: false,
+      timer: 1500
+  })
+
+    const jobTitle = document.getElementById('jobTitle').value;
+    const details = document.getElementById('jobDescription').value;
+    const responsibilities = document.getElementById('jobResponsibilities').value;
+    // const qualifications = document.getElementById('jobQualifications')
+
+    const department = document.getElementById('jobDept').value;
+    const skill1 = document.getElementById('skill1').value;
+    const skill2 = document.getElementById('skill2').value;
+    const skill3 = document.getElementById('skill3').value;
+    const skill4 = document.getElementById('skill4').value;
+    const skill5 = document.getElementById('skill5').value;
+    // const salary = document.getElementById('jobSalary').value;
+    const deadline = document.getElementById('deadline').value;
+
+    const allValuesFilled = (
+      jobTitle !== "" &&
+      details !== "" &&
+      department !== "" &&
+      deadline !== ""
     );
-    // Then, you can update the displayed options in the shared datalist
-    const skillsDropdown = document.getElementById('skills');
-    skillsDropdown.innerHTML = '';
-    filteredSkills.forEach(skill => {
-      const option = document.createElement('option');
-      option.value = skill;
-      skillsDropdown.appendChild(option);
-    });
-  });
-}
 
-// Add event listeners and fetch data
-document.querySelectorAll('input[list="skills"]').forEach(inputElement => {
-  inputElement.addEventListener('input', handleSearchInput);
-});
+    const filledSkills = [];
 
-fetchSkillsFromFirebase()
-  .then(() => populateDropdown())
-  .catch(error => console.error('Error:', error));
+    if (skill1 !== "") {
+      filledSkills.push(skill1);
+    }
+    if (skill2 !== "") {
+      filledSkills.push(skill2);
+    }
+    if (skill3 !== "") {
+      filledSkills.push(skill3);
+    }
+    if (skill4 !== "") {
+      filledSkills.push(skill4);
+    }
+    if (skill5 !== "") {
+      filledSkills.push(skill5);
+    }
 
-
-const jobsRef = ref(database, 'jobs')
-const createBtn = document.getElementById('submit')
-
-
-if (createBtn != null){
-  createBtn.addEventListener("click", async function() { 
-  const jobTitle = document.getElementById('jobTitle').value
-  const details = document.getElementById('jobDescription').value
-  const location = document.getElementById('jobLocation').value
-  const department = document.getElementById('jobDept').value
-  const skill1 = document.getElementById('skill1').value
-  const skill2 = document.getElementById('skill2').value
-  const skill3 = document.getElementById('skill3').value
-  const skill4 = document.getElementById('skill4').value
-  const skill5 = document.getElementById('skill5').value
-  const salary = document.getElementById('jobSalary').value
-  const deadline = document.getElementById('deadline').value
-
-
-  const allValuesFilled = (
-    jobTitle !== "" &&
-    details !== "" &&
-    location !== "" &&
-    department !== "" &&
-    salary !== "" &&
-    deadline !== ""
-  );
-
-  const filledSkills = [];
-
-  if (skill1 !== "") {
-    filledSkills.push(skill1);
-  }
-  if (skill2 !== "") {
-    filledSkills.push(skill2);
-  }
-  if (skill3 !== "") {
-    filledSkills.push(skill3);
-  }
-  if (skill4 !== "") {
-    filledSkills.push(skill4);
-  }
-  if (skill5 !== "") {
-    filledSkills.push(skill5);
-  }
-    if(allValuesFilled && filledSkills.length >= 1){
+    if (allValuesFilled && filledSkills.length >= 1) {
       const jobData = {
         title: jobTitle,
         details: details,
-        location: location,
+        responsibilities: responsibilities,
+        // qualifications: qualifications,
         department: department,
         Skills: filledSkills,
-        salary: parseInt(salary),
-        deadline: new Date(`${deadline}`).getTime()
+        // salary: parseInt(salary),
+        deadline: deadline,
+        link: 'role_listing.html',
+        applicants_list: 'applicant_list.html'
       }
 
-      push(jobsRef, jobData).then(function() {
-        console.log("Data has been successfully added!");
-      }).catch(function(error) {
-        console.error("Error adding data:", error);
-      });
-
+      firebaseService.pushData(jobsRef, jobData)
+        .then(() => {
+          console.log("Data has been successfully added!");
+          swal({
+            title: "Good job!",
+            text: "You have successfully created a new job listing!",
+            timer: 3000, // Set the timer to 8 seconds (8000 milliseconds)
+            type: success,
+            showConfirmButton: false
+          });
+      
+          setTimeout(() => {
+            // Redirect to 'job_listing.html' after the SweetAlert animation
+            window.location.href = 'job_listing.html';
+          }, 3000); // Adjust the timeout to match the timer duration
+        })
+        .catch(error => {
+          console.error("Error adding data:", error);
+        });
+    } else {
+      // alert("Please fill all fields");
+      Swal.fire({
+        position: 'middle',
+        icon: 'info',
+        title: 'Please fill all fields',
+        showConfirmButton: false,
+        timer: 1500
+    })
+      // Your code to handle validation errors
+      console.log(deadline)
     }
-    else{
-      alert("Please fill all fields");
-      console.log(filledSkills)
-      console.log('jobTitle: ', jobTitle);
-      console.log('details: ', details);
-      console.log('location: ', location);
-      console.log('department: ', department);
-      console.log('skill1: ', skill1);
-      console.log('skill2: ', skill2);
-      console.log('skill3: ', skill3);
-      console.log('skill4: ', skill4);
-      console.log('skill5: ', skill5);
-      console.log('salary: ', salary);
-      console.log('deadline: ', deadline);
-    }
-    
-
-
-  })
+  });
 }

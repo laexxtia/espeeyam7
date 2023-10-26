@@ -26,7 +26,7 @@
 
 
 .box{
-    padding: 12px;
+    padding: 20px;
     box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2);
     border-radius: 16px;
     margin: 30px 30px;
@@ -65,22 +65,95 @@
     position:relative;
 }
 
+.skill-button {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white;
+    border: 3px solid #f0f0f0;
+}
 
-.skillrow{
+.skill-button.active {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white; 
+    border: 3px solid #007bff; 
+}
+
+.skillrow {
     margin-top: 10px;
-    position: relative;
+    margin-bottom: 10px;
+    display: flex;
     align-items: center;
 }
 
 .test{
     margin-right: 10px;
     margin-bottom: 10px;
+    padding-top: 10px;
     position: relative;
     font-family: "Rubik", sans-serif;
 }
 
-.skilltext{
+.skilltext {
     opacity: 70%;
     font-family: "Rubik", sans-serif;
+    margin-right: 10px; /* Add right margin for spacing */
+}
+
+.scrollable-div {
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+    height: auto;
+}
+
+
+
+/* Optional: Style the scrollbar */
+.scrollable-div::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+
+}
+
+h2{
+    padding-left: 12px;
+}
+
+.form-control{
+    padding-left: 12px; 
+}
+
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+.skills-list li {
     margin-bottom: 10px;
+  }
+  
+.skill {
+    display: flex;
+    align-items: center;
+  }
+  
+/* Style for skills the staff has */
+.has-skill {
+    list-style-image: url('./images/yes-skill.png');
+  }
+  
+  /* Style for skills the staff doesn't have */
+  .no-skill {
+    list-style-image: url('./images/no-skill.png');
+  }
+  
+.ul {
+    padding: 0px 0px 0px 0px;
 }

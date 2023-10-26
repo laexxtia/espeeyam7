@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,13 +16,13 @@
     <div class = "container-fluid">
         <div class = "row mx-auto">
             <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-                <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                <a href="job_listing.html" class="d-flex align-items-center link-body-emphasis text-decoration-none">
                 <span class="welcome-msg">Welcome, Admin</span>
                 </a>
         
                 <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                     <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="applied_job.html">Applied Jobs</a> -->
-                    <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Settings</a>
+                    <!-- <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Settings</a> -->
                     <a class="me-3 py-2 link-body-emphasis text-decoration-none" href="#">Profile</a>
                 </nav>
             </div>
@@ -35,13 +34,20 @@
     <div class = "container-fluid">
 
         <!-- Job counter -->
-        <div class="headerContainer">
+        <div class="headerContainer d-flex flex-row justify-content-between">
             <h2></h2>
             <div class="new-listing-container align-element: center;" id="createNew"></div>
         </div>
 
         <!-- search bar -->
-        <input class="form-control me-2" id ="myinput" type="search" placeholder="Search" aria-label="Search"/>
+        <input class="form-control me-2" id ="myinput" type="search" placeholder="Search by Title" aria-label="Search"/>
+
+        <!-- Filter skills section -->
+        <div class="container-fluid skills-filter rounded-pill">
+            <br>
+            <h6>Filter by Skills:</h6>
+            <!-- Skill checkboxes will be generated here dynamically by JavaScript -->
+        </div>
 
         <!-- container for job listing containers -->
         <div class="jobs-list-container mx-auto">
@@ -51,7 +57,6 @@
         </div>
     </div>
     <!-- end of job listing -->
-    <script src="job_listing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
