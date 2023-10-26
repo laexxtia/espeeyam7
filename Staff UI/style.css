@@ -16,8 +16,7 @@
 
 .row{
     padding-top: 20px;
-    justify-content:space-around;
-
+    justify-content: center;
 }
 .jobs-list-container h2{
     font-size: 30px;
@@ -27,14 +26,16 @@
 
 
 .box{
-    padding: 12px;
+    padding: 20px;
     box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2);
     border-radius: 16px;
-    margin: 20px 10px;
+    margin: 30px 30px;
     position: relative;
     transition: all 400ms ease;
     display: flex;
     flex-direction: column;
+    word-wrap: break-word;
+    
 }
 
 
@@ -51,13 +52,108 @@
 }
 
 .details{
-    margin-top: 6px; 
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 18px;
     color: #333;
     line-height: 1.3;
+    
 }
 
 .btn{
-    margin-top: 10px;
+    margin-top: auto;
+    position:relative;
 }
 
+.skill-button {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white;
+    border: 3px solid #f0f0f0;
+}
+
+.skill-button.active {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white; 
+    border: 3px solid #007bff; 
+}
+
+.skillrow {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.test{
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    position: relative;
+    font-family: "Rubik", sans-serif;
+}
+
+.skilltext {
+    opacity: 70%;
+    font-family: "Rubik", sans-serif;
+    margin-right: 10px; /* Add right margin for spacing */
+}
+
+.scrollable-div {
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+    height: auto;
+}
+
+
+
+/* Optional: Style the scrollbar */
+.scrollable-div::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+
+}
+
+h2{
+    padding-left: 12px;
+}
+
+.form-control{
+    padding-left: 12px; 
+}
+
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+.skills-list li {
+    margin-bottom: 10px;
+  }
+  
+.skill {
+    display: flex;
+    align-items: center;
+  }
+  
+/* Style for skills the staff has */
+.has-skill {
+    list-style-image: url('./images/yes-skill.png');
+  }
+  
+  /* Style for skills the staff doesn't have */
+  .no-skill {
+    list-style-image: url('./images/no-skill.png');
+  }
+  
+.ul {
+    padding: 0px 0px 0px 0px;
+}

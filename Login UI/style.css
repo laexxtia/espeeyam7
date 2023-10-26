@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+
+*{
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff1cc !important;
+    justify-content: center;
+    align-items: center;
+    
+}
+/* Container */
+.container{
+    display: flex;
+    height: 500px;
+    width: 800px;
+    /* border: 1px solid black; */
+    margin: auto;
+    margin-top: 60px;
+    padding-left: 0;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2)
+    
+    
+}
+
+/* Login Form */
+.form{
+    display: flex;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+.form h2{
+    font-size:3rem;
+    margin: 20px;
+    display: inline-block;
+}
+.form h3{
+    margin: 20px;
+}
+.box{
+    padding: 12px;
+    width:65%;
+    margin:15px;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+
+#submit{
+    padding: 12px 30px;
+    width: 40%;
+    margin-top: 20px;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 400ms ease;
+    display: relative;
+}
+
+#submit:hover{
+    cursor: pointer;
+    background-color: black;
+    transform: scale(1.03);
+}
+
+
+.form a{
+    text-decoration: underline;
+    color: black;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+}
+
+.form a:hover{
+    color:black
+}
+
+/* Right Side */
+.side{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-color: #fae6ca;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.side img{
+    width: 80%;
+    height: 100%;
+}
+
+i{
+    margin-left: -45px;
+    cursor: pointer;
+}

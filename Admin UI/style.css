@@ -1,0 +1,141 @@
+
+.container{
+    margin: auto;
+    justify-content: center;
+}
+
+.welcome-msg{
+    font-family: "Rubik", sans-serif;
+    font-style: bold;
+    font-size: 25px;
+}
+
+.jobs-list-container{
+    font-family: "Rubik", sans-serif;
+}
+
+.row{
+    padding-top: 20px;
+    justify-content: center;
+}
+.jobs-list-container h2{
+    font-size: 30px;
+    border-left: 4px solid black;
+    padding-left: 20px;
+}
+
+
+.box{
+    padding: 20px;
+    box-shadow: 0 4px 24px -8px rgba(2, 48, 71, 0.2);
+    border-radius: 16px;
+    margin: 30px 30px;
+    position: relative;
+    transition: all 400ms ease;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    
+}
+
+
+.box:hover{
+    transform: scale(1.03);
+}
+
+.job-title{
+    font-size: 30px;
+    padding: 10px 0;
+    margin: 0;
+    position: relative;
+    word-wrap:break-word ;
+}
+
+.details{
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.3;
+    
+}
+
+.btn{
+    margin-top: auto;
+    position:relative;
+    
+}
+
+.skill-button {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white;
+    border: 3px solid #f0f0f0;
+}
+
+.skill-button.active {
+    margin-right: 10px; 
+    margin-bottom: 10px;
+    background-color: white; 
+    border: 3px solid #007bff; 
+}
+
+.skillrow{
+    margin-top: 10px;
+    position: relative;
+    align-items: center;
+    margin-bottom: 10px;
+    
+
+}
+
+.test{
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    position: relative;
+    font-family: "Rubik", sans-serif;
+}
+
+.skilltext{
+    opacity: 70%;
+    font-family: "Rubik", sans-serif;
+    margin-bottom: 10px;
+}
+
+.scrollable-div {
+    white-space: nowrap; /* Prevent buttons from wrapping to the next line */
+    overflow-x: scroll; /* Add horizontal scroll when content overflows */
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+    height: auto;
+    
+}
+
+
+/* Optional: Style the scrollbar */
+.scrollable-div::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+
+}
+
+h2{
+    padding-left: 12px;
+}
+
+.form-control{
+    padding-left: 12px; 
+}
+
+.btndiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}

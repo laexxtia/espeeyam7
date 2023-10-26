@@ -7,13 +7,17 @@
     <!-- Add Bootstrap CSS CDN link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script type = "module" src="role_listing.js"></script>
 
     <style>
         /* Custom CSS styles */
         body {
             background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+            font-family: "Rubik", sans-serif
         }
 
         .card {
@@ -37,85 +41,41 @@
             text-align: center;
             margin: 20px 0;
         }
+
+        .h1{
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     
-    <div class="container mt-4">
+    <div class="container mt-4 pb-5 mb-5">
         <div class="row justify-content-center">
-            <div class="rounded">
-                <a href="job_listing.html" class="btn btn-dark">Back</a>
-                </div>
-            <div class="col-md-8">
-              
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="role-title">Product Owner</h1>
-                      
-
-                        <hr>
-                        <div class="description">
-                            <h2>Description</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel nisi eu ex lacinia luctus. Fusce id dapibus lectus. Vivamus eu lacinia ex, nec lacinia sapien.</p>
-                        </div>
-                        <div class="requirements">
-                            <h2>Requirements</h2>
-                            <ul>
-                                <li>Minimum 2 years of experience</li>
-                                <li>Bachelor's degree in a related field</li>
-                                <li>Strong communication skills</li>
-                            </ul>
-                        </div>
-                        <div class="skills">
-                            <h2>skills</h2>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id praesentium accusantium fuga nesciunt expedita assumenda quos voluptatibus doloremque nam vero dolor, eum, ut illum recusandae harum reiciendis minus perspiciatis veritatis.</p>
-                        </div>
-                        <div class="salary">
-                            <h2>Salary</h2>
-                            <p>$60,000 - $80,000 per year</p>
-                        </div>
-                        <div class="apply-btn">
-                            <a class="btn btn-primary " onclick="applyNow()">Apply Now</a>
-                        </div>
-
-                        <script>
-                            // JavaScript function to show a confirmation alert
-                            const jobDetails = {
-                                    title: "Product Owner",
-                                    description: "Lorem ipsum dolor sit amet...",
-                                    requirements: [
-                                        "Minimum 2 years of experience",
-                                        "Bachelor's degree in a related field",
-                                        "Strong communication skills"
-                                    ],
-                                    skills: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
-                                    salary: "$60,000 - $80,000 per year"
-                            };
-                 
-                            function applyNow() {
-                                if (confirm("Are you sure you want to apply for this job?")) {
-                                    swal("Good job!", "You have successfully applied for the job!", "success");
-                                    // Get existing applied jobs from local storage or initialize an empty array
-                                        const appliedJobs = JSON.parse(localStorage.getItem('appliedJobs')) || [];
-
-                                        // Add the new job to the array
-                                        appliedJobs.push(jobDetails);
-
-                                        // Store updated applied jobs in local storage
-                                        localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
-
-                                }   
-                            }
-
-
-
-
-                        </script>
-                    </div>
-                </div>
+            <div class="rounded sticky-top pt-5 ps-5">
+                <a href="job_listing.html" class="btn btn-dark fs-5 pe-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-short mb-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                      </svg>
+                      Back
+                </a>
             </div>
+
+            <div class="col-md-8">
+            
+                <div class="card">
+                    <div class="card-body p-5">
+
+                    </div>
+                    
+                </div>
+                        
+
+            </div>
+
         </div>
     </div>
+
+
 
     <!-- Add Bootstrap JS and Popper.js CDN links (for Bootstrap modal, etc.) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
