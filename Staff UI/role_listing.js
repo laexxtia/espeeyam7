@@ -78,9 +78,9 @@ async function main(){
 
             let deadline = document.createElement("p")
             deadline.setAttribute("class", "fw-bold");
-            deadline.innerHTML = "Application Deadline:"
+            deadline.innerHTML = "Application Deadline: "
             let deadline_date = document.createElement("p");
-            deadline_date.setAttribute("class", "fw-bold text-danger");
+            deadline_date.setAttribute("class", "text-danger");
             deadline_date.setAttribute("id", "deadline-date");
             deadline_date.innerHTML = job_deadline;
             deadline.appendChild(deadline_date);

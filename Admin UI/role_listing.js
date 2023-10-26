@@ -136,6 +136,7 @@ async function main(){
             let deadline_date = document.createElement("p");
             deadline_date.setAttribute("class", "fw-bold text-danger deadline");
             deadline_date.setAttribute("id", "deadline");
+            deadline_date.innerHTML = job.deadline;
             deadline.appendChild(deadline_date);
             jobDescription.appendChild(deadline);
             jobContainer.appendChild(jobDescription);
