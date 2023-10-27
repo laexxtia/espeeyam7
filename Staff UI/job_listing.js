@@ -27,7 +27,7 @@ firebaseService.onAuthStateChanged(async (user) => {
 
             for (const jobId in jobs) {
                 const job = jobs[jobId];
-
+                console.log(job);
                 // not creating job cards for jobs that are past application deadline
                 let currentDate = new Date();
                 let job_deadline = new Date(job.deadline + " 23:59"); 
@@ -73,13 +73,13 @@ firebaseService.onAuthStateChanged(async (user) => {
                         for (const j in userData.Skill) {
                             if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
                                 skills_needed.setAttribute("class", "btn btn-success test");
+                                skill_buttons.prepend(skills_needed);
                                 break; // Skill matched, no need to continue checking
                             } else {
                                 skills_needed.setAttribute("class", "btn btn-secondary test disabled");
+                                skill_buttons.appendChild(skills_needed);
                             }
                         }
-                        
-                        skill_buttons.append(skills_needed);
                         skill_row.append(skill_buttons)
                     }
                                             

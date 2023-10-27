@@ -1,14 +1,17 @@
 import app from '../config/newconfig.js';
 import FirebaseService from '../config/firebaseService.js';
 
+
 const firebaseService = new FirebaseService(app)
-const applicantProfileCardContainer = document.getElementById('applicantCards');
+// const applicantProfileCardContainer = document.getElementById('applicantCards');
 var currentURL = window.location.href;
 var url = new URL(currentURL);
 var jobID = url.search.slice(2);
 
 const jobRef = firebaseService.getDatabaseRef('jobs/' + jobID);
 const applicantContainer = document.querySelector("#applicants");
+const skillSearch = document.querySelector(".form-control")
+let searchTerm ="";
 
 let job;
 let applicants;  
@@ -16,17 +19,23 @@ let userData;
 
 async function getJobFromFirebase() {
     try {
-      job = await firebaseService.getDatabaseValue(jobRef);
+    job = await firebaseService.getDatabaseValue(jobRef);
     } catch (error) {
-      console.error("Error fetching jobs:", error);
-      throw error;
+    console.error("Error fetching jobs:", error);
+    throw error;
     }
-  }
+}
 
+skillSearch.addEventListener("input", () => {
+    searchTerm = skillSearch.value.toLowerCase();
+    console.log("Search Term:", searchTerm); // Check if searchTerm is updated
+    main();
+});
 
 async function main(){
     try{
         await getJobFromFirebase();
+        applicantContainer.innerHTML = ''
         if(job){
             applicants = job.applicants
             for (const i in applicants){
@@ -46,43 +55,98 @@ async function main(){
                     }
                 }
                 await getUserDataFromFirebase();
-                console.log(userData);
-                const applicantCardHTML = `
-                <div class="col-md-6">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">${userData.Staff_FName} ${userData.Staff_LName}</h5>
-                            <p class="card-text">Email: ${userData.Email}</p>
-                            <p class="card-text">Country: ${userData.Country}</p>
-                            <p class="card-text">Department: ${userData.Dept}</p>
-                            <div class = skillrow>
+                console.log(job.Skills);
+                if (userData.Skill.some(e => e.toLowerCase().includes(searchTerm)) && job.Skills.some(i => i.toLowerCase().includes(searchTerm)) || searchTerm === ""){
+                    let applicantCol = document.createElement("div");
+                    applicantCol.setAttribute("class", "col-md-6");
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                `
-                applicantContainer.innerHTML += applicantCardHTML;
-                const skillrow = document.querySelector(".skillrow");
-                var skill_btns = document.createElement("div");
-                skill_btns.setAttribute("class", "scrollable-div")
-                console.log("hi")
-                for (const i in job.Skills) {
-                    let skills_needed = document.createElement("span");
-                    skills_needed.innerText = job.Skills[i]; // Set the default text
+                    let applicantCard = document.createElement("div");
+                    applicantCard.setAttribute("class", "card mb-4");
+
+                    let applicantCardBody = document.createElement("div");
+                    applicantCardBody.setAttribute("class", "card-body"); 
+
+                    let applicantDetails = `<h5 class="card-title">${userData.Staff_FName} ${userData.Staff_LName}</h5>
+                                <p class="card-text">Email: ${userData.Email}</p>
+                                <p class="card-text">Country: ${userData.Country}</p>
+                                <p class="card-text">Department: ${userData.Dept}</p>`
+
+                    let skillrow = document.createElement("div"); 
+                    skillrow.setAttribute("class", "skillrow");
+
                     
-                    for (const j in userData.Skill) {
-                        if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
-                            skills_needed.setAttribute("class", "btn btn-success test");
-                            break; // Skill matched, no need to continue checking
-                        } else {
-                            skills_needed.setAttribute("class", "btn btn-secondary test disabled");
+                    applicantCardBody.innerHTML= applicantDetails;
+                    applicantCardBody.appendChild(skillrow);
+
+                    applicantCard.appendChild(applicantCardBody);
+
+                    applicantCol.appendChild(applicantCard);
+
+                    applicantContainer.append(applicantCol);
+                    var skill_btns = document.createElement("div");
+                    skill_btns.setAttribute("class", "scrollable-div")
+                
+                    for (const i in job.Skills) {
+                        let skills_needed = document.createElement("span");
+                        skills_needed.innerText = job.Skills[i]; // Set the default text
+                        
+                        for (const j in userData.Skill) {
+                            if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
+                                skills_needed.setAttribute("class", "btn btn-success test");
+                                skill_btns.prepend(skills_needed);
+                                break; // Skill matched, no need to continue checking
+                            } else {
+                                skills_needed.setAttribute("class", "btn btn-secondary test disabled");
+                                skill_btns.appendChild(skills_needed);
+                            }
                         }
+                        skillrow.appendChild(skill_btns);
+                        console.log(skillrow);
+
                     }
-                    skill_btns.appendChild(skills_needed);
-                    skillrow.appendChild(skill_btns);
-                    console.log(skillrow);
                 }
+                else{
+                    continue;
+                }
+                
+                console.log(userData);
+                // const applicantCardHTML = `
+                // <div class="col-md-6">
+                //     <div class="card mb-4">
+                //         <div class="card-body">
+                //             <h5 class="card-title">${userData.Staff_FName} ${userData.Staff_LName}</h5>
+                //             <p class="card-text">Email: ${userData.Email}</p>
+                //             <p class="card-text">Country: ${userData.Country}</p>
+                //             <p class="card-text">Department: ${userData.Dept}</p>
+                //             <div class = skillrow>
+
+                //             </div>
+                //         </div>
+                //     </div>
+                // </div>
+                // `
+                // applicantContainer.innerHTML += applicantCardHTML;
+                // const skillrow = document.querySelector(".skillrow");
+                // var skill_btns = document.createElement("div");
+                // skill_btns.setAttribute("class", "scrollable-div")
+                // console.log("hi")
+                // for (const i in job.Skills) {
+                //     let skills_needed = document.createElement("span");
+                //     skills_needed.innerText = job.Skills[i]; // Set the default text
+                    
+                //     for (const j in userData.Skill) {
+                //         if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
+                //             skills_needed.setAttribute("class", "btn btn-success test");
+                //             skill_btns.prepend(skills_needed);
+                //             break; // Skill matched, no need to continue checking
+                //         } else {
+                //             skills_needed.setAttribute("class", "btn btn-secondary test disabled");
+                //             skill_btns.appendChild(skills_needed);
+                //         }
+                //     }
+                //     skillrow.appendChild(skill_btns);
+                //     console.log(skillrow);
+                // }
                 
             }
             
