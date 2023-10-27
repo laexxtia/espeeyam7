@@ -45,7 +45,7 @@ if (createBtn) {
 
     const jobTitle = document.getElementById('jobTitle').value;
     const details = document.getElementById('jobDescription').value;
-    const responsibilities = document.getElementById('jobResponsibilities').value;
+    // const responsibilities = document.getElementById('jobResponsibilities').value;
     // const qualifications = document.getElementById('jobQualifications')
 
     const department = document.getElementById('jobDept').value;
@@ -86,7 +86,7 @@ if (createBtn) {
       const jobData = {
         title: jobTitle,
         details: details,
-        responsibilities: responsibilities,
+        // responsibilities: responsibilities,
         // qualifications: qualifications,
         department: department,
         Skills: filledSkills,
