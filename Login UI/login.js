@@ -26,9 +26,9 @@ if (login != null) {
             if (userData) {
               const user_accesss = userData.Access_Rights;
               if (user_accesss == 1) {
-                window.location.href = '../Staff UI/job_listing.html';
+                window.location.href = '../staff/job_listing.html';
               } else {
-                window.location.href = '../Admin UI/job_listing.html';
+                window.location.href = '../admin/job_listing.html';
               }
             } else {
               console.log("User data not found");
