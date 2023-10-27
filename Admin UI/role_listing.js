@@ -143,20 +143,20 @@ async function main(){
             console.log(jobDescription);
 
 
-            //responsibilities
-            let jobResponsibilties = document.createElement("div");
-            let jobResponsibilitiesTitleDiv = document.createElement("div");
-            jobResponsibilties.setAttribute("class", "mb-5");
-            jobResponsibilitiesTitleDiv.setAttribute("class", "d-flex mb-2");
-            let jobResponsibilitiesTitle = document.createElement("h2");
-            jobResponsibilitiesTitle.innerHTML = "Responsibilities";
-            jobResponsibilitiesTitleDiv.appendChild(jobResponsibilitiesTitle);
-            jobResponsibilties.appendChild(jobResponsibilitiesTitleDiv);
-            jobContainer.appendChild(jobResponsibilties);
-            let jobResponsibiltiesText = document.createElement("p");
-            jobResponsibiltiesText.innerHTML = job.responsibilities;
-            jobResponsibilties.appendChild(jobResponsibiltiesText);
-            jobResponsibiltiesText.setAttribute("class", "jobResponsibilities");
+            // //responsibilities
+            // let jobResponsibilties = document.createElement("div");
+            // let jobResponsibilitiesTitleDiv = document.createElement("div");
+            // jobResponsibilties.setAttribute("class", "mb-5");
+            // jobResponsibilitiesTitleDiv.setAttribute("class", "d-flex mb-2");
+            // let jobResponsibilitiesTitle = document.createElement("h2");
+            // jobResponsibilitiesTitle.innerHTML = "Responsibilities";
+            // jobResponsibilitiesTitleDiv.appendChild(jobResponsibilitiesTitle);
+            // jobResponsibilties.appendChild(jobResponsibilitiesTitleDiv);
+            // jobContainer.appendChild(jobResponsibilties);
+            // let jobResponsibiltiesText = document.createElement("p");
+            // jobResponsibiltiesText.innerHTML = job.responsibilities;
+            // jobResponsibilties.appendChild(jobResponsibiltiesText);
+            // jobResponsibiltiesText.setAttribute("class", "jobResponsibilities");
             
 
             // Skills Required
