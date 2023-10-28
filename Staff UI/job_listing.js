@@ -44,16 +44,18 @@ firebaseService.onAuthStateChanged(async (user) => {
                     title.classList.add("job-title");
                     title.innerText = job.title;
 
+                    if(job.applicants == userData.  )
+
                     let details = document.createElement("div");
                     details.classList.add("details");
                     details.innerText = job.details;
 
-                    let detailsbtn = document.createElement("a")
-                    detailsbtn.setAttribute("class", "btn btn-primary")
+                    let detailsbtn = document.createElement("a");
+                    detailsbtn.setAttribute("class", "btn btn-primary");
+                    detailsbtn.setAttribute("id", "detailsbtn");
                     detailsbtn.innerHTML = "More Details";
-                    detailsbtn.href = "role_listing.html?=" + jobId
+                    detailsbtn.href = "role_listing.html?=" + jobId;
 
-                    // jobCard.appendChild(image);
                     jobCard.appendChild(title);
                     jobCard.appendChild(details);
 
@@ -102,7 +104,7 @@ firebaseService.onAuthStateChanged(async (user) => {
         function showAllJobCards() {
             const jobCards = document.querySelectorAll(".job-card");
             jobCards.forEach(card => {
-                card.style.display = "block";
+                card.style.display = "flex";
             });
         }
 
@@ -199,14 +201,14 @@ firebaseService.onAuthStateChanged(async (user) => {
                     const matchingSkills = selectedSkills.filter(skill => jobSkills.includes(skill));
             
                     if (matchingSkills.length === selectedSkills.length) {
-                        jobCard.style.display = "block";
+                        jobCard.style.display = "flex";
                     } else {
                         jobCard.style.display = "none";
                     }
                 } else {
                     // Handle the case when the data-skills attribute is not defined for this job card.
                     // You can choose to show it or hide it, depending on your requirements.
-                    jobCard.style.display = "block"; // Show the card as a fallback
+                    jobCard.style.display = "flex"; // Show the card as a fallback
                 }
             }
         }

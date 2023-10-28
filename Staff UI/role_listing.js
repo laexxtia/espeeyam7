@@ -88,19 +88,19 @@ async function main(){
             jobContainer.appendChild(jobDescription);
 
             //responsibilities
-            let jobResponsibilties = document.createElement("div");
-            let jobResponsibilitiesTitleDiv = document.createElement("div");
-            jobResponsibilties.setAttribute("class", "mb-5");
-            jobResponsibilitiesTitleDiv.setAttribute("class", "d-flex mb-2");
-            let jobResponsibilitiesTitle = document.createElement("h2");
-            jobResponsibilitiesTitle.innerHTML = "Responsibilities";
-            jobResponsibilitiesTitleDiv.appendChild(jobResponsibilitiesTitle);
-            jobResponsibilties.appendChild(jobResponsibilitiesTitleDiv);
-            let jobResponsibiltiesText = document.createElement("p");
-            jobResponsibiltiesText.innerHTML = job.responsibilities;
-            jobResponsibilties.appendChild(jobResponsibiltiesText);
+            // let jobResponsibilties = document.createElement("div");
+            // let jobResponsibilitiesTitleDiv = document.createElement("div");
+            // jobResponsibilties.setAttribute("class", "mb-5");
+            // jobResponsibilitiesTitleDiv.setAttribute("class", "d-flex mb-2");
+            // let jobResponsibilitiesTitle = document.createElement("h2");
+            // jobResponsibilitiesTitle.innerHTML = "Responsibilities";
+            // jobResponsibilitiesTitleDiv.appendChild(jobResponsibilitiesTitle);
+            // jobResponsibilties.appendChild(jobResponsibilitiesTitleDiv);
+            // let jobResponsibiltiesText = document.createElement("p");
+            // jobResponsibiltiesText.innerHTML = job.responsibilities;
+            // jobResponsibilties.appendChild(jobResponsibiltiesText);
             
-            jobContainer.appendChild(jobResponsibilties);
+            // jobContainer.appendChild(jobResponsibilties);
             
             // Skills Required
             // let jobSkills = document.createElement("div"); 
