@@ -44,7 +44,7 @@ auth.onAuthStateChanged(function (user) {
                     console.log(userData.Staff_FName)
                     const staff_name = userData.Staff_FName + " " + userData.Staff_LName
                     const staff_email = userData.Email
-                    const skills = userData.Skill
+                    const skills = userData.Skills
                     let staffname = document.getElementById('staffname')
                     staffname.innerHTML = staff_name
                     let staffemail = document.getElementById('staffemail')

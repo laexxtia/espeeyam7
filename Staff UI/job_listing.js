@@ -36,7 +36,7 @@ firebaseService.onAuthStateChanged(async (user) => {
                     continue;
                 }
 
-                if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                if (job.title.toLowerCase().includes(searchTerm.toLowerCase()) || searchTerm === "") {
                     let jobCard = document.createElement("div");
                     jobCard.setAttribute("class", "col-3 box job-card")
 
@@ -44,7 +44,17 @@ firebaseService.onAuthStateChanged(async (user) => {
                     title.classList.add("job-title");
                     title.innerText = job.title;
 
-                    if(job.applicants == userData.  )
+                    
+
+                    // console.log(job.applicants);
+                    // console.log(userData);
+
+                    if (job.applicants.includes(userData.Staff_ID)){
+                        let applied = document.createElement("a");
+                        applied.setAttribute("class", "applied");
+                        applied.innerText = "You have applied for this job";
+                    }
+                    
 
                     let details = document.createElement("div");
                     details.classList.add("details");
@@ -71,9 +81,9 @@ firebaseService.onAuthStateChanged(async (user) => {
                     for (const i in job.Skills) {
                         let skills_needed = document.createElement("span");
                         skills_needed.innerText = job.Skills[i]; // Set the default text
-                        
-                        for (const j in userData.Skill) {
-                            if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
+                        console.log(job.Skills[i]);
+                        for (const j in userData.Skills) {
+                            if (userData.Skills[j].toLowerCase() === job.Skills[i].toLowerCase()) {
                                 skills_needed.setAttribute("class", "btn btn-success test");
                                 skill_buttons.prepend(skills_needed);
                                 break; // Skill matched, no need to continue checking
@@ -87,6 +97,16 @@ firebaseService.onAuthStateChanged(async (user) => {
                                             
                     
                     jobCard.appendChild(skill_row);
+                    if (job.applicants.includes(userData.Staff_ID)){
+                        let applied = document.createElement("p");
+                        applied.setAttribute("class", "applied text-danger");
+                        applied.innerText = "You have applied for this job";
+                        jobCard.appendChild(applied)
+                    }
+                    else{
+                        continue
+                    }
+
                     jobCard.appendChild(detailsbtn);
                     
                     console.log(job.Skills)

@@ -146,7 +146,7 @@ async function main(){
                 skillText.innerHTML = job.Skills[i];
 
                 // Append the skill text to the appropriate list based on whether the staff has the skill
-                if (userData.Skill.includes(job.Skills[i])) {
+                if (userData.Skills.includes(job.Skills[i])) {
                     jobSkillsListItem.appendChild(skillText);
                     hasSkillList.appendChild(jobSkillsListItem);
                 } else {
@@ -176,12 +176,12 @@ async function main(){
             let skills_matched_counter = 0;
             let skills_missing = [];
             for (const i in job.Skills) {
-                for (const j in userData.Skill) {
-                    if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()){
+                for (const j in userData.Skills) {
+                    if (userData.Skills[j].toLowerCase() === job.Skills[i].toLowerCase()){
                         skills_matched_counter +=1;
                     }
                     else{
-                        if(!skills_missing.includes(job.Skills[i]) && !userData.Skill.includes(job.Skills[i])){
+                        if(!skills_missing.includes(job.Skills[i]) && !userData.Skills.includes(job.Skills[i])){
                             skills_missing.push(job.Skills[i]);
                         }
                         
@@ -292,7 +292,7 @@ async function main(){
                 let applynowbtn = document.createElement("button");
                 applynowbtn.setAttribute("class", "btn btn-secondary fs-4 px-3");
                 applynowbtn.setAttribute("disabled", ""); // Set the disabled attribute to make the button disabled
-                applynowbtn.innerHTML = "Apply Now";
+                applynowbtn.innerHTML = "You have applied for this position ";
                 applynowbtndiv.appendChild(applynowbtn);
                 jobContainer.appendChild(applynowbtndiv);
             };

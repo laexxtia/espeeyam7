@@ -83,7 +83,6 @@
 
 .skillrow {
     margin-top: 10px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
 }
@@ -115,10 +114,13 @@
     max-width: 600px;
     margin: 50px auto;  
 }
-    
+
+.applied{
+    padding-bottom: 10px;
+    color: red;
+}
 
 
-/* Optional: Style the scrollbar */
 .scrollable-div::-webkit-scrollbar {
     width: 6px;
     height: 6px;

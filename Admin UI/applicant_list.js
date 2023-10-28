@@ -56,7 +56,7 @@ async function main(){
                 }
                 await getUserDataFromFirebase();
                 console.log(job.Skills);
-                if (userData.Skill.some(e => e.toLowerCase().includes(searchTerm)) && job.Skills.some(i => i.toLowerCase().includes(searchTerm)) || searchTerm === ""){
+                if (userData.Skills.some(e => e.toLowerCase().includes(searchTerm)) && job.Skills.some(i => i.toLowerCase().includes(searchTerm)) || searchTerm === ""){
                     let applicantCol = document.createElement("div");
                     applicantCol.setAttribute("class", "col-md-6");
 
@@ -90,8 +90,8 @@ async function main(){
                         let skills_needed = document.createElement("span");
                         skills_needed.innerText = job.Skills[i]; // Set the default text
                         
-                        for (const j in userData.Skill) {
-                            if (userData.Skill[j].toLowerCase() === job.Skills[i].toLowerCase()) {
+                        for (const j in userData.Skills) {
+                            if (userData.Skills[j].toLowerCase() === job.Skills[i].toLowerCase()) {
                                 skills_needed.setAttribute("class", "btn btn-success test");
                                 skill_btns.prepend(skills_needed);
                                 break; // Skill matched, no need to continue checking
