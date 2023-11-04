@@ -23,6 +23,4 @@ jobs:
 
     - name: Deploy to Server
       run: |
-        # Replace this with your deployment script or commands
-        # For example, you might use tools like scp, rsync, or any other deployment method here
-        node server.js  # Replace with the correct entry point for your Express.js app
+        node server.js
