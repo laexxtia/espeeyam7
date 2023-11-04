@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy to Server
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,16 +16,13 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 16  # Use Node.js 16
+        node-version: 16
 
     - name: Install dependencies
       run: npm install
 
-    - name: Build the project
-      run: npm run build  # Replace with your build command
-
     - name: Deploy to Server
       run: |
         # Replace this with your deployment script or commands
-        # After deploying, start your Node.js server
+        # For example, you might use tools like scp, rsync, or any other deployment method here
         node server.js  # Replace with the correct entry point for your Express.js app
