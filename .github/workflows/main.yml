@@ -23,4 +23,22 @@ jobs:
 
     - name: Deploy to Server
       run: |
-        node server.js
+        # Start the server in the background
+        node server.js &
+
+        # Define the timeout duration (in seconds)
+        timeout=30
+        for ((i=0; i<$timeout; i++)); do
+          # Check if the server is responding
+          if [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:3000)" == "200" ]]; then
+            break
+          fi
+          sleep 5
+        done
+
+        # Run your tests or any other actions that depend on the server
+        # For example: npm test
+
+        # Stop the server gracefully
+        pkill -f "node server.js"
+    # This job will have a default timeout of 6 hours
