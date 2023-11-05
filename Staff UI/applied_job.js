@@ -20,6 +20,7 @@ firebaseService.onAuthStateChanged(async (user) => {
             try {
                 const userDataSnapshot = await firebaseService.getDatabaseValue(user_ref);
                 userData = userDataSnapshot;
+                console.log(userData)
             } catch (error) {
                 console.error("Error fetching user data:", error);
                 throw error;
@@ -34,12 +35,15 @@ firebaseService.onAuthStateChanged(async (user) => {
                 console.log(userData);
 
                 for (const job_uid of userData.applied_jobs) {
+
                     const jobRef = firebaseService.getDatabaseRef('jobs/' + job_uid);
 
                     async function getJobFromFirebase() {
                         try {
                             const jobSnapshot = await firebaseService.getDatabaseValue(jobRef);
+                            console.error(jobSnapshot)
                             const job = jobSnapshot;
+                            console.log(job)
                             return job;
                         } catch (error) {
                             console.error("Error fetching jobs:", error);

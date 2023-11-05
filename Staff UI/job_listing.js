@@ -8,8 +8,6 @@ firebaseService.onAuthStateChanged(async (user) => {
     if (user) {
         var uid = user.uid;
 
-        console.log("USER IS LOGGED IN");
-
         sessionStorage.setItem("userID", uid);
         const user_ref = firebaseService.getDatabaseRef('Staff/' + uid);
 
@@ -29,33 +27,36 @@ firebaseService.onAuthStateChanged(async (user) => {
                 const job = jobs[jobId];
                 console.log(job);
                 // not creating job cards for jobs that are past application deadline
-                let currentDate = new Date();
+                let currentDate = new Date();   
                 let job_deadline = new Date(job.deadline + " 23:59"); 
 
                 if (currentDate > job_deadline) {
                     continue;
+                } else {
+                    console.log("date is ok")
                 }
-
+                
                 if (job.title.toLowerCase().includes(searchTerm.toLowerCase()) || searchTerm === "") {
                     let jobCard = document.createElement("div");
                     jobCard.setAttribute("class", "col-3 box job-card")
-
+                    console.log(jobCard)
                     let title = document.createElement("h3");
                     title.classList.add("job-title");
                     title.innerText = job.title;
 
-                    
+                    console.log(job.title)
+                    console.log(job.applicants);
 
-                    // console.log(job.applicants);
-                    // console.log(userData);
-
-                    if (job.applicants.includes(userData.Staff_ID)){
-                        let applied = document.createElement("a");
-                        applied.setAttribute("class", "applied");
-                        applied.innerText = "You have applied for this job";
+                    if (job.applicants !== undefined) {
+                        console.log('hi')
+                        if (job.applicants.includes(userData.Staff_ID)){
+                            let applied = document.createElement("a");
+                            applied.setAttribute("class", "applied");
+                            applied.innerText = "You have applied for this job";
+                        }
                     }
                     
-
+                    
                     let details = document.createElement("div");
                     details.classList.add("details");
                     details.innerText = job.details;
@@ -77,11 +78,9 @@ firebaseService.onAuthStateChanged(async (user) => {
                     let skill_buttons = document.createElement("div")
                     skill_buttons.setAttribute("class", "scrollable-div")
 
-                    skill_row.append(skill_text)
                     for (const i in job.Skills) {
                         let skills_needed = document.createElement("span");
                         skills_needed.innerText = job.Skills[i]; // Set the default text
-                        console.log(job.Skills[i]);
                         for (const j in userData.Skills) {
                             if (userData.Skills[j].toLowerCase() === job.Skills[i].toLowerCase()) {
                                 skills_needed.setAttribute("class", "btn btn-success test");
@@ -97,19 +96,22 @@ firebaseService.onAuthStateChanged(async (user) => {
                                             
                     
                     jobCard.appendChild(skill_row);
-                    if (job.applicants.includes(userData.Staff_ID)){
-                        let applied = document.createElement("p");
-                        applied.setAttribute("class", "applied text-danger");
-                        applied.innerText = "You have applied for this job";
-                        jobCard.appendChild(applied)
+
+                    if (job.applicants !== undefined) {
+                        if (job.applicants.includes(userData.Staff_ID)){
+                            let applied = document.createElement("p");
+                            applied.setAttribute("class", "applied text-danger");
+                            applied.innerText = "You have applied for this job";
+                            jobCard.appendChild(applied)
+                        }
+                        // else{
+                        //     continue
+                        // }
                     }
-                    else{
-                        continue
-                    }
+                    
 
                     jobCard.appendChild(detailsbtn);
                     
-                    console.log(job.Skills)
                     jobCard.dataset.skills = job.Skills.join(", ");
 
                     jobsContainer.append(jobCard)

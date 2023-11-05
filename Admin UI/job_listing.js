@@ -127,28 +127,6 @@ firebaseService.onAuthStateChanged(async (user) => {
           }
         }
       }
-
-  
-      // for (const jobCard of jobsContainer.querySelectorAll(".job-card")) {
-      //     console.log(jobCard)
-      //     const skillsAttribute = jobCard.dataset.skills;
-      //     console.log(skillsAttribute)
-
-      //     if (skillsAttribute) {
-      //         const jobSkills = skillsAttribute.split(",").map(skill => skill.trim().toLowerCase());
-      
-      //         const matchingSkills = selectedSkills.filter(skill => jobSkills.includes(skill));
-      
-      //         if (matchingSkills.length === selectedSkills.length) {
-      //             jobCard.style.display = "block";
-      //             console.log(jobCard)
-      //         } else {
-      //             jobCard.style.display = "none";
-      //         }
-      //     } else {
-      //         jobCard.style.display = "block";
-      //     }
-      // }
   }
 
   async function generateSkillCheckboxes() {
