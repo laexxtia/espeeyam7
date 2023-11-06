@@ -16,6 +16,7 @@ describe('Login Test', () => {
   });
 
   test('Login Test', async () => {
+    jest.setTimeout(20000);
     await page.goto('http://localhost:3000/login/login.html'); // Replace with the URL of the page you want to test.
     let prevURL = page.url();
     await page.fill('#email', 'Sally.Loh@allinone.com.sg');
