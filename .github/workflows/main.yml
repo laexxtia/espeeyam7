@@ -42,6 +42,12 @@ jobs:
 
       - name: Run Playwright Tests
         run: npx jest
+        
+      - name: Save Screenshots as Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: screenshots
 
       - name: Stop Server
         run: pkill -f "node server.js"
