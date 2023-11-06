@@ -6,7 +6,7 @@ describe('Login Test', () => {
 
   beforeAll(async () => {
     browser = await chromium.launch({
-      headless: false, // Set headless to false to run in non-headless mode
+      headless: true, // Set headless to false to run in non-headless mode
     });
     page = await browser.newPage();
   });
