@@ -1,4 +1,4 @@
-name: Deploy, Run Playwright Tests, and Stop Server
+name: Deploy, Install Browsers, Run Playwright Tests, and Stop Server
 
 on:
   push:
@@ -34,9 +34,11 @@ jobs:
             sleep 5
           done
 
+      - name: Install Playwright Browsers
+        run: npx playwright install
+
       - name: Run Playwright Tests
-        run: npx jest
+        run: npx playwright test
 
       - name: Stop Server
         run: pkill -f "node server.js"
-
