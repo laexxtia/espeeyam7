@@ -23,8 +23,10 @@ describe('Login Test', () => {
 
     // Your Playwright test code here
     await page.click('#submit');
-    await page.waitForTimeout(4000);
-    let currentURL = page.url();
+
+    targetURL = "http://localhost:3000/admin/job_listing.html"
+    await page.waitForURL(targetURL, { timeout: 10000 })
+    currentURL = page.url()
     console.log(currentURL);
 
     // Assertions can be added here to determine if the login was successful or not.
