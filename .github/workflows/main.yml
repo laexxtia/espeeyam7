@@ -41,7 +41,7 @@ jobs:
         run: npm install jest --save-dev
 
       - name: Run Playwright Tests
-        run: npx playwright test
+        run: npx jest
 
       - name: Stop Server
         run: pkill -f "node server.js"
