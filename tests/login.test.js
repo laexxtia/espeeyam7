@@ -30,6 +30,8 @@ describe('Login Test', () => {
     // Assertions can be added here to determine if the login was successful or not.
     if (prevURL == currentURL) {
       console.log('Login Failed');
+      await page.screenshot({ path: 'error screenshot.png' });
+
       throw new Error('Login Failed'); // This will fail the test
     } else {
       console.log('Login successful');
