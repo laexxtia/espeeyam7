@@ -23,7 +23,7 @@ describe('Login Test', () => {
 
     // Your Playwright test code here
     await page.click('#submit');
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
     let currentURL = page.url();
     console.log(currentURL);
 
