@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/Login%20UI/(.*)", 
+      "destination": "/Login%20UI/$1" 
+    }
+  ],
+  "routes": {
+    "/Login%20UI": "/Login%20UI/login.html" 
+  }
+}
