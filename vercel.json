@@ -1,19 +1,8 @@
 {
-    "rewrites": [
-      {
-        "source": "/Login%20UI/(.*)", 
-        "destination": "/Login%20UI/$1" 
-      }
-    ],
-    "routes": [
-      {
-        "src": "/Login%20UI",
-        "dest": "/Login%20UI/login.html"
-      },
-      {
-        "src": "/(.*)",
-        "status": 404,
-        "continue": true
-      }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/Login%20UI/(.*)",
+      "destination": "/Login%20UI/$1"
+    }
+  ]
+}
