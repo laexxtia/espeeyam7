@@ -7,8 +7,5 @@
   },
   "jest": {
     "testTimeout": 10000
-  },
-  "scripts": {
-    "start": "node server.js"
   }
 }
