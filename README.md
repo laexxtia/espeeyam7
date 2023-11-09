@@ -107,3 +107,13 @@ The installation instructions are as follows:
 4. A <u>link</u> should be returned in the terminal. Click it and you're ready to go!
 
 [Return to Table of Contents](#table-of-contents)
+
+### Testing
+
+Our test case file is login.test.js. To run it, write the following command in your IDE terminal:
+
+   ```sh
+   npx jest
+   ```
+
+[Return to Table of Contents](#table-of-contents)
