@@ -96,7 +96,7 @@ The installation instructions are as follows:
    git clone https://github.com/laexxtia/espeeyam7.git
    ```
 
-2. Open the repository locally.
+2. Open the repository locally and add the config.js (consists of your Firebase configuration) file to the config folder.
 
 3. In the terminal in your IDE, write the following command:
 
