@@ -6,13 +6,8 @@ This projects provides staff with an avenue to conveniently source and apply for
 ## Table of Contents
 - [Description](#description)
 - [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Installation](#installation)
+- [Testing](#testing)
 
 ## Description
 
@@ -86,7 +81,7 @@ Some key features of the portal include:
 
 [Return to Table of Contents](#table-of-contents)
 
-### Installation
+## Installation
 
 The installation instructions are as follows:
 
@@ -108,9 +103,9 @@ The installation instructions are as follows:
 
 [Return to Table of Contents](#table-of-contents)
 
-### Testing
+## Testing
 
-Our test case file is login.test.js. To run it, write the following command in your IDE terminal:
+Our test case file is login.test.js. Please make sure to complete the steps in [Installation](#installation) before testing. To run it, write the following command in your IDE terminal:
 
    ```sh
    npx jest
