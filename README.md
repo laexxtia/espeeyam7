@@ -4,7 +4,6 @@ This projects provides staff with an avenue to conveniently source and apply for
 
 Here is the <a href='https://github.com/laexxtia/espeeyam7'>link</a> to our Github repository.
 
-t
 ## Table of Contents
 - [Description](#description)
 - [Features](#features)
