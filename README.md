@@ -2,9 +2,9 @@
 
 This projects provides staff with an avenue to conveniently source and apply for roles within the organisation. The respective hiring managers and HR administrative are also given the means to find suitable candidates for their positions within All-In-One.
 
-Here is the <p href='https://github.com/laexxtia/espeeyam7'>link</p> to our Github repository.
+Here is the <a href='https://github.com/laexxtia/espeeyam7'>link</a> to our Github repository.
 
-
+t
 ## Table of Contents
 - [Description](#description)
 - [Features](#features)
